@@ -8,7 +8,7 @@ import CallToAction from "@/components/home/CallToAction";
 
 const Home = () => {
     return (
-        <main className="min-h-screen bg-white">
+        <main className="min-h-screen bg-white pt-20">
             <Hero />
             <CohortSection />
             <CourseSection />

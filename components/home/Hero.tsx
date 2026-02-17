@@ -6,7 +6,7 @@ const Hero = () => {
         <section className="bg-white text-black py-20 px-6 md:px-12 lg:px-24 flex flex-col items-center text-center">
             <div className="max-w-4xl">
                 <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6">
-                    Programs Designed for Real Growth
+                    Learn the Skills Shaping the Future.
                 </h1>
                 <p className="text-xl md:text-2xl text-gray-600 mb-10 max-w-2xl mx-auto">
                     Explore our courses and the cohorts currently open for application.
