@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 
@@ -15,7 +16,7 @@ const Header = () => {
             <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="text-2xl font-bold tracking-tight">
-                    Khrien Academy
+                    <Image src="/academylogo.webp" alt="Academy Logo" width={100} height={100} />
                 </Link>
 
                 {/* Navigation - Desktop */}
