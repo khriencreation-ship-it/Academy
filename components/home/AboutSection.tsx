@@ -3,7 +3,7 @@ import React from "react";
 
 const AboutSection = () => {
     return (
-        <section className="max-w-360 mx-auto py-20 px-6 md:px-12 lg:px-24 mx-auto gap-20 bg-brand Green my-6 z-20 rounded-3xl flex justify-between items-center">
+        <section className="max-w-360 py-20 px-6 md:px-12 lg:px-24 mx-auto gap-20 bg-brand Green my-6 z-20 rounded-3xl flex justify-between items-center">
             <div className="w-1/2 max-w-5xl mx-auto text-left">
                 <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-8 text-black tracking-tight uppercase italic">
                     <span className="text-brandPurple">Education</span> Built With <span className="text-brandPurple">Purpose</span>

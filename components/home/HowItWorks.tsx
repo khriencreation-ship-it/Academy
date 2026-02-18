@@ -1,23 +1,28 @@
 import React from "react";
+import { FaUsers, FaBook, FaCheckCircle } from "react-icons/fa";
 
 const HowItWorks = () => {
     return (
-        <section className="bg-gray-50 py-20 px-6 md:px-12 lg:px-24">
-            <div className="max-w-360 mx-auto">
+        <section className="bg-brandGray py-20 px-6 md:px-12 lg:px-24">
+            <div className="max-w-6xl mx-auto">
                 <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-4 text-black">How It Works</h2>
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                        At Khrien Academy, you don’t enroll in courses alone — you join a cohort.
+                    <h2 className="text-4xl md:text-5xl font-black mb-4 text-black tracking-tight">
+                        How It Works
+                    </h2>
+                    <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+                        At Khrien Academy, you don't enroll in courses alone — you join a cohort.
                         Together, they create a guided and supportive learning experience.
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {/* Cohorts Column */}
-                    <div>
-                        <div className="flex items-center gap-3 mb-6">
-                            <span className="bg-purple-100 p-2 rounded-lg text-2xl">🤝</span>
-                            <h3 className="text-2xl font-bold text-black">Cohorts provide:</h3>
+                    <div className="bg-gradient-to-br from-brandPurple to-purple-600 rounded-3xl p-8 shadow-xl">
+                        <div className="flex items-center gap-4 mb-8">
+                            <div className="bg-white/20 backdrop-blur-sm p-4 rounded-xl">
+                                <FaUsers className="text-4xl text-white" />
+                            </div>
+                            <h3 className="text-2xl md:text-3xl font-bold text-white">Cohorts provide:</h3>
                         </div>
                         <ul className="space-y-4">
                             {[
@@ -26,19 +31,21 @@ const HowItWorks = () => {
                                 "Live tutor-led sessions",
                                 "Accountability and peer support"
                             ].map((item, index) => (
-                                <li key={index} className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-                                    <span className="text-purple-600 flex-shrink-0">✓</span>
-                                    <span className="text-gray-700 font-medium">{item}</span>
+                                <li key={index} className="flex items-start gap-3 bg-white/15 backdrop-blur-sm p-5 rounded-xl hover:bg-white/25 transition-all duration-300">
+                                    <FaCheckCircle className="text-white text-xl flex-shrink-0 mt-0.5" />
+                                    <span className="text-white font-medium text-base leading-relaxed">{item}</span>
                                 </li>
                             ))}
                         </ul>
                     </div>
 
                     {/* Courses Column */}
-                    <div>
-                        <div className="flex items-center gap-3 mb-6">
-                            <span className="bg-blue-100 p-2 rounded-lg text-2xl">📚</span>
-                            <h3 className="text-2xl font-bold text-black">Courses provide:</h3>
+                    <div className="bg-linear-to-br from-brandGreen to-green-600 rounded-3xl p-8 shadow-xl">
+                        <div className="flex items-center gap-4 mb-8">
+                            <div className="bg-white/20 backdrop-blur-sm p-4 rounded-xl">
+                                <FaBook className="text-4xl text-white" />
+                            </div>
+                            <h3 className="text-2xl md:text-3xl font-bold text-white">Courses provide:</h3>
                         </div>
                         <ul className="space-y-4">
                             {[
@@ -46,9 +53,9 @@ const HowItWorks = () => {
                                 "Clear learning outcomes",
                                 "Practical assignments and assessments"
                             ].map((item, index) => (
-                                <li key={index} className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-                                    <span className="text-blue-600 flex-shrink-0">✓</span>
-                                    <span className="text-gray-700 font-medium">{item}</span>
+                                <li key={index} className="flex items-start gap-3 bg-white/15 backdrop-blur-sm p-5 rounded-xl hover:bg-white/25 transition-all duration-300">
+                                    <FaCheckCircle className="text-white text-xl shrink-0 mt-0.5" />
+                                    <span className="text-white font-medium text-base leading-relaxed">{item}</span>
                                 </li>
                             ))}
                         </ul>
