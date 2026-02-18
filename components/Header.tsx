@@ -52,7 +52,7 @@ const Header = () => {
                 <div className="hidden md:flex items-center gap-4">
                     <Link
                         href="/apply"
-                        className="text-center border-5 rounded-full border-r border-t font-semibold border-black bg-brandPurple px-10 py-2 lg:py-3 hover:bg-brandPurple hover:text-white transition-all duration-50 ease-in-out"
+                        className="text-center rounded-full text-white font-semibold bg-brandPurple px-10 py-2 lg:py-3 hover:bg-brandPurple hover:text-white transition-all duration-50 ease-in-out"
                     >
                         Apply to Learn
                     </Link>
