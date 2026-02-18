@@ -47,7 +47,7 @@ const CoursesSection = () => {
 
                         <Link
                             href="#"
-                            className="inline-bloc k bg-brandPurple text-white font-semibold px-10 py-3 rounded-full  border border-black border-b-5 border-l-5 hover:opacity-90 transition-all duration-300 text-lg shadow-md hover:shadow-lg"
+                            className="bg-brandPurple text-white font-semibold px-10 py-3 rounded-full  border border-black border-b-5 border-l-5 hover:opacity-90 transition-all duration-300 text-lg shadow-md hover:shadow-lg"
                         >
                             Explore Course
                         </Link>

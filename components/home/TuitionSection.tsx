@@ -1,63 +1,87 @@
 import React from "react";
 import Link from "next/link";
+import { FaCalendarAlt, FaMoneyBillWave, FaCheckCircle } from "react-icons/fa";
 
 const TuitionSection = () => {
     return (
-        <section className="bg-brandGray py-24 px-6 md:px-12 lg:px-24">
+        <section className="bg-white py-24 px-6 md:px-12">
             <div className="max-w-6xl mx-auto">
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black tracking-tight">
+                    <h2 className="text-4xl md:text-6xl font-black mb-4 text-black tracking-tight">
                         Tuition & Program Dates
                     </h2>
                 </div>
 
-                {/* Cohort Card */}
-                <div className="bg-linear-to-br from-brandPurple to-purple-700 rounded-3xl p-10 md:p-14 text-white shadow-2xl">
-                    <div className="max-w-3xl mx-auto text-center">
-                        <h3 className="text-3xl md:text-4xl font-bold mb-10">
-                            The Genesis Cohort
-                        </h3>
+                {/* Centered Single Column Layout */}
+               <div className="grid grid-cols-3">
+               <div className="max-w-md mx-auto bg-white shadow-md border duration-300 text-center p-8 rounded-2xl border-brandPurple/40 transition-colors">
+                    <h3 className="text-3xl md:text-4xl font-bold mb-8 text-center text-brandPurple">
+                        The Genesis Cohort
+                    </h3>
 
-                        <div className="grid md:grid-cols-2 gap-6 mb-8">
-                            <div className="bg-white/15 backdrop-blur-sm rounded-2xl p-8 hover:bg-white/20 transition-all duration-300">
-                                <div className="text-5xl mb-4">📅</div>
-                                <div className="text-lg font-semibold mb-2 opacity-90">Program Dates</div>
-                                <div className="text-2xl md:text-3xl font-bold">April 5 – June 27</div>
-                            </div>
-
-                            <div className="bg-white/15 backdrop-blur-sm rounded-2xl p-8 hover:bg-white/20 transition-all duration-300">
-                                <div className="text-5xl mb-4">💰</div>
-                                <div className="text-lg font-semibold mb-2 opacity-90">Tuition Fee</div>
-                                <div className="text-2xl md:text-3xl font-bold">₦200,000</div>
-                            </div>
-                        </div>
-
-                        <div className="bg-white/15 backdrop-blur-sm rounded-2xl p-6 mb-10 inline-block">
-                            <div className="text-lg font-semibold mb-1 opacity-90">Application Fee</div>
-                            <div className="text-2xl font-bold flex items-center justify-center gap-2">
-                                <span>✅</span>
-                                <span>Free</span>
+                    {/* Stacked Cards */}
+                    <div className="space-y-5">
+                        {/* Program Dates */}
+                        <div className="bg-white rounded-2xl p-6 ">
+                            <div className="flex items-center gap-4">
+                                <div className="bg-brandPurple/10 p-4 rounded-xl">
+                                    <FaCalendarAlt className="text-3xl text-brandPurple" />
+                                </div>
+                                <div className="flex-1 text-left">
+                                    <div className="text-sm font-semibold text-gray-600 mb-1">Program Dates</div>
+                                    <div className="text-xl md:text-2xl font-bold text-black">April 5 – June 27</div>
+                                </div>
                             </div>
                         </div>
 
-                        <div className="mb-10 space-y-4">
-                            <p className="text-lg md:text-xl leading-relaxed opacity-95">
-                                The Genesis Cohort marks the beginning of Khrien Academy.
-                            </p>
-                            <p className="text-lg md:text-xl leading-relaxed opacity-95">
-                                Cohort size is intentionally limited to ensure quality learning, meaningful interaction, and focused tutor support.
-                            </p>
+                        {/* Tuition Fee */}
+                        <div className="bg-white rounded-2xl p-6 ">
+                            <div className="flex items-center gap-4">
+                                <div className="bg-brandGreen/10 p-4 rounded-xl">
+                                    <FaMoneyBillWave className="text-3xl text-brandGreen" />
+                                </div>
+                                <div className="flex-1 text-left">
+                                    <div className="text-sm font-semibold text-gray-600 mb-1">Tuition Fee</div>
+                                    <div className="text-xl md:text-2xl font-bold text-black">₦200,000</div>
+                                </div>
+                            </div>
                         </div>
 
-                        <Link
-                            href="/apply"
-                            className="inline-block bg-white text-brandPurple font-bold px-12 py-5 rounded-full hover:bg-gray-100 transition-all duration-300 text-lg shadow-xl"
-                        >
-                            Apply Now
-                        </Link>
+                        {/* Application Fee */}
+                        <div className="bg-white rounded-2xl p-6">
+                            <div className="flex items-center gap-4">
+                                <div className="bg-brandYellow/10 p-4 rounded-xl">
+                                    <FaCheckCircle className="text-3xl text-brandYellow" />
+                                </div>
+                                <div className="flex-1 text-left">
+                                    <div className="text-sm font-semibold text-gray-600 mb-1">Application Fee</div>
+                                    <div className="text-xl md:text-2xl font-bold text-black">Free</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Description */}
+                        <div className="bg-brandPurple/5 rounded-2xl p-4 border-2 border-brandPurple/10">
+                            <div className="space-y-3 mb-6">
+                                <p className="text-sm md:text-base leading-relaxed text-gray-700 text-center">
+                                    The Genesis Cohort marks the beginning of Khrien Academy.
+                                </p>
+                                <p className="text-sm md:text-base leading-relaxed text-gray-700 text-center">
+                                    Cohort size is intentionally limited to ensure quality learning, meaningful interaction, and focused tutor support.
+                                </p>
+                            </div>
+
+                            <Link
+                                href="/apply"
+                                className="bg-brandPurple mb-3 text-white font-semibold px-10 py-3 rounded-full hover:opacity-90 transition-all duration-300 text-lg shadow-md hover:shadow-lg"
+                            >
+                                Apply Now
+                            </Link>
+                        </div>
                     </div>
                 </div>
+               </div>
             </div>
         </section>
     );
