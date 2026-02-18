@@ -8,13 +8,16 @@ import {
     FaUsers,
 } from 'react-icons/fa'
 import FAQSection from '@/components/about/FAQSection'
+import { PiTreeStructure } from "react-icons/pi";
+import { MdCoPresent } from "react-icons/md";
+import { TbTargetArrow } from "react-icons/tb";
+import DarkVeil from '@/components/DarkVeil';
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
 
 const beliefs = [
-    { label: 'Structured', sub: 'not overwhelming' },
-    { label: 'Practical', sub: 'not abstract' },
-    { label: 'Purpose-driven', sub: 'not trend-chasing' },
+    { icon: PiTreeStructure, label: 'Structured', sub: 'not overwhelming' },
+    { icon: MdCoPresent, label: 'Practical', sub: 'not abstract' },
+    { icon: TbTargetArrow, label: 'Purpose-driven', sub: 'not trend-chasing' },
 ]
 
 const modelItems = [
@@ -25,14 +28,19 @@ const modelItems = [
     { icon: FaClipboardCheck, label: 'Continuous guidance throughout the program', color: 'text-brandGreen' },
 ]
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
-
 export default function AboutPage() {
     return (
-        <main className="px-4 lg:px-9">
-
+        <main className="px-4 lg:px-9 max-w-360 mx-auto">
+            {/* <DarkVeil
+                hueShift={0}
+                noiseIntensity={0}
+                scanlineIntensity={0}
+                speed={0.5}
+                scanlineFrequency={0}
+                warpAmount={0}
+            /> */}
             {/* ── Hero ── */}
-            <section className="py-24 px-6 md:px-12 lg:px-24 text-center max-w-5xl mx-auto">
+            <section className="py-24 px-6 md:px-12 lg:px-24 text-center max-w-4xl mx-auto h-screen mt-20">
                 <p className="text-sm font-semibold uppercase tracking-widest text-brandPurple mb-4">
                     About Us
                 </p>
@@ -47,8 +55,8 @@ export default function AboutPage() {
             </section>
 
             {/* ── We Believe ── */}
-            <section className="bg-brandGray rounded-3xl py-20 px-6 md:px-12 lg:px-24 max-w-360 mx-auto mb-6">
-                <div className="max-w-5xl mx-auto">
+            <section className=" rounded-3xl py-10 px-6 md:px-12 lg:px-10 max-w-360 mx-auto mb-6">
+                <div className="mx-auto">
                     <p className="text-sm font-semibold uppercase tracking-widest text-brandPurple mb-4 text-center">
                         Our Beliefs
                     </p>
@@ -56,15 +64,21 @@ export default function AboutPage() {
                         We believe learning should be:
                     </h2>
                     <div className="grid md:grid-cols-3 gap-6">
-                        {beliefs.map(({ label, sub }) => (
-                            <div
-                                key={label}
-                                className="bg-white rounded-2xl p-8 border border-gray-200 hover:shadow-lg hover:border-brandPurple transition-all duration-300 text-center"
-                            >
-                                <p className="text-2xl font-bold text-black mb-2">{label},</p>
-                                <p className="text-lg text-gray-500">{sub}</p>
-                            </div>
-                        ))}
+                        {beliefs.map(({ label, sub, icon }) => {
+                            const IconComponent = icon;
+                            return (
+                                <div
+                                    key={label}
+                                    className="bg-white rounded-2xl p-8 border border-gray-200 hover:shadow-lg hover:border-brandPurple transition-all duration-300"
+                                >
+                                    <div className="flex items-center gap-2">
+                                        <IconComponent className="text-brandPurple text-3xl mb-4" />
+                                        <p className="text-2xl font-bold text-black mb-2">{label}</p>
+                                    </div>
+                                    <p className="text-lg text-gray-500">{sub}</p>
+                                </div>
+                            );
+                        })}
                     </div>
                     <p className="text-center text-lg md:text-xl text-gray-700 mt-12 leading-relaxed max-w-3xl mx-auto">
                         Our goal is to help learners move from understanding concepts to applying skills with
