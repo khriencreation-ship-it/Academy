@@ -14,7 +14,7 @@ const Header = () => {
 
     return (
         <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-3xl border-b border-gray-100 shadow-sm">
-            <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div className="max-w-360 mx-auto px-6 h-20 flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="text-2xl font-bold tracking-tight">
                     <Image src="/academylogo.webp" alt="Academy Logo" width={100} height={100} />
@@ -40,12 +40,6 @@ const Header = () => {
                     >
                         Cohorts & Courses
                     </Link>
-                    <Link
-                        href="/tuition"
-                        className="text-lg font-medium text-black hover:text-brandPurple transition-colors"
-                    >
-                        Tuition & Dates
-                    </Link>
                 </nav>
 
                 {/* Actions - Desktop */}
@@ -54,8 +48,15 @@ const Header = () => {
                         href="/apply"
                         className="text-center rounded-full text-white font-semibold bg-brandPurple px-10 py-2 lg:py-3 hover:bg-brandPurple hover:text-white transition-all duration-50 ease-in-out"
                     >
-                        Apply to Learn
+                        Apply Now
                     </Link>
+                    <a
+                        href="https://lms.khrien.com"
+                        target="blank"
+                        className="text-center rounded-full text-white font-semibold bg-brandPurple px-10 py-2 lg:py-3 hover:bg-brandPurple hover:text-white transition-all duration-50 ease-in-out"
+                    >
+                        Login
+                    </a>
                 </div>
 
                 {/* Mobile Menu Button */}

@@ -7,7 +7,7 @@ import ClosingCTASection from '@/components/home/ClosingCTASection'
 
 const page = () => {
   return (
-    <main className='px-4 lg:px-9'>
+    <main>
       <Hero />
       <AboutSection />
       <CoursesSection />
