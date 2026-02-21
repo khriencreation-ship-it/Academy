@@ -8,9 +8,9 @@ const Footer = () => {
     <div className='bg-black relative'>
       {/* <div className="absolute inset-0 bg-brandGreen/10 z-0"></div> */}
       <div className="">
-        <Image src="/lines/bg-line-center.webp" alt="Lines Background" fill className="object-cover z-0" />
-        <Image src="/lines/bg-line-left.webp" alt="Lines Background" fill className="object-cover z-0" />
-        <Image src="/lines/bg-line-right.webp" alt="Lines Background" fill className="object-cover z-0" />
+        <Image src="/lines/bg-line-center.webp" alt="Lines Background" className='absolute top-0 left-0 right-0 z-0' width={500} height={500} />
+        <Image src="/lines/bg-line-left.webp" alt="Lines Background" className='absolute top-0 left-0 right-0 z-0' width={500} height={500} />
+        <Image src="/lines/bg-line-right.webp" alt="Lines Background" className='absolute top-0 left-0 right-0 z-0' width={500} height={500} />
       </div>
       <section className="bg-black text-white py-10 lg:py-20 my-6">
         <div className="max-w-4xl mx-auto text-center">
