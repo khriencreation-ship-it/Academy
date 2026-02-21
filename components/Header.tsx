@@ -17,7 +17,7 @@ const Header = () => {
 
     return (
         <header className="fixed top-0 left-0 right-0 z-50 bg-white backdrop-blur-3xl">
-            <div className="max-w-360 mx-auto  h-20 flex items-center justify-evenly">
+            <div className="max-w-360 mx-auto  h-20 flex items-center px-4 lg:justify-evenly justify-between">
                 {/* Logo */}
                 <Link href="/" className="text-2xl font-bold tracking-tight">
                     <Image src="/academylogo.webp" alt="Academy Logo" width={100} height={100} />

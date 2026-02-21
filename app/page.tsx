@@ -13,7 +13,7 @@ const page = () => {
       <CoursesSection />
       <TuitionSection />
       <LearningApproachSection />
-      <ClosingCTASection />
+      {/* <ClosingCTASection /> */}
     </main>
   )
 }

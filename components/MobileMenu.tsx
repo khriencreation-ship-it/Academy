@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
+import { FaUser } from 'react-icons/fa';
 
 interface MobileMenuProps {
     setIsMenuOpen: (isOpen: boolean) => void;
@@ -30,21 +31,15 @@ const MobileMenu = ({ setIsMenuOpen }: MobileMenuProps) => {
                 >
                     Cohorts & Courses
                 </Link>
-                <Link
-                    href="/tuition"
-                    className="text-xl font-medium text-gray-600 hover:text-black transition-colors"
-                    onClick={() => setIsMenuOpen(false)}
-                >
-                    Tuition & Dates
-                </Link>
             </nav>
             <div className="flex flex-col justify-center items-center gap-4">
                 <Link
                     href="/apply"
-                    className="text-center border-5 rounded-full border-r border-t border-black bg-brandYellow px-10 py-2 lg:py-3 hover:bg-brandPurple hover:text-white transition-all duration-50 ease-in-out"
+                    className="flex items-center gap-2 text-center rounded-sm text-white bg-brandPurple px-5 py-2 lg:py-2.5 hover:bg-brandPurple/90 hover:text-white transition-all duration-50 ease-in-out"
                     onClick={() => setIsMenuOpen(false)}
                 >
-                    Apply Now
+                    Apply
+                    <FaUser className="text-xl" />
                 </Link>
             </div>
         </div>
