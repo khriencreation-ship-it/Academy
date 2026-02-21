@@ -13,15 +13,15 @@ const Header = () => {
     };
 
     return (
-        <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-3xl border-b border-gray-100 shadow-sm">
-            <div className="max-w-360 mx-auto px-6 h-20 flex items-center justify-between">
+        <header className="fixed top-0 left-0 right-0 z-50 bg-white backdrop-blur-3xl border-b border-gray-100 shadow-sm">
+            <div className="max-w-360 mx-auto  h-20 flex items-center justify-evenly">
                 {/* Logo */}
                 <Link href="/" className="text-2xl font-bold tracking-tight">
                     <Image src="/academylogo.webp" alt="Academy Logo" width={100} height={100} />
                 </Link>
 
                 {/* Navigation - Desktop */}
-                <nav className="hidden md:flex items-center gap-8">
+                <nav className="hidden md:flex items-center justify-evenly w-[40%]">
                     <Link
                         href="/"
                         className="text-lg font-medium text-black hover:text-brandPurple transition-colors"
@@ -43,17 +43,17 @@ const Header = () => {
                 </nav>
 
                 {/* Actions - Desktop */}
-                <div className="hidden md:flex items-center gap-4">
+                <div className="hidden md:flex items-center justify-end gap-4">
                     <Link
                         href="/apply"
-                        className="text-center rounded-full text-white font-semibold bg-brandPurple px-10 py-2 lg:py-3 hover:bg-brandPurple hover:text-white transition-all duration-50 ease-in-out"
+                        className="text-center rounded-full text-white bg-brandPurple px-10 py-2 lg:py-3 hover:bg-brandPurple/90 hover:text-white transition-all duration-50 ease-in-out"
                     >
                         Apply Now
                     </Link>
                     <a
                         href="https://lms.khrien.com"
                         target="blank"
-                        className="text-center rounded-full text-white font-semibold bg-brandPurple px-10 py-2 lg:py-3 hover:bg-brandPurple hover:text-white transition-all duration-50 ease-in-out"
+                        className="text-center rounded-full text-white bg-brandGreen px-10 py-2 lg:py-3 hover:bg-brandPurple/90 hover:text-white transition-all duration-50 ease-in-out"
                     >
                         Login
                     </a>
