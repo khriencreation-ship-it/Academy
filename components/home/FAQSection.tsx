@@ -61,13 +61,13 @@ const faqs = [
 function FAQItem({ q, a }: { q: string; a: string }) {
     const [open, setOpen] = useState(false)
     return (
-        <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
+        <div className="bg-white border border-gray-200 overflow-hidden">
             <button
                 onClick={() => setOpen(!open)}
                 className="w-full flex items-center justify-between gap-4 px-7 py-6 text-left hover:bg-white transition-colors duration-200"
             >
                 <span className="text-lg font-semibold text-black">{q}</span>
-                <span className="text-brandPurple shrink-0">
+                <span className="text-brandPurple shrink-0 transition-transform duration-200">
                     {open ? <FaChevronUp /> : <FaChevronDown />}
                 </span>
             </button>
@@ -82,15 +82,12 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 
 export default function FAQSection() {
     return (
-        <section className=" rounded-3xl py-20 px-6 md:px-0  max-w-360 mx-auto mb-10">
-            <div className="max-w-5xl mx-auto">
-                <p className="text-sm font-semibold uppercase tracking-widest text-brandPurple mb-4 text-center">
-                    FAQ
-                </p>
-                <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight text-center mb-12">
+        <section className="py6 md:py-12 lg:py-16 px-6 md:px-0  max-w-6xl mx-auto">
+            <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
+                <h2 className="text-4xl md:text-5xl font-normal text-black tracking-tight text-left mb-12">
                     Frequently Asked Questions
                 </h2>
-                <div className="space-y-4">
+                <div className="col-span-2 px-12">
                     {faqs.map((item) => (
                         <FAQItem key={item.q} q={item.q} a={item.a} />
                     ))}

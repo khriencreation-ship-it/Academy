@@ -9,25 +9,25 @@ const Footer = () => {
       {/* <div className="absolute inset-0 bg-brandGreen/10 z-0"></div> */}
       <div className="relative ">
 
-    {/* LEFT */}
-    <Image
-      src="/lines/bg-line-left.webp"
-      alt="Lines Left"
-      width={500}
-      height={500}
-      className="absolute top-0 left-0 z-0 opacity-90"
-    />
-    {/* RIGHT */}
-    <Image
-      src="/lines/bg-line-right.webp"
-      alt="Lines Right"
-      width={500}
-      height={500}
-      className="absolute top-0 right-0 z-0 opacity-90"
-    />
+        {/* LEFT */}
+        <Image
+          src="/lines/bg-line-left.webp"
+          alt="Lines Left"
+          width={500}
+          height={500}
+          className="absolute top-0 left-0 z-0 opacity-90"
+        />
+        {/* RIGHT */}
+        <Image
+          src="/lines/bg-line-right.webp"
+          alt="Lines Right"
+          width={500}
+          height={500}
+          className="absolute top-4 right-0 z-0 opacity-90"
+        />
 
-  </div>
-      <section className="bg-black text-white py-10 lg:py-20 my-6">
+      </div>
+      <section className="text-white lg:h-[500px] h-[300px] py-10 lg:py-20 my-6 flex items-center justify-center">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-3  tracking-tight leading-tight">
             Start With Intention

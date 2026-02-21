@@ -3,7 +3,7 @@ import AboutSection from '@/components/home/AboutSection'
 import CoursesSection from '@/components/home/CoursesSection'
 import TuitionSection from '@/components/home/TuitionSection'
 import LearningApproachSection from '@/components/home/LearningApproachSection'
-import ClosingCTASection from '@/components/home/ClosingCTASection'
+import FAQSection from '@/components/home/FAQSection'
 
 const page = () => {
   return (
@@ -12,8 +12,8 @@ const page = () => {
       <AboutSection />
       <CoursesSection />
       <TuitionSection />
+      <FAQSection />
       <LearningApproachSection />
-      {/* <ClosingCTASection /> */}
     </main>
   )
 }

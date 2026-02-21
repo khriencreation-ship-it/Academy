@@ -65,13 +65,6 @@ const LearningApproachSection = () => {
                         );
                     })}
                 </div>
-
-                {/* Bottom Message */}
-                <div className="text-center">
-                    <p className="text-lg md:text-xl lg:text-2xl font-semibold text-black">
-                        We focus on understanding first — then confident application.
-                    </p>
-                </div>
             </div>
         </section>
     );

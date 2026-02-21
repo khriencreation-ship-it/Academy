@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from "react";
 
 const AboutSection = () => {
-    return (
+    return ( 
         <section className="max-w-360 py-12 md:py-16 lg:py-20 px-4 md:px-8 lg:px-12 mx-auto bg-brandGreen my-6 z-20 rounded-2xl md:rounded-3xl">
             <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
                 <div className="text-left">

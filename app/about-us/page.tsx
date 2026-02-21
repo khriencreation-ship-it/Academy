@@ -7,7 +7,7 @@ import {
     FaClipboardCheck,
     FaUsers,
 } from 'react-icons/fa'
-import FAQSection from '@/components/about/FAQSection'
+import FAQSection from '@/components/home/FAQSection'
 import { PiTreeStructure } from "react-icons/pi";
 import { MdCoPresent } from "react-icons/md";
 import { TbTargetArrow } from "react-icons/tb";
