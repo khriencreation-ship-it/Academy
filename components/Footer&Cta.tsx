@@ -27,7 +27,7 @@ const Footer = () => {
         />
 
       </div>
-      <section className="text-white lg:h-[500px] h-[300px] py-10 lg:py-20 my-6 flex items-center justify-center">
+      <section className="text-white lg:h-125 h-75 py-10 lg:py-20 my-6 flex items-center justify-center">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-3  tracking-tight leading-tight">
             Start With Intention
@@ -43,7 +43,7 @@ const Footer = () => {
           </Link>
         </div>
       </section>
-      <footer className='bg-black h-auto py-20'>
+      <footer className='bg-black h-auto py-20 px-3'>
         <div className='max-w-360 mx-auto text-white'>
           <div className="flex flex-col gap-3 justify-center items-center">
             <Image src="/academylogo.webp" alt="Logo" width={150} height={150} />
@@ -67,7 +67,7 @@ const Footer = () => {
             </div>
           </div>
           <hr className='my-5 mx-auto max-w-360' />
-          <div className='grid grid-cols-1 md:grid-cols-3 py-8'>
+          <div className='grid grid-cols-1 md:grid-cols-3 py-8 px-3'>
             <div>
               <p className='text-sm'>&copy; {new Date().getFullYear()} Khrien Academy. All rights reserved.</p>
             </div>
