@@ -15,7 +15,7 @@ const Footer = () => {
       alt="Lines Left"
       width={500}
       height={500}
-      className="absolute top-0 left-0 z-0 opacity-50"
+      className="absolute top-0 left-0 z-0 opacity-90"
     />
     {/* RIGHT */}
     <Image
