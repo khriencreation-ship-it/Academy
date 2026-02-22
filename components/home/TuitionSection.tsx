@@ -4,13 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 const TuitionSection = () => {
   return (
-    <section className="bg-white py-12 relative overflow-hidden">
+    <section className="bg-white py-16 relative overflow-hidden">
       <div className="max-w-360 mx-auto relative z-50">
         {/* Background lines */}
         <div className="absolute top-0 bottom-20  left-1/2 -translate-x-1/2 z-0  pointer-events-none">
           <Image
             src="/lines/bg-line-center.webp"
-            className="opacity-50 w-[800px] max-w-none"
+            className="opacity-50 w-200 max-w-none"
             alt="Background lines"
             width={1000}
             height={1000}
@@ -59,6 +59,11 @@ const TuitionSection = () => {
             </div>
           </div>{" "}
         </div>
+      </div>
+      <div className="max-w-4xl mx-auto mt-20">
+        <h2 className="text-5xl text-center">
+        Khrien Academy was created to bridge the gap between curiosity and capability.
+        </h2>
       </div>
     </section>
   );
