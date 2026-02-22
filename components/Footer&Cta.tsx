@@ -15,31 +15,21 @@ const Footer = () => {
       alt="Lines Left"
       width={500}
       height={500}
-      className="absolute top-0 left-0 z-0"
+      className="absolute top-0 left-0 z-0 opacity-50"
     />
-
-    {/* CENTER */}
-    <Image
-      src="/lines/bg-line-center.webp"
-      alt="Lines Center"
-      width={500}
-      height={500}
-      className="absolute top-0 left-1/2 -translate-x-1/2 z-0"
-    />
-
     {/* RIGHT */}
     <Image
       src="/lines/bg-line-right.webp"
       alt="Lines Right"
       width={500}
       height={500}
-      className="absolute top-0 right-0 z-0"
+      className="absolute top-0 right-0 z-0 opacity-90"
     />
 
   </div>
       <section className="bg-black text-white py-10 lg:py-20 my-6">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal mb-3  tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-3  tracking-tight leading-tight">
             Start With Intention
           </h2>
           <p className="text-base md:text-lg text-white/80 mb-8 md:mb-10 leading-relaxed max-w-3xl mx-auto">
@@ -77,7 +67,7 @@ const Footer = () => {
             </div>
           </div>
           <hr className='my-5 mx-auto max-w-360' />
-          <div className='grid grid-cols-1 md:grid-cols-3 mt-6'>
+          <div className='grid grid-cols-1 md:grid-cols-3 py-8'>
             <div>
               <p className='text-sm'>&copy; {new Date().getFullYear()} Khrien Academy. All rights reserved.</p>
             </div>
