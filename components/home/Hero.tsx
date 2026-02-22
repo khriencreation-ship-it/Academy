@@ -50,8 +50,8 @@ const Hero = () => {
     }, [imageSlider.length]);
 
     return (
-        <div className="bg-black">
-            <section className="max-w-360 mx-auto relative mt-24 flex items-center justify-center min-h-screen w-screen bg-black overflow-hidden rounded-3xl">
+        <div className="bg-black pt-20">
+            <section className="max-w-360 mx-auto relative flex items-center justify-center h-screen overflow-hidden rounded-3xl">
                 {/* Image Carousel */}
                 {imageSlider.map((image, index) => (
                     <motion.div
@@ -73,7 +73,7 @@ const Hero = () => {
                 ))}
                 <div className="absolute inset-0 bg-black/20" />
                 {/* contents */}
-                <div className="text-center relative z-10">
+                <div className="text-center relative z-10 px-4">
                     {/* Headline */}
                     <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal tracking-tight mb-4 md:mb-6 text-white/80 leading-tight">
                         Learn the Skills Shaping the Future.

@@ -5,7 +5,7 @@ import Image from "next/image";
 const TuitionSection = () => {
     return (
         <section className="bg-white py-16 relative overflow-hidden">
-            <div className="max-w-360 mx-auto relative z-50">
+            <div className="max-w-360 mx-auto relative z-20">
                 {/* Background lines */}
                 <div className="absolute top-0 bottom-20  left-1/2 -translate-x-1/2 z-0  pointer-events-none">
                     <Image
@@ -18,7 +18,7 @@ const TuitionSection = () => {
                 </div>
 
                 {/* Content */}
-                <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+                <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 relative z-0">
                     {" "}
                     <div className="flex flex-col gap-10 items-end">
                         {" "}
