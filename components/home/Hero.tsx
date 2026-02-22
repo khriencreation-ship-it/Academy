@@ -50,55 +50,57 @@ const Hero = () => {
     }, [imageSlider.length]);
 
     return (
-        <section className="max-w-360 mx-auto relative mt-24 flex items-center justify-center min-h-screen w-screen bg-black overflow-hidden rounded-3xl">
-            {/* Image Carousel */}
-            {imageSlider.map((image, index) => (
-                <motion.div
-                    key={image.image}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: currentIndex === index ? 0.8 : 0 }}
-                    transition={{ duration: 0.5, ease: "easeInOut" }}
-                    className="absolute inset-0"
-                >
-                    <Image
-                        src={image.image}
-                        alt={image.alt}
-                        fill
-                        priority={index === 0}
-                        className="w-full h-full object-cover"
-                        sizes="100vw"
-                    />
-                </motion.div>
-            ))}
-            <div className="absolute inset-0 bg-black/20" />
-            {/* contents */}
-            <div className="text-center relative z-10">
-                {/* Headline */}
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal tracking-tight mb-4 md:mb-6 text-white/80 leading-tight">
-                    Learn the Skills Shaping the Future.
-                </h1>
-
-                {/* Supporting Copy */}
-                <div className="max-w-4xl mx-auto mb-8 md:mb-10">
-                    <p className="text-base md:text-lg lg:text-xl text-white/80 leading-relaxed">
-                        Khrien Academy is a modern learning institution focused on helping individuals build relevant, practical skills through structured programs, live instruction, and hands-on application.
-                    </p>
-                </div>
-
-                {/* CTA */}
-                <div className="flex flex-col items-center gap-3 md:gap-4">
-                    <Link
-                        href="/apply"
-                        className="text-center rounded-full text-white font-semibold bg-brandPurple px-8 md:px-10 py-2.5 md:py-3 hover:opacity-90 transition-all duration-300 text-base md:text-lg"
+        <div className="bg-black">
+            <section className="max-w-360 mx-auto relative mt-24 flex items-center justify-center min-h-screen w-screen bg-black overflow-hidden rounded-3xl">
+                {/* Image Carousel */}
+                {imageSlider.map((image, index) => (
+                    <motion.div
+                        key={image.image}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: currentIndex === index ? 0.8 : 0 }}
+                        transition={{ duration: 0.5, ease: "easeInOut" }}
+                        className="absolute inset-0"
                     >
-                        Apply Now
-                    </Link>
-                    <p className="text-xs md:text-sm text-white/60 font-medium">
-                        Applications now open • Limited cohort size
-                    </p>
+                        <Image
+                            src={image.image}
+                            alt={image.alt}
+                            fill
+                            priority={index === 0}
+                            className="w-full h-full object-cover"
+                            sizes="100vw"
+                        />
+                    </motion.div>
+                ))}
+                <div className="absolute inset-0 bg-black/20" />
+                {/* contents */}
+                <div className="text-center relative z-10">
+                    {/* Headline */}
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal tracking-tight mb-4 md:mb-6 text-white/80 leading-tight">
+                        Learn the Skills Shaping the Future.
+                    </h1>
+
+                    {/* Supporting Copy */}
+                    <div className="max-w-4xl mx-auto mb-8 md:mb-10">
+                        <p className="text-base md:text-lg lg:text-xl text-white/80 leading-relaxed">
+                            Khrien Academy is a modern learning institution focused on helping individuals build relevant, practical skills through structured programs, live instruction, and hands-on application.
+                        </p>
+                    </div>
+
+                    {/* CTA */}
+                    <div className="flex flex-col items-center gap-3 md:gap-4">
+                        <Link
+                            href="/apply"
+                            className="text-center rounded-full text-white font-semibold bg-brandPurple px-8 md:px-10 py-2.5 md:py-3 hover:opacity-90 transition-all duration-300 text-base md:text-lg"
+                        >
+                            Apply Now
+                        </Link>
+                        <p className="text-xs md:text-sm text-white/60 font-medium">
+                            Applications now open • Limited cohort size
+                        </p>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     );
 };
 
