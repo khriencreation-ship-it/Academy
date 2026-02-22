@@ -10,7 +10,7 @@ const TuitionSection = () => {
         <div className="absolute top-0 bottom-20  left-1/2 -translate-x-1/2 z-0  pointer-events-none">
           <Image
             src="/lines/bg-line-center.webp"
-            className="opacity-50"
+            className="opacity-50 w-[800px] max-w-none"
             alt="Background lines"
             width={1000}
             height={1000}
