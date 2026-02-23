@@ -46,14 +46,14 @@ const Footer = () => {
               </span>
 
               {/* Hover Text */}
-              <span className="absolute inset-0 flex items-center justify-center text-white bg-brandGreen transition-all duration-300 translate-y-full group-hover:translate-y-0">
+              <span className="absolute inset-0 flex items-center justify-center text-brandPurple bg-white transition-all duration-300 translate-y-full group-hover:translate-y-0">
                 Apply Now
               </span>
             </Link>
           </div>
         </div>
       </section>
-      <footer className='bg-black h-auto py-20 px-3'>
+      <footer className='bg-black h-auto pt-0 pb-20 px-3'>
         <div className='max-w-360 mx-auto text-white'>
           <div className="flex flex-col gap-3 justify-center items-center">
             <Image src="/academylogo.webp" alt="Logo" width={150} height={150} />
@@ -69,7 +69,7 @@ const Footer = () => {
               <a
                 href="https://lms.khrien.com"
                 target="_blank"
-                className="flex items-center gap-2 text-center rounded-sm text-brandGreen bg-black px-5 py-2 lg:py-2 border-2 border-brandGreen hover:bg-brandGreen hover:text-white transition-all duration-200 ease-in-out"
+                className="flex items-center gap-2 text-center rounded-sm text-brandPurple bg-black px-5 py-2 lg:py-2 border-2 border-brandPurple hover:bg-brandPurple hover:text-white transition-all duration-200 ease-in-out"
               >
                 Login
                 <MdLogin className="text-xl" />

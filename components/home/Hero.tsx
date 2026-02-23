@@ -88,12 +88,22 @@ const Hero = () => {
 
                     {/* CTA */}
                     <div className="flex flex-col items-center gap-2 sm:gap-3 md:gap-4">
-                        <Link
-                            href="/apply"
-                            className="text-center rounded-sm text-white font-semibold bg-brandPurple px-6 sm:px-8 md:px-10 py-2 sm:py-2.5 md:py-3 hover:opacity-90 transition-all duration-300 text-sm sm:text-base md:text-lg"
-                        >
-                            Apply Now
-                        </Link>
+                    <div className="flex justify-center mt-6">
+            <Link
+              href="/about"
+              className="relative inline-block overflow-hidden rounded-sm bg-brandPurple px-6 md:px-8 lg:px-10 py-2.5 md:py-3 text-sm md:text-base lg:text-lg font-semibold group"
+            >
+              {/* Default Text */}
+              <span className="block text-white transition-all duration-300 group-hover:-translate-y-full group-hover:opacity-0">
+                Apply Now
+              </span>
+
+              {/* Hover Text */}
+              <span className="absolute inset-0 flex items-center justify-center text-brandPurple bg-white transition-all duration-300 translate-y-full group-hover:translate-y-0">
+                Apply Now
+              </span>
+            </Link>
+          </div>
                         <p className="text-xs md:text-sm text-white/60 font-medium">
                             Applications now open • Limited cohort size
                         </p>
