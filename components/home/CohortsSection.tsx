@@ -55,7 +55,7 @@ const CohortsSection = () => {
               </span>
 
               {/* Hover Text */}
-              <span className="absolute inset-0 flex items-center justify-center text-white bg-brandGreen transition-all duration-300 translate-y-full group-hover:translate-y-0">
+              <span className="absolute inset-0 flex items-center justify-center text-white bg-brandPurple transition-all duration-300 translate-y-full group-hover:translate-y-0">
                 Apply Now
               </span>
             </Link>
