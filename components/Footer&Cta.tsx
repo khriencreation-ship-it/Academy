@@ -23,7 +23,7 @@ const Footer = () => {
           alt="Lines Right"
           width={500}
           height={500}
-          className="absolute top-4 right-0 z-0 opacity-90"
+          className="hidden md:block absolute top-4 right-0 z-0 opacity-90"
         />
 
       </div>
@@ -35,12 +35,22 @@ const Footer = () => {
           <p className="text-base md:text-lg text-white/80 mb-8 md:mb-10 leading-relaxed max-w-3xl mx-auto">
             Whether you're beginning something new or building on what you already know, Khrien Academy offers a clear and supportive path forward.
           </p>
-          <Link
-            href="/apply"
-            className="inline-block bg-brandPurple text-white font-semibold px-8 md:px-10 py-2.5 md:py-3 rounded-full hover:opacity-90 transition-all duration-300 text-base md:text-lg shadow-md hover:shadow-lg"
-          >
-            Secure Your Spot
-          </Link>
+          <div className="flex justify-center mt-6">
+            <Link
+              href="/about"
+              className="relative inline-block overflow-hidden rounded-sm bg-brandPurple px-6 md:px-8 lg:px-10 py-2.5 md:py-3 text-sm md:text-base lg:text-lg font-semibold group"
+            >
+              {/* Default Text */}
+              <span className="block text-white transition-all duration-300 group-hover:-translate-y-full group-hover:opacity-0">
+                Apply Now
+              </span>
+
+              {/* Hover Text */}
+              <span className="absolute inset-0 flex items-center justify-center text-white bg-brandGreen transition-all duration-300 translate-y-full group-hover:translate-y-0">
+                Apply Now
+              </span>
+            </Link>
+          </div>
         </div>
       </section>
       <footer className='bg-black h-auto py-20 px-3'>
