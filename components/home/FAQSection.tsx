@@ -64,15 +64,15 @@ function FAQItem({ q, a }: { q: string; a: string }) {
         <div className="bg-white border border-gray-200 overflow-hidden">
             <button
                 onClick={() => setOpen(!open)}
-                className="w-full flex items-center justify-between gap-4 px-7 py-6 text-left hover:bg-white transition-colors duration-200"
+                className="w-full flex items-center justify-between gap-2 sm:gap-4 px-4 sm:px-7 py-4 sm:py-6 text-left hover:bg-white transition-colors duration-200"
             >
-                <span className="text-lg font-semibold text-black">{q}</span>
+                <span className="text-base sm:text-lg font-semibold text-black">{q}</span>
                 <span className="text-brandPurple shrink-0 transition-transform duration-200">
                     {open ? <FaChevronUp /> : <FaChevronDown />}
                 </span>
             </button>
             {open && (
-                <div className="px-7 pb-6 text-gray-700 leading-relaxed text-base border-t border-gray-100 pt-4">
+                <div className="px-4 sm:px-7 pb-4 sm:pb-6 text-gray-700 leading-relaxed text-sm sm:text-base border-t border-gray-100 pt-4">
                     {a}
                 </div>
             )}
@@ -82,12 +82,12 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 
 export default function FAQSection() {
     return (
-        <section className="py6 md:py-12 lg:py-16 px-6 md:px-0  max-w-6xl mx-auto">
-            <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
-                <h2 className="text-4xl md:text-5xl font-normal text-black tracking-tight text-left mb-12">
+        <section className="py-8 md:py-12 lg:py-16 px-4 md:px-6 lg:px-0 max-w-6xl mx-auto">
+            <div className="w-full grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-0">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal text-black tracking-tight text-center lg:text-left mb-4 lg:mb-12">
                     Frequently Asked Questions
                 </h2>
-                <div className="col-span-2 px-12">
+                <div className="col-span-1 lg:col-span-2 lg:px-12">
                     {faqs.map((item) => (
                         <FAQItem key={item.q} q={item.q} a={item.a} />
                     ))}

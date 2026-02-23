@@ -26,10 +26,10 @@ const Header = () => {
     };
 
     return (
-        <div className="bg-black">
+        <div className="bg-white lg:bg-black">
             <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
                 ? "bg-white shadow-md"
-                : "bg-black"
+                : "bg-white lg:bg-black"
                 }`}>
                 <div className="max-w-360 mx-auto  h-20 flex items-center px-4 lg:justify-evenly justify-between">
                     {/* Logo */}
@@ -89,7 +89,7 @@ const Header = () => {
 
                     {/* Mobile Menu Button */}
                     <button
-                        className={`md:hidden p-2 focus:outline-none ${isScrolled ? "text-gray-600" : "text-white"
+                        className={`md:hidden p-2 focus:outline-none ${isScrolled ? "text-gray-600" : "text-black lg:text-white"
                             }`}
                         onClick={toggleMenu}
                         aria-label="Toggle menu"

@@ -2,16 +2,16 @@ import React from 'react'
 
 const Introvideo = () => {
     return (
-        <section className='relative mb-20'>
+        <section className='relative mb-10 md:mb-20'>
             {/* Black background for top half */}
             <div className="absolute top-0 left-0 right-0 h-1/2 bg-black z-0" />
             {/* White background for bottom half */}
             <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-white z-0" />
 
-            <div className="max-w-360 mx-auto h-150 relative z-10">
-                <div className="max-w-6xl mx-auto relative h-150">
+            <div className="max-w-360 mx-auto h-80 sm:h-96 md:h-125 lg:h-150 relative z-10 px-4 md:px-0">
+                <div className="max-w-6xl mx-auto relative h-full">
                     <video autoPlay muted loop playsInline
-                        className='absolute top-0 left-0 inset-1 w-full h-full object-cover z-0 rounded-2xl'
+                        className='absolute top-0 left-0 w-full h-full object-cover z-0 rounded-xl md:rounded-2xl'
                         preload='metadata'
                         poster='https://res.cloudinary.com/dluhzoptp/image/upload/f_auto,q_auto,w_1920/landingPage-poster_nlsczt'>
                         <source
@@ -19,7 +19,7 @@ const Introvideo = () => {
                             type="video/mp4"
                         />
                     </video>
-                    <div className="absolute inset-0 bg-black/20 z-10 rounded-2xl" />
+                    <div className="absolute inset-0 bg-black/20 z-10 rounded-xl md:rounded-2xl" />
                 </div>
             </div>
         </section>
