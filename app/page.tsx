@@ -6,6 +6,7 @@ import LearningApproachSection from '@/components/home/LearningApproachSection'
 import FAQSection from '@/components/home/FAQSection'
 import Introvideo from '@/components/home/Introvideo-section'
 import WhatsApp from '@/components/Whatsapp'
+import CohortsSection from '@/components/home/CohortsSection'
 
 const page = () => {
   return (
@@ -16,6 +17,7 @@ const page = () => {
       <Introvideo />
       <TuitionSection />
       <CoursesSection />
+      <CohortsSection />
       <FAQSection />
       <LearningApproachSection />
     </main>
