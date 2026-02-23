@@ -111,12 +111,12 @@ const CoursesSection = () => {
                                 </div>
 
                                 {/* Content below */}
-                                <div className="p-6 md:p-8 text-center flex flex-col flex-grow">
+                                <div className="p-6 md:p-8 text-center flex flex-col grow">
                                     <h3 className="text-xl sm:text-2xl md:text-2xl font-normal mb-4 text-brandPurple">
                                         {course.title}
                                     </h3>
 
-                                    <p className="text-sm md:text-base text-gray-700 mb-6 leading-relaxed flex-grow">
+                                    <p className="text-sm md:text-base text-gray-700 mb-6 leading-relaxed grow">
                                         A comprehensive beginner-to-intermediate program designed to help learners understand Artificial Intelligence from the ground up, covering concepts, tools, real-world applications, and modern workflows.
                                     </p>
 

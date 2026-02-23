@@ -14,6 +14,8 @@ import { TbTargetArrow } from "react-icons/tb";
 import DarkVeil from '@/components/DarkVeil';
 import Footer from '@/components/Footer&Cta';
 import HeroSection from '@/components/about/HeroSection';
+import Introvideo from '@/components/home/Introvideo-section';
+import MissionAndVision from '@/components/about/MissionAndVision';
 
 
 const beliefs = [
@@ -33,12 +35,10 @@ const modelItems = [
 export default function AboutPage() {
     return (
         <>
-
-
-            {/* Main Content */}
-            <main className="bg-black">
-                {/* ── Hero Section ── */}
+            <main className="">
                 <HeroSection />
+                <Introvideo />
+                <MissionAndVision />
 
                 {/* ── We Believe Section ── */}
                 <section className="py-12 md:py-16 px-4 md:px-6 max-w-360 mx-auto">
