@@ -77,8 +77,8 @@ const Footer = () => {
             </div>
           </div>
           <hr className='my-5 mx-auto max-w-360' />
-          <div className='grid grid-cols-1 md:grid-cols-3 py-8 px-3'>
-            <div>
+          <div className='grid grid-cols-1 md:grid-cols-3 justify-center items-center py-8 gap-6 px-3'>
+            <div className='text-center'>
               <p className='text-sm'>&copy; {new Date().getFullYear()} Khrien Academy. All rights reserved.</p>
             </div>
             <div className='social-media flex justify-center gap-5 items-center'>
@@ -92,7 +92,7 @@ const Footer = () => {
                 <FaLinkedin className='text-2xl' />
               </a>
             </div>
-            <div className='flex gap-3 items-center justify-end'>
+            <div className='flex gap-3 items-center justify-center lg:justify-end'>
               <p className='text-sm'>Privacy Policy</p>
               <p className='text-sm'>Terms of Service</p>
             </div>

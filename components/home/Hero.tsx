@@ -51,7 +51,7 @@ const Hero = () => {
 
     return (
         <div className="bg-black pt-16 sm:pt-20">
-            <section className="max-w-360 mx-auto relative flex items-center justify-center h-[85vh] sm:h-screen overflow-hidden rounded-xl sm:rounded-2xl md:rounded-3xl mx-2 sm:mx-0">
+            <section className="max-w-360 mx-auto relative flex items-center justify-center h-[85vh] sm:h-screen overflow-hidden sm:mx-0">
                 {/* Image Carousel */}
                 {imageSlider.map((image, index) => (
                     <motion.div

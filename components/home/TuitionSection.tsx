@@ -10,7 +10,7 @@ const TuitionSection = () => {
                 <div className="hidden md:block absolute top-0 bottom-20 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none">
                     <Image
                         src="/lines/bg-line-center.webp"
-                        className="opacity-90 w-200 max-w-none"
+                        className="w-200 max-w-none"
                         alt="Background lines"
                         width={1000}
                         height={1000}
@@ -39,7 +39,7 @@ const TuitionSection = () => {
                         </div>
                     </div>
                     {/* Right Column */}
-                    <div className="flex flex-col-reverse gap-6 md:gap-10 justify-end items-center md:items-start">
+                    <div className="flex flex-col-reverse md:flex-col gap-6 md:gap-10 justify-end items-center md:items-start">
                         <div className="relative w-full max-w-80 h-16 sm:h-20 md:w-87.5 md:h-17.5">
                             <Image
                                 src="/home/quiz.png"
