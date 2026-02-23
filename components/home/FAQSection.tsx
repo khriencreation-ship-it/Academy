@@ -28,34 +28,34 @@ const faqs = [
         q: 'How much time should I commit each week?',
         a: 'On average, learners should expect to dedicate 5–8 hours per week, including lessons, live sessions, and assignments. Time commitment may vary depending on your pace and level of engagement.',
     },
-    {
-        q: 'Is this program self-paced?',
-        a: 'Lessons are self-paced within the structure of the cohort. Content is released on a schedule, but you can complete lessons at your own pace within each learning period.',
-    },
-    {
-        q: 'How many students are in each cohort?',
-        a: 'Cohort sizes are intentionally limited to ensure quality learning, meaningful interaction, and adequate tutor support.',
-    },
-    {
-        q: 'What happens after I apply?',
-        a: "Once you submit your application, our team reviews it and reaches out with next steps. If accepted, you'll receive onboarding information and access details before the program begins.",
-    },
-    {
-        q: 'Is there an application fee?',
-        a: 'No. Applications to Khrien Academy are free.',
-    },
-    {
-        q: 'Do you offer certificates?',
-        a: 'Yes. Learners who complete the program and meet the course requirements will receive a certificate of completion from Khrien Academy.',
-    },
-    {
-        q: 'Can I take multiple courses at Khrien Academy?',
-        a: 'Yes. As Khrien Academy grows, learners will be able to enroll in multiple programs over time, depending on availability and prerequisites.',
-    },
-    {
-        q: 'How can I contact Khrien Academy for more questions?',
-        a: 'You can reach us via the Contact Us page or email us directly. Our team is happy to help clarify any questions you may have.',
-    },
+    // {
+    //     q: 'Is this program self-paced?',
+    //     a: 'Lessons are self-paced within the structure of the cohort. Content is released on a schedule, but you can complete lessons at your own pace within each learning period.',
+    // },
+    // {
+    //     q: 'How many students are in each cohort?',
+    //     a: 'Cohort sizes are intentionally limited to ensure quality learning, meaningful interaction, and adequate tutor support.',
+    // },
+    // {
+    //     q: 'What happens after I apply?',
+    //     a: "Once you submit your application, our team reviews it and reaches out with next steps. If accepted, you'll receive onboarding information and access details before the program begins.",
+    // },
+    // {
+    //     q: 'Is there an application fee?',
+    //     a: 'No. Applications to Khrien Academy are free.',
+    // },
+    // {
+    //     q: 'Do you offer certificates?',
+    //     a: 'Yes. Learners who complete the program and meet the course requirements will receive a certificate of completion from Khrien Academy.',
+    // },
+    // {
+    //     q: 'Can I take multiple courses at Khrien Academy?',
+    //     a: 'Yes. As Khrien Academy grows, learners will be able to enroll in multiple programs over time, depending on availability and prerequisites.',
+    // },
+    // {
+    //     q: 'How can I contact Khrien Academy for more questions?',
+    //     a: 'You can reach us via the Contact Us page or email us directly. Our team is happy to help clarify any questions you may have.',
+    // },
 ]
 
 function FAQItem({ q, a }: { q: string; a: string }) {

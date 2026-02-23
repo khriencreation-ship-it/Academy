@@ -18,8 +18,8 @@ const page = () => {
       <TuitionSection />
       <CoursesSection />
       <CohortsSection />
-      <FAQSection />
       <LearningApproachSection />
+      <FAQSection />
     </main>
   )
 }
