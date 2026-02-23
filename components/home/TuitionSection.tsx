@@ -1,7 +1,35 @@
+"use client"
 import React from "react";
 import Link from "next/link";
-
 import Image from "next/image";
+import { motion } from "framer-motion";
+
+// Animation variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0 }
+};
+
+const fadeInLeft = {
+  hidden: { opacity: 0, x: -30 },
+  visible: { opacity: 1, x: 0 }
+};
+
+const fadeInRight = {
+  hidden: { opacity: 0, x: 30 },
+  visible: { opacity: 1, x: 0 }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15
+    }
+  }
+};
+
 const TuitionSection = () => {
   return (
     <section className="bg-white py-8 md:py-12 lg:py-16 relative overflow-hidden">
@@ -18,48 +46,77 @@ const TuitionSection = () => {
         </div>
 
         {/* Content - Mobile: single column, Desktop: two columns */}
-        <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 relative z-0">
+        <motion.div
+          className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 relative z-0"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={staggerContainer}
+        >
           {/* Left Column */}
           <div className="flex flex-col gap-6 md:gap-10 items-center md:items-end">
-            <div className="relative w-full max-w-72 h-64 sm:h-72 md:w-75 md:h-75">
+            <motion.div
+              className="relative w-full max-w-72 h-64 sm:h-72 md:w-75 md:h-75"
+              variants={fadeInLeft}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
               <Image
                 src="/home/imageTwo.jpg"
                 alt="Learning"
                 fill
                 className="border border-brandGreen rounded-lg object-cover shadow-[0_0_1px_#22c55e,0_0_5px_#22c55e]"
               />
-            </div>
-            <div className="relative w-full max-w-80 h-16 sm:h-20 md:w-87.5 md:h-17.5 md:mr-12">
+            </motion.div>
+            <motion.div
+              className="relative w-full max-w-80 h-16 sm:h-20 md:w-87.5 md:h-17.5 md:mr-12"
+              variants={fadeInLeft}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+            >
               <Image
                 src="/home/live-class.png"
                 alt="Live Class"
                 fill
                 className="shadow-lg rounded-lg object-contain"
               />
-            </div>
+            </motion.div>
           </div>
           {/* Right Column */}
           <div className="flex flex-col-reverse md:flex-col gap-6 md:gap-10 justify-end items-center md:items-start">
-            <div className="relative w-full max-w-80 h-16 sm:h-20 md:w-87.5 md:h-17.5">
+            <motion.div
+              className="relative w-full max-w-80 h-16 sm:h-20 md:w-87.5 md:h-17.5"
+              variants={fadeInRight}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+            >
               <Image
                 src="/home/quiz.png"
                 alt="Quiz"
                 fill
                 className="shadow-lg rounded-lg object-contain"
               />
-            </div>
-            <div className="relative w-full max-w-72 h-64 sm:h-64 md:w-62.5 md:h-62.5 md:mx-6">
+            </motion.div>
+            <motion.div
+              className="relative w-full max-w-72 h-64 sm:h-64 md:w-62.5 md:h-62.5 md:mx-6"
+              variants={fadeInRight}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+            >
               <Image
                 src="/home/imageOne.jpg"
                 alt="Study"
                 fill
                 className="object-cover border border-brandPurple rounded-lg shadow-[0_0_1px_#934ab3,0_0_5px_#934ab3]"
               />
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
-      <div className="max-w-4xl mx-auto mt-6 sm:mt-8 md:mt-12 lg:mt-28 px-4 md:px-0">
+      <motion.div
+        className="max-w-4xl mx-auto mt-6 sm:mt-8 md:mt-12 lg:mt-28 px-4 md:px-0"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={fadeInUp}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center leading-tight">
           Our programs are carefully designed to help learners not just consume
           information.
@@ -80,7 +137,7 @@ const TuitionSection = () => {
             </span>
           </Link>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

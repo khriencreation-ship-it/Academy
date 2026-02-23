@@ -2,6 +2,23 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { motion } from "framer-motion";
+
+// Animation variants
+const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0 }
+};
+
+const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.2
+        }
+    }
+};
 
 interface CourseType {
     category: string;
@@ -32,15 +49,30 @@ const CoursesSection = () => {
         <section className="bg-white py-12 md:py-16 lg:py-20 px-4 md:px-8">
             <div className="max-w-360 mx-auto">
                 {/* Header */}
-                <div className="text-center mb-10 md:mb-12">
+                <motion.div
+                    className="text-center mb-10 md:mb-12"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.3 }}
+                    variants={fadeInUp}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                >
                     <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal mb-4 text-black tracking-tight">
                         What You'll Learn
                     </h2>
                     <p className="text-base md:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto">
                         Our courses are built to meet learners where they are and guide them forward through a balanced mix of theory, practice, and guided instruction.
                     </p>
-                </div>
-                <div className="mt-6 mb-8 border border-brandGray/90 rounded-full  px-5 py-3 flex w-fit mx-auto">
+                </motion.div>
+
+                <motion.div
+                    className="mt-6 mb-8 border border-brandGray/90 rounded-full px-5 py-3 flex w-fit mx-auto"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.3 }}
+                    variants={fadeInUp}
+                    transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
+                >
                     <p className="text-black">filter by :</p>
                     <div className="flex gap-5 ml-4">
                         {/* <button className={`${selectedItemCategory === "all" ? "text-black" : "text-black/50"} `} onClick={() => {
@@ -49,13 +81,25 @@ const CoursesSection = () => {
                         }}>All</button> */}
                         <button className={`${selectedItemCategory === "genesis-cohort" ? "text-black" : "text-black/50"} `} onClick={() => handleSelectItem("genesis-cohort")}>Genesis Cohort</button>
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Course Cards Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                <motion.div
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.2 }}
+                    variants={staggerContainer}
+                >
                     {courses.map((course, index) => {
                         return (
-                            <div key={index} className="bg-white shadow-md border duration-300 rounded-2xl border-brandPurple/40 transition-colors overflow-hidden flex flex-col">
+                            <motion.div
+                                key={index}
+                                className="bg-white shadow-md border duration-300 rounded-2xl border-brandPurple/40 transition-colors overflow-hidden flex flex-col"
+                                variants={fadeInUp}
+                                transition={{ duration: 0.5, ease: "easeOut" }}
+                                whileHover={{ y: -8, transition: { duration: 0.2 } }}
+                            >
                                 {/* Image at top */}
                                 <div className="relative w-full h-48 md:h-56">
                                     <Image
@@ -83,10 +127,10 @@ const CoursesSection = () => {
                                         {course.button}
                                     </Link>
                                 </div>
-                            </div>
+                            </motion.div>
                         )
                     })}
-                </div>
+                </motion.div>
             </div>
         </section>
     );

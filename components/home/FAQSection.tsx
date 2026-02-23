@@ -2,6 +2,28 @@
 
 import { useState } from 'react'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
+import { motion, AnimatePresence } from 'framer-motion'
+
+// Animation variants
+const fadeInLeft = {
+    hidden: { opacity: 0, x: -30 },
+    visible: { opacity: 1, x: 0 }
+};
+
+const fadeInUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+};
+
+const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1
+        }
+    }
+};
 
 const faqs = [
     {
@@ -61,22 +83,40 @@ const faqs = [
 function FAQItem({ q, a }: { q: string; a: string }) {
     const [open, setOpen] = useState(false)
     return (
-        <div className="bg-white border border-gray-200 overflow-hidden">
+        <motion.div
+            className="bg-white border border-gray-200 overflow-hidden"
+            variants={fadeInUp}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+        >
             <button
                 onClick={() => setOpen(!open)}
                 className="w-full flex items-center justify-between gap-2 sm:gap-4 px-4 sm:px-7 py-4 sm:py-6 text-left hover:bg-white transition-colors duration-200"
             >
                 <span className="text-base sm:text-lg font-semibold text-black">{q}</span>
-                <span className="text-brandPurple shrink-0 transition-transform duration-200">
+                <motion.span
+                    className="text-brandPurple shrink-0"
+                    animate={{ rotate: open ? 180 : 0 }}
+                    transition={{ duration: 0.2 }}
+                >
                     {open ? <FaChevronUp /> : <FaChevronDown />}
-                </span>
+                </motion.span>
             </button>
-            {open && (
-                <div className="px-4 sm:px-7 pb-4 sm:pb-6 text-gray-700 leading-relaxed text-sm sm:text-base border-t border-gray-100 pt-4">
-                    {a}
-                </div>
-            )}
-        </div>
+            <AnimatePresence>
+                {open && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        className="overflow-hidden"
+                    >
+                        <div className="px-4 sm:px-7 pb-4 sm:pb-6 text-gray-700 leading-relaxed text-sm sm:text-base border-t border-gray-100 pt-4">
+                            {a}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </motion.div>
     )
 }
 
@@ -84,14 +124,27 @@ export default function FAQSection() {
     return (
         <section className="py-8 md:py-12 lg:py-16 px-4 md:px-6 lg:px-0 max-w-6xl mx-auto">
             <div className="w-full grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-0">
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal text-black tracking-tight text-center lg:text-left mb-4 lg:mb-12">
+                <motion.h2
+                    className="text-3xl sm:text-4xl md:text-5xl font-normal text-black tracking-tight text-center lg:text-left mb-4 lg:mb-12"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.3 }}
+                    variants={fadeInLeft}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                >
                     Frequently Asked Questions
-                </h2>
-                <div className="col-span-1 lg:col-span-2 lg:px-12">
+                </motion.h2>
+                <motion.div
+                    className="col-span-1 lg:col-span-2 lg:px-12"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.1 }}
+                    variants={staggerContainer}
+                >
                     {faqs.map((item) => (
                         <FAQItem key={item.q} q={item.q} a={item.a} />
                     ))}
-                </div>
+                </motion.div>
             </div>
         </section>
     )

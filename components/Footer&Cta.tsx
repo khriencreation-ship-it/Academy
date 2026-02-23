@@ -1,7 +1,35 @@
+"use client"
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaFacebook, FaInstagram, FaLinkedin, FaUser } from 'react-icons/fa'
 import { MdLogin } from 'react-icons/md'
+import { motion } from 'framer-motion'
+
+// Animation variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0 }
+};
+
+const fadeInLeft = {
+  hidden: { opacity: 0, x: -30 },
+  visible: { opacity: 1, x: 0 }
+};
+
+const fadeInRight = {
+  hidden: { opacity: 0, x: 30 },
+  visible: { opacity: 1, x: 0 }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
 
 const Footer = () => {
   return (
@@ -28,16 +56,34 @@ const Footer = () => {
 
       </div>
       <section className="text-white lg:h-125 h-75 py-10 lg:py-20 my-6 flex items-center justify-center">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-3  tracking-tight leading-tight">
+        <motion.div
+          className="max-w-4xl mx-auto text-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={staggerContainer}
+        >
+          <motion.h2
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-3 tracking-tight leading-tight"
+            variants={fadeInUp}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
             Start With Intention
-          </h2>
-          <p className="text-base md:text-lg text-white/80 mb-8 md:mb-10 leading-relaxed max-w-3xl mx-auto">
+          </motion.h2>
+          <motion.p
+            className="text-base md:text-lg text-white/80 mb-8 md:mb-10 leading-relaxed max-w-3xl mx-auto"
+            variants={fadeInUp}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+          >
             Whether you're beginning something new or building on what you already know, Khrien Academy offers a clear and supportive path forward.
-          </p>
-          <div className="flex justify-center mt-6">
+          </motion.p>
+          <motion.div
+            className="flex justify-center mt-6"
+            variants={fadeInUp}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+          >
             <Link
-              href="/about"
+              href="/apply"
               className="relative inline-block overflow-hidden rounded-sm bg-brandPurple px-6 md:px-8 lg:px-10 py-2.5 md:py-3 text-sm md:text-base lg:text-lg font-semibold group"
             >
               {/* Default Text */}
@@ -50,12 +96,22 @@ const Footer = () => {
                 Apply Now
               </span>
             </Link>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
       <footer className='bg-black h-auto pt-0 pb-20 px-3'>
-        <div className='max-w-360 mx-auto text-white'>
-          <div className="flex flex-col gap-3 justify-center items-center">
+        <motion.div
+          className='max-w-360 mx-auto text-white'
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={staggerContainer}
+        >
+          <motion.div
+            className="flex flex-col gap-3 justify-center items-center"
+            variants={fadeInUp}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          >
             <Image src="/academylogo.webp" alt="Logo" width={150} height={150} />
             <p>A platform for learning and sharing knowledge.</p>
             <div className='nav-buttons flex justify-center gap-6 items-center my-5'>
@@ -75,29 +131,44 @@ const Footer = () => {
                 <MdLogin className="text-xl" />
               </a>
             </div>
-          </div>
+          </motion.div>
           <hr className='my-5 mx-auto max-w-360' />
-          <div className='grid grid-cols-1 md:grid-cols-3 justify-center items-center py-8 gap-6 px-3'>
-            <div className='text-center'>
+          <motion.div
+            className='grid grid-cols-1 md:grid-cols-3 justify-center items-center py-8 gap-6 px-3'
+            variants={staggerContainer}
+          >
+            <motion.div
+              className='text-center'
+              variants={fadeInLeft}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
               <p className='text-sm'>&copy; {new Date().getFullYear()} Khrien Academy. All rights reserved.</p>
-            </div>
-            <div className='social-media flex justify-center gap-5 items-center'>
-              <a href='https://www.facebook.com/share/16bZdmZNAb' target='_blank' className=" p-2 bg-white/30 rounded-full">
+            </motion.div>
+            <motion.div
+              className='social-media flex justify-center gap-5 items-center'
+              variants={fadeInUp}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
+              <a href='https://www.facebook.com/share/16bZdmZNAb' target='_blank' className=" p-2 bg-white/30 rounded-full hover:bg-white/50 transition-colors">
                 <FaFacebook className='text-2xl' />
               </a>
-              <a href='https://www.instagram.com/thisis_khrien?igsh=MWJocjI5ZWdsbHF5Zw==' target='_blank' className="p-2 bg-white/30 rounded-full">
+              <a href='https://www.instagram.com/thisis_khrien?igsh=MWJocjI5ZWdsbHF5Zw==' target='_blank' className="p-2 bg-white/30 rounded-full hover:bg-white/50 transition-colors">
                 <FaInstagram className='text-2xl' />
               </a>
-              <a href='https://www.linkedin.com/company/khrien' target='_blank' className="p-2 bg-white/30 rounded-full">
+              <a href='https://www.linkedin.com/company/khrien' target='_blank' className="p-2 bg-white/30 rounded-full hover:bg-white/50 transition-colors">
                 <FaLinkedin className='text-2xl' />
               </a>
-            </div>
-            <div className='flex gap-3 items-center justify-center lg:justify-end'>
+            </motion.div>
+            <motion.div
+              className='flex gap-3 items-center justify-center lg:justify-end'
+              variants={fadeInRight}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
               <p className='text-sm'>Privacy Policy</p>
               <p className='text-sm'>Terms of Service</p>
-            </div>
-          </div>
-        </div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </footer>
     </div>
   )

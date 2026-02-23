@@ -4,6 +4,23 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
+// Animation variants
+const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0 }
+};
+
+const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.2,
+            delayChildren: 0.3
+        }
+    }
+};
+
 const Hero = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -38,7 +55,7 @@ const Hero = () => {
         },
     ];
 
-    // Auto-slide every 1 second
+    // Auto-slide every 2 seconds
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentIndex((prevIndex) =>
@@ -50,7 +67,7 @@ const Hero = () => {
     }, [imageSlider.length]);
 
     return (
-        <div className="bg-black pt-16 sm:pt-20 px-10">
+        <div className="bg-black pt-16 sm:pt-20 px-4 sm:px-10">
             <section className="max-w-360 mx-auto relative flex items-center justify-center h-[85vh] sm:h-screen overflow-hidden sm:mx-0 rounded-3xl">
                 {/* Image Carousel */}
                 {imageSlider.map((image, index) => (
@@ -72,43 +89,61 @@ const Hero = () => {
                     </motion.div>
                 ))}
                 <div className="absolute inset-0 bg-black/20" />
+
                 {/* contents */}
-                <div className="text-center relative z-10 px-4 sm:px-6">
+                <motion.div
+                    className="text-center relative z-10 px-4 sm:px-6"
+                    variants={staggerContainer}
+                    initial="hidden"
+                    animate="visible"
+                >
                     {/* Headline */}
-                    <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-normal tracking-tight mb-3 sm:mb-4 md:mb-6 text-white/80 leading-tight">
+                    <motion.h1
+                        variants={fadeInUp}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                        className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-normal tracking-tight mb-3 sm:mb-4 md:mb-6 text-white/80 leading-tight"
+                    >
                         Learn the Skills Shaping the Future.
-                    </h1>
+                    </motion.h1>
 
                     {/* Supporting Copy */}
-                    <div className="max-w-4xl mx-auto mb-6 sm:mb-8 md:mb-10">
+                    <motion.div
+                        variants={fadeInUp}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                        className="max-w-4xl mx-auto mb-6 sm:mb-8 md:mb-10"
+                    >
                         <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 leading-relaxed px-2">
                             Khrien Academy is a modern learning institution focused on helping individuals build relevant, practical skills through structured programs, live instruction, and hands-on application.
                         </p>
-                    </div>
+                    </motion.div>
 
                     {/* CTA */}
-                    <div className="flex flex-col items-center gap-2 sm:gap-3 md:gap-4">
-                    <div className="flex justify-center mt-6">
-            <Link
-              href="/about"
-              className="relative inline-block overflow-hidden rounded-sm bg-brandPurple px-6 md:px-8 lg:px-10 py-2.5 md:py-3 text-sm md:text-base lg:text-lg font-semibold group"
-            >
-              {/* Default Text */}
-              <span className="block text-white transition-all duration-300 group-hover:-translate-y-full group-hover:opacity-0">
-                Apply Now
-              </span>
+                    <motion.div
+                        variants={fadeInUp}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                        className="flex flex-col items-center gap-2 sm:gap-3 md:gap-4"
+                    >
+                        <div className="flex justify-center mt-6">
+                            <Link
+                                href="/apply"
+                                className="relative inline-block overflow-hidden rounded-sm bg-brandPurple px-6 md:px-8 lg:px-10 py-2.5 md:py-3 text-sm md:text-base lg:text-lg font-semibold group"
+                            >
+                                {/* Default Text */}
+                                <span className="block text-white transition-all duration-300 group-hover:-translate-y-full group-hover:opacity-0">
+                                    Apply Now
+                                </span>
 
-              {/* Hover Text */}
-              <span className="absolute inset-0 flex items-center justify-center text-brandPurple bg-white transition-all duration-300 translate-y-full group-hover:translate-y-0">
-                Apply Now
-              </span>
-            </Link>
-          </div>
+                                {/* Hover Text */}
+                                <span className="absolute inset-0 flex items-center justify-center text-brandPurple bg-white transition-all duration-300 translate-y-full group-hover:translate-y-0">
+                                    Apply Now
+                                </span>
+                            </Link>
+                        </div>
                         <p className="text-xs md:text-sm text-white/60 font-medium">
                             Applications now open • Limited cohort size
                         </p>
-                    </div>
-                </div>
+                    </motion.div>
+                </motion.div>
             </section>
         </div>
     );
