@@ -50,8 +50,8 @@ const Hero = () => {
     }, [imageSlider.length]);
 
     return (
-        <div className="bg-black pt-16 sm:pt-20">
-            <section className="max-w-360 mx-auto relative flex items-center justify-center h-[85vh] sm:h-screen overflow-hidden sm:mx-0">
+        <div className="bg-black pt-16 sm:pt-20 px-10">
+            <section className="max-w-360 mx-auto relative flex items-center justify-center h-[85vh] sm:h-screen overflow-hidden sm:mx-0 rounded-3xl">
                 {/* Image Carousel */}
                 {imageSlider.map((image, index) => (
                     <motion.div
@@ -90,7 +90,7 @@ const Hero = () => {
                     <div className="flex flex-col items-center gap-2 sm:gap-3 md:gap-4">
                         <Link
                             href="/apply"
-                            className="text-center rounded-full text-white font-semibold bg-brandPurple px-6 sm:px-8 md:px-10 py-2 sm:py-2.5 md:py-3 hover:opacity-90 transition-all duration-300 text-sm sm:text-base md:text-lg"
+                            className="text-center rounded-sm text-white font-semibold bg-brandPurple px-6 sm:px-8 md:px-10 py-2 sm:py-2.5 md:py-3 hover:opacity-90 transition-all duration-300 text-sm sm:text-base md:text-lg"
                         >
                             Apply Now
                         </Link>
