@@ -12,8 +12,8 @@ const page = () => {
       <Hero />
       <AboutSection />
       <Introvideo />
-      {/* <CoursesSection /> */}
       <TuitionSection />
+      <CoursesSection />
       <FAQSection />
       <LearningApproachSection />
     </main>

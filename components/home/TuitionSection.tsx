@@ -7,7 +7,7 @@ const TuitionSection = () => {
         <section className="bg-white py-16 relative overflow-hidden">
             <div className="max-w-360 mx-auto relative z-20">
                 {/* Background lines */}
-                <div className="absolute top-0 bottom-20  left-1/2 -translate-x-1/2 z-0  pointer-events-none">
+                <div className="absolute top-0 bottom-20  left-1/2 -translate-x-1/2 -translate-y-1/2 z-0  pointer-events-none">
                     <Image
                         src="/lines/bg-line-center.webp"
                         className="opacity-50 w-200 max-w-none"
@@ -62,7 +62,7 @@ const TuitionSection = () => {
             </div>
             <div className="max-w-4xl mx-auto mt-6 sm:mt-12 lg:mt-28">
                 <h2 className="text-5xl text-center">
-                    Khrien Academy was created to bridge the gap between curiosity and capability.
+                    Our programs are carefully designed to help learners not just consume information.
                 </h2>
                 <div className="flex justify-center mt-6">
                     <Link
@@ -71,12 +71,12 @@ const TuitionSection = () => {
                     >
                         {/* Default Text */}
                         <span className="block text-white transition-all duration-300 group-hover:-translate-y-full group-hover:opacity-0">
-                            Learn More
+                            Apply Now
                         </span>
 
                         {/* Hover Text */}
                         <span className="absolute inset-0 flex items-center justify-center text-white bg-brandGreen transition-all duration-300 translate-y-full group-hover:translate-y-0">
-                            Learn More
+                            Apply Now
                         </span>
                     </Link>
                 </div>

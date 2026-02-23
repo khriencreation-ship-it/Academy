@@ -80,7 +80,7 @@ const Header = () => {
                         <a
                             href="https://lms.khrien.com"
                             target="blank"
-                            className="flex items-center gap-2 text-center rounded-sm text-brandGreen bg-white px-5 py-2 lg:py-2 border-2 border-brandGreen hover:bg-brandGreen hover:text-white transition-all duration-200 ease-in-out"
+                            className={`flex items-center gap-2 text-center rounded-sm text-brandGreen  ${isScrolled ? "bg-white" : "bg-transparent"} px-5 py-2 lg:py-2 border-2 border-brandGreen hover:bg-brandGreen hover:text-white transition-all duration-200 ease-in-out`}
                         >
                             Login
                             <MdLogin className="text-xl" />
