@@ -34,8 +34,7 @@ const LMSSection = () => {
                         </h2>
 
                         <p className="text-base sm:text-lg text-black/80 leading-relaxed max-w-lg mx-auto md:mx-0">
-                            To provide high-quality, accessible education that empowers learners
-                            to grow, adapt, and build confidently in a changing world.
+                        Our platform provides structured courses, interactive lessons, real-time assessments, and collaborative learning tools that support continuous development.
                         </p>
                     </motion.div>
 
