@@ -47,12 +47,11 @@ const HeroSection = () => {
                         The Genesis Cohort.
                     </motion.h1>
                     <motion.p
-                        className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 leading-relaxed max-w-3xl mx-auto px-2"
+                        className="text-sm sm:text-base md:text-lg text-white/80 leading-relaxed max-w-3xl mx-auto px-2"
                         variants={fadeInUp}
                         transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
                     >
-                        Khrien Academy is a future-focused learning institution built to help individuals develop
-                        practical, relevant skills for a rapidly evolving world.
+                        The Genesis Cohort marks the beginning of Khrien Academy, a focused and intentional learning experience crafted to build strong foundations, practical skills, and real confidence for the future.
                     </motion.p>
                 </motion.div>
             </section>
