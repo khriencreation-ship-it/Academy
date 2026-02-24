@@ -17,6 +17,7 @@ import {
 import { MdGroups, MdSchedule } from 'react-icons/md'
 import { HiAcademicCap } from 'react-icons/hi'
 import DarkVeil from '@/components/DarkVeil'
+import HeroSection from '@/components/cohorts/HeroSection'
 
 const cohortBenefits = [
     { icon: MdSchedule, label: 'A clear start and end date', color: 'text-brandPurple' },
@@ -50,44 +51,11 @@ const courseTopics = [
 export default function CohortsPage() {
     return (
         <>
-            {/* Fixed Background Layer */}
-            <div className="fixed inset-0 w-full h-full -z-10 bg-brandPurple">
-                <DarkVeil
-                    hueShift={285}
-                    noiseIntensity={0.02}
-                    scanlineIntensity={0.1}
-                    speed={0.3}
-                    scanlineFrequency={0.5}
-                    warpAmount={0.2}
-                />
-            </div>
 
             {/* Main Content */}
-            <main className="relative px-4 lg:px-9 max-w-360 mx-auto">
-                {/* ── Hero ── */}
-                <section className="pt-32 pb-16 md:pt-40 md:pb-20 px-4 md:px-8 text-center max-w-4xl mx-auto">
-                    <p className="text-xs md:text-sm font-semibold uppercase tracking-widest text-brandPurple mb-3">
-                        Cohorts & Courses
-                    </p>
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight mb-4 md:mb-6">
-                        Programs Designed for{' '}
-                        <span className="text-brandPurple">Real Growth</span>
-                    </h1>
-                    <p className="text-base md:text-lg lg:text-xl text-white/80 leading-relaxed max-w-3xl mx-auto mb-6 md:mb-8">
-                        Explore our courses and the cohorts currently open for application.
-                    </p>
-                    <div className="flex flex-col items-center gap-3">
-                        <Link
-                            href="/apply"
-                            className="inline-block bg-brandPurple text-white font-semibold px-8 md:px-10 py-2.5 md:py-3 rounded-full hover:opacity-90 transition-all duration-300 text-base md:text-lg shadow-md hover:shadow-lg"
-                        >
-                            Apply to Learn
-                        </Link>
-                        <p className="text-xs md:text-sm text-white/60">
-                            Limited cohort size • Structured learning experience
-                        </p>
-                    </div>
-                </section>
+            <main className="">
+
+               <HeroSection  />
 
                 {/* ── Current & Upcoming Cohorts ── */}
                 <section className="py-12 md:py-16 px-4 md:px-6 max-w-360 mx-auto">
@@ -311,24 +279,6 @@ export default function CohortsPage() {
                         <p className="text-center text-lg md:text-xl font-semibold text-white/90 italic">
                             No prior technical background is required.
                         </p>
-                    </div>
-                </section>
-
-                {/* ── Closing CTA ── */}
-                <section className="py-8 md:py-10 px-4 md:px-6 text-center max-w-360 mx-auto mb-8 md:mb-10">
-                    <div className="bg-brandPurple rounded-2xl md:rounded-3xl py-12 md:py-16 lg:py-20 px-6 md:px-8 max-w-5xl mx-auto">
-                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 tracking-tight">
-                            Begin With the Right Cohort
-                        </h2>
-                        <p className="text-base md:text-lg lg:text-xl text-gray-300 mb-6 md:mb-8 leading-relaxed max-w-2xl mx-auto">
-                            Applications reviewed on a rolling basis • Limited spots available.
-                        </p>
-                        <Link
-                            href="/apply"
-                            className="inline-block bg-brandYellow text-white font-semibold px-8 md:px-10 py-2.5 md:py-3 rounded-full hover:opacity-90 transition-all duration-300 text-base md:text-lg shadow-md hover:shadow-lg"
-                        >
-                            Apply Now
-                        </Link>
                     </div>
                 </section>
             </main>
