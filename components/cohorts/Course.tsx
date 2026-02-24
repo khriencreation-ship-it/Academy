@@ -15,7 +15,7 @@ const courseTopics = [
   return (
     <section className="py-12 md:py-16 px-4 md:px-6 max-w-360 mx-auto">
                     <div className="mx-auto">
-                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black tracking-tight text-center mb-4">
+                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-normal text-black tracking-tight text-center mb-4">
                             Courses You'll Take
                         </h2>
                         <p className="text-base md:text-lg text-black leading-relaxed max-w-3xl mx-auto text-center mb-8 md:mb-10">
@@ -29,10 +29,10 @@ const courseTopics = [
                                 <div className="flex flex-col sm:flex-row items-start gap-3 mb-5">
                                     <FaBrain className="text-brandPurple text-2xl md:text-3xl shrink-0 mt-1" />
                                     <div>
-                                        <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black mb-2">
+                                        <h3 className="text-2xl sm:text-3xl md:text-4xl font-normal text-black mb-2">
                                             AI Foundations & Applied Intelligence
                                         </h3>
-                                        <p className="text-brandGreen font-semibold text-sm md:text-base">
+                                        <p className="text-brandGreen font-light text-sm md:text-base">
                                             Beginner → Intermediate
                                         </p>
                                     </div>
