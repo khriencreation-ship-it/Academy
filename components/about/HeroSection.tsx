@@ -25,7 +25,7 @@ const HeroSection = () => {
         <div className="pt-16 sm:pt-20 px-2 sm:px-4 md:px-10 bg-black pb-8 sm:pb-12 md:pb-20">
             <section className="relative h-[70vh] sm:h-[80vh] md:h-screen w-full overflow-hidden">
                 <Image
-                    src="/about-us/image-one.jpg"
+                    src="/about-us/image-three.jpg"
                     alt="Hero"
                     fill
                     priority

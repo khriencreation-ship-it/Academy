@@ -30,7 +30,7 @@ const LMSSection = () => {
                         transition={{ duration: 0.6, ease: "easeOut" }}
                     >
                         <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold">
-                            Our LMS
+                            Khrien LMS
                         </h2>
 
                         <p className="text-base sm:text-lg text-black/80 leading-relaxed max-w-lg mx-auto md:mx-0">
