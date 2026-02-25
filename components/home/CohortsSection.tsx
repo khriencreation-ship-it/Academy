@@ -100,7 +100,7 @@ const CohortsSection = () => {
                                 <span className="text-2xl"><BiMoney /></span>
                                 <div>
                                     <p className="text-sm font-semibold text-gray-600">Tuition Fee</p>
-                                    <p className="text-lg font-normal text-black">₦200,000</p>
+                                    <p className="text-lg font-normal text-black">Scholarship Based</p>
                                 </div>
                             </motion.div>
                         </motion.div>

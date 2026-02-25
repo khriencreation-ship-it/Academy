@@ -53,7 +53,7 @@ const TeachingModel = () => {
                         return (
                             <motion.div
                                 key={label}
-                                className="bg-white rounded-xl md:rounded-2xl p-5 sm:p-6 md:p-8 border border-gray-100 hover:shadow-md transition-all duration-300"
+                                className="bg-white rounded-xl md:rounded-2xl p-5 sm:p-6 md:p-8 border border-gray-200 hover:shadow-lg hover:border-brandPurple transition-all duration-300"
                                 variants={fadeInUp}
                                 transition={{ duration: 0.5, ease: "easeOut" }}
                                 whileHover={{ y: -5, transition: { duration: 0.2 } }}
