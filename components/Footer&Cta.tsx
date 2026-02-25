@@ -33,7 +33,7 @@ const staggerContainer = {
 
 const Footer = () => {
   return (
-    <div className='bg-black relative'>
+    <div className='bg-black relative w-screen '>
       {/* <div className="absolute inset-0 bg-brandGreen/10 z-0"></div> */}
       <div className="relative ">
 
@@ -55,7 +55,7 @@ const Footer = () => {
         />
 
       </div>
-      <section className="text-white lg:h-125 h-75 py-10 lg:py-20 my-6 flex items-center justify-center">
+      <section className="text-white lg:h-125 h-75 py-10 lg:py-20 flex items-center justify-center">
         <motion.div
           className="max-w-4xl mx-auto text-center"
           initial="hidden"

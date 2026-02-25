@@ -4,52 +4,85 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import * as zod from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+const validationSchema = zod.object({
+  fullName: zod.string().min(1, "Full name is required"),
+  email: zod.string().email("Invalid email address"),
+  phone: zod.string().min(1, "Phone number is required"),
+  motivation: zod.string().min(1, "Motivation is required"),
+  goals: zod.string().min(1, "Goals are required"),
+  experience: zod.enum(["None", "Beginner", "Some experience"],
+    {
+      message: "Experience is required",
+    }),
+  referral: zod.string().optional(),
+})
+
+type FormData = zod.infer<typeof validationSchema>
 
 const Form = () => {
-  const [form, setForm] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    motivation: "",
-    goals: "",
-    experience: "",
-    referral: "",
-  });
-  const [submitted, setSubmitted] = useState(false);
+  const { register, handleSubmit, formState: { errors }, reset, watch } = useForm<FormData>({
+    resolver: zodResolver(validationSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      phone: "",
+      motivation: "",
+      goals: "",
+      experience: "None",
+      referral: "",
+    },
+  })
+  const experience = watch("experience");
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0 }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: send form data to backend
+  const [submitted, setSubmitted] = useState(false);
+
+  const formSubmit = (data: FormData) => {
+    console.log(data);
+    reset();
     setSubmitted(true);
   };
 
   if (submitted) {
     return (
-      <main className="px-4 lg:px-9">
-        <section className="min-h-[70vh] flex items-center justify-center py-16 md:py-24 px-4 md:px-6">
-          <div className="max-w-lg mx-auto text-center">
-            <div className="text-5xl md:text-6xl mb-4 md:mb-6">🎉</div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
-              Application Received!
+      <main className="px-4 lg:px-9 bg-black h-screen w-screen flex items-center justify-center">
+        <section className="min-h-[70vh] bg-black flex items-center justify-center py-16 md:py-24 px-4 md:px-6">
+          <div className=" mx-auto text-center">
+            {/* <div className="text-5xl md:text-6xl mb-4 md:mb-6">🎉</div> */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-normal text-white mb-4 tracking-tight">
+              Application Submitted Successfully!
             </h1>
-            <p className="text-base md:text-lg text-white/80 leading-relaxed mb-6 md:mb-8">
-              Thank you for applying to Khrien Academy. Our team will review
-              your application and reach out with next steps.
+            <p className="max-w-2xl mx-auto text-base md:text-lg text-white/80 leading-relaxed mb-6 md:mb-8">
+              Thanks for applying! Follow us on social media to stay updated with the latest news and announcements.
             </p>
-            <Link
-              href="/"
-              className="inline-block bg-brandPurple text-white font-semibold px-8 md:px-10 py-2.5 md:py-3 lg:py-4 rounded-full hover:opacity-90 transition-all duration-300 text-base md:text-lg"
+            <motion.div
+              className="flex justify-center mt-6"
+              variants={fadeInUp}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
             >
-              Back to Home
-            </Link>
+              <Link
+                href="/"
+                className="relative inline-block overflow-hidden rounded-sm bg-brandPurple px-6 md:px-8 lg:px-10 py-2.5 md:py-3 text-sm md:text-base lg:text-lg font-semibold group"
+              >
+                {/* Default Text */}
+                <span className="block text-white transition-all duration-300 group-hover:-translate-y-full group-hover:opacity-0">
+                  Back to Home
+                </span>
+
+                {/* Hover Text */}
+                <span className="absolute inset-0 flex items-center justify-center text-brandPurple bg-white transition-all duration-300 translate-y-full group-hover:translate-y-0">
+                  Back to Home
+                </span>
+              </Link>
+            </motion.div>
           </div>
         </section>
       </main>
@@ -71,7 +104,7 @@ const Form = () => {
 
       {/* ── Form ── */}
       <section className="min-h-screen flex justify-between items-start px-3 py-6 gap-10 max-w-360">
-        <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8 flex-1">
+        <form onSubmit={handleSubmit(formSubmit)} className="space-y-6 md:space-y-8 flex-1">
           {/* Full Name */}
           <div>
             <label
@@ -82,14 +115,12 @@ const Form = () => {
             </label>
             <input
               id="fullName"
-              name="fullName"
               type="text"
-              required
               placeholder="Enter your legal name"
-              value={form.fullName}
-              onChange={handleChange}
+              {...register('fullName')}
               className="w-full rounded-xl border border-gray-300 px-4 md:px-5 py-3 md:py-4 text-sm md:text-base text-white placeholder:text-white/60 focus:outline-none focus:border-brandPurple focus:ring-2 focus:ring-brandPurple/20 transition-all duration-200 bg-transparent"
             />
+            {errors.fullName?.message && <p className="text-red-500 mt-2 font-semibold text-sm">* {errors.fullName?.message}</p>}
           </div>
 
           {/* Email */}
@@ -102,14 +133,12 @@ const Form = () => {
             </label>
             <input
               id="email"
-              name="email"
               type="email"
-              required
               placeholder="We'll use this to communicate important updates"
-              value={form.email}
-              onChange={handleChange}
+              {...register('email')}
               className="w-full rounded-xl border border-gray-300 px-4 md:px-5 py-3 md:py-4 text-sm md:text-base text-white placeholder:text-white/60 focus:outline-none focus:border-brandPurple focus:ring-2 focus:ring-brandPurple/20 transition-all duration-200 bg-transparent"
             />
+            {errors.email?.message && <p className="text-red-500 mt-2 font-semibold text-sm">* {errors.email?.message}</p>}
           </div>
 
           {/* Phone */}
@@ -122,14 +151,12 @@ const Form = () => {
             </label>
             <input
               id="phone"
-              name="phone"
               type="tel"
-              required
               placeholder="WhatsApp-enabled preferred"
-              value={form.phone}
-              onChange={handleChange}
+              {...register('phone')}
               className="w-full rounded-xl border border-gray-300 px-4 md:px-5 py-3 md:py-4 text-sm md:text-base text-white placeholder:text-white/60 focus:outline-none focus:border-brandPurple focus:ring-2 focus:ring-brandPurple/20 transition-all duration-200 bg-transparent"
             />
+            {errors.phone?.message && <p className="text-red-500 mt-2 font-semibold text-sm">* {errors.phone?.message}</p>}
           </div>
 
           {/* Motivation */}
@@ -142,14 +169,12 @@ const Form = () => {
             </label>
             <textarea
               id="motivation"
-              name="motivation"
-              required
               rows={4}
               placeholder="Tell us briefly what motivated you to apply"
-              value={form.motivation}
-              onChange={handleChange}
+              {...register('motivation')}
               className="w-full rounded-xl border border-gray-300 px-4 md:px-5 py-3 md:py-4 text-sm md:text-base text-white placeholder:text-white/60 focus:outline-none focus:border-brandPurple focus:ring-2 focus:ring-brandPurple/20 transition-all duration-200 resize-none bg-transparent"
             />
+            {errors.motivation?.message && <p className="text-red-500 mt-2 font-semibold text-sm">* {errors.motivation?.message}</p>}
           </div>
 
           {/* Goals */}
@@ -162,14 +187,12 @@ const Form = () => {
             </label>
             <textarea
               id="goals"
-              name="goals"
-              required
               rows={4}
               placeholder="Skills, clarity, career growth, personal development, etc."
-              value={form.goals}
-              onChange={handleChange}
+              {...register('goals')}
               className="w-full rounded-xl border border-gray-300 px-4 md:px-5 py-3 md:py-4 text-sm md:text-base text-white placeholder:text-white/60 focus:outline-none focus:border-brandPurple focus:ring-2 focus:ring-brandPurple/20 transition-all duration-200 resize-none bg-transparent"
             />
+            {errors.goals?.message && <p className="text-red-500 mt-2 font-semibold text-sm">* {errors.goals?.message}</p>}
           </div>
 
           {/* Experience */}
@@ -181,24 +204,22 @@ const Form = () => {
               {["None", "Beginner", "Some experience"].map((option) => (
                 <label
                   key={option}
-                  className={`flex-1 cursor-pointer rounded-xl border-2 px-4 md:px-5 py-3 md:py-4 text-center font-medium transition-all duration-200 text-sm md:text-base ${
-                    form.experience === option
-                      ? "border-brandPurple bg-brandPurple/20 text-white"
-                      : "border-gray-300 text-white/60 hover:border-gray-400"
-                  }`}
+                  className={`flex-1 cursor-pointer rounded-xl border-2 px-4 md:px-5 py-3 md:py-4 text-center font-medium transition-all duration-200 text-sm md:text-base ${experience === option
+                    ? "border-brandPurple bg-brandPurple/20 text-white"
+                    : "border-gray-300 text-white/60 hover:border-gray-400"
+                    }`}
                 >
                   <input
                     type="radio"
-                    name="experience"
+                    {...register('experience')}
                     value={option}
-                    checked={form.experience === option}
-                    onChange={handleChange}
                     className="sr-only"
                   />
                   {option}
                 </label>
               ))}
             </div>
+            {errors.experience?.message && <p className="text-red-500 mt-2 font-semibold text-sm">* {errors.experience?.message}</p>}
           </div>
 
           {/* Referral */}
@@ -214,11 +235,9 @@ const Form = () => {
             </label>
             <input
               id="referral"
-              name="referral"
               type="text"
               placeholder="e.g. Social media, a friend, search engine..."
-              value={form.referral}
-              onChange={handleChange}
+              {...register('referral')}
               className="w-full rounded-xl border border-gray-300 px-4 md:px-5 py-3 md:py-4 text-sm md:text-base text-white placeholder:text-white/60 focus:outline-none focus:border-brandPurple focus:ring-2 focus:ring-brandPurple/20 transition-all duration-200 bg-transparent"
             />
           </div>
