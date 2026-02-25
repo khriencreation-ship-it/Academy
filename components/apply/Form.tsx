@@ -232,10 +232,6 @@ const Form = () => {
               Submit Application
             </button>
           </div>
-
-          <p className="text-center text-xs md:text-sm text-white/80">
-            No application fee • Applications reviewed within 48 hours
-          </p>
         </form>
         <motion.div
           initial={{ opacity: 0, x: 100, scale: 0.8 }}
@@ -244,7 +240,8 @@ const Form = () => {
           transition={{ duration: 1 }}
           className="relative w-full hidden lg:block lg:w-1/2 min-h-100 lg:h-225 overflow-hidden"
         >
-          <Image src="" alt="" fill className="object-cover" />
+          <Image src="/form/form-image.jpg" priority alt="" fill className="object-cover" />
+          <div className="absolute inset-0 bg-black/50" />
         </motion.div>
       </section>
     </main>

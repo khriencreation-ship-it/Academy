@@ -83,7 +83,8 @@ const Header = () => {
                         transition={{ delay: 0.1 }}
                     >
                         <Link href="/" className="text-2xl font-bold tracking-tight">
-                            <Image src="/academylogo.webp" alt="Academy Logo" width={100} height={100} />
+                        {/* logo-blackbg.png */}
+                            <Image src={isScrolled ? "/academylogo.webp": "/logo-blackbg.png"} priority alt="Academy Logo" width={100} height={100} />
                         </Link>
                     </motion.div>
 

@@ -112,7 +112,7 @@ const Footer = () => {
             variants={fadeInUp}
             transition={{ duration: 0.5, ease: "easeOut" }}
           >
-            <Image src="/academylogo.webp" alt="Logo" width={150} height={150} />
+            <Image src="/logo-blackbg.png" alt="Logo" width={150} height={150} />
             <p>A platform for learning and sharing knowledge.</p>
             <div className='nav-buttons flex justify-center gap-6 items-center my-5'>
               <Link
