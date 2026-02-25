@@ -31,6 +31,13 @@ const MobileMenu = ({ setIsMenuOpen }: MobileMenuProps) => {
                 >
                     Cohorts & Courses
                 </Link>
+                <Link
+                    href="/contact-us"
+                    className="text-xl font-medium text-gray-600 hover:text-black transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                >
+                    Contact
+                </Link>
             </nav>
             <div className="flex flex-col justify-center items-center gap-4">
                 <Link

@@ -89,11 +89,12 @@ const Header = () => {
                     </motion.div>
 
                     {/* Navigation - Desktop */}
-                    <nav className="hidden md:flex items-center justify-evenly w-[40%]">
+                    <nav className="hidden md:flex items-center justify-evenly w-[50%]">
                         {[
                             { href: "/", label: "Home" },
                             { href: "/about-us", label: "About Us" },
-                            { href: "/cohorts", label: "Cohorts & Courses" }
+                            { href: "/cohorts", label: "Cohorts & Courses" },
+                            { href: "/contact-us", label: "Contact" }
                         ].map((link, i) => (
                             <motion.div
                                 key={link.href}
