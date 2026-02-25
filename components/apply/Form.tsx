@@ -7,6 +7,8 @@ import { motion } from "framer-motion";
 import * as zod from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const validationSchema = zod.object({
   fullName: zod.string().min(1, "Full name is required"),
@@ -45,10 +47,14 @@ const Form = () => {
 
   const [submitted, setSubmitted] = useState(false);
 
-  const formSubmit = (data: FormData) => {
-    console.log(data);
-    reset();
-    setSubmitted(true);
+  const formSubmit = async (data: FormData) => {
+    try {
+      await axios.post('/api/contact', data);
+      reset();
+      setSubmitted(true);
+    } catch (error) {
+      toast.error('Form submission failed');
+    }
   };
 
   if (submitted) {
