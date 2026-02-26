@@ -67,7 +67,7 @@ const Form = () => {
               Application Submitted Successfully!
             </h1>
             <p className="max-w-2xl mx-auto text-base md:text-lg text-white/80 leading-relaxed mb-6 md:mb-8">
-              Thanks for applying! Follow us on social media to stay updated with the latest news and announcements.
+              Thank you for applying to Khrien Academy. Your application has been received and is currently under review. Please make sure you are following our Instagram page, as this is required for your application to be considered. Also, keep an eye on your email and our social media pages for important updates about your application.
             </p>
             <motion.div
               className="flex justify-center mt-6"
@@ -80,7 +80,7 @@ const Form = () => {
               >
                 {/* Default Text */}
                 <span className="block text-white transition-all duration-300 group-hover:-translate-y-full group-hover:opacity-0">
-                  Back to Home
+                  Instagram
                 </span>
 
                 {/* Hover Text */}

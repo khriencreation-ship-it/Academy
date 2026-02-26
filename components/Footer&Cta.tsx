@@ -34,9 +34,7 @@ const staggerContainer = {
 const Footer = () => {
   return (
     <div className='bg-black relative w-screen '>
-      {/* <div className="absolute inset-0 bg-brandGreen/10 z-0"></div> */}
       <div className="relative ">
-
         {/* LEFT */}
         <Image
           src="/lines/bg-line-left.webp"

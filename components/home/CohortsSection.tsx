@@ -2,10 +2,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import { BiMoney } from 'react-icons/bi'
-import { SlCalender } from 'react-icons/sl'
 import { motion } from 'framer-motion'
-
+import { FaMoneyBillWave } from "react-icons/fa";
+import { MdOutlineDateRange } from "react-icons/md";
 // Animation variants
 const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
@@ -78,7 +77,7 @@ const CohortsSection = () => {
                             The Genesis Cohort marks the beginning of Khrien Academy, a focused, intentional learning experience designed to build strong foundations and real confidence.
                         </motion.p>
                         <motion.div
-                            className="space-y-3"
+                            className=" w-full flex flex-col lg:flex-row  space-y-5 lg:items-center space-x-8 "
                             variants={staggerContainer}
                         >
                             <motion.div
@@ -86,7 +85,7 @@ const CohortsSection = () => {
                                 variants={fadeInUp}
                                 transition={{ duration: 0.4, ease: "easeOut" }}
                             >
-                                <span className="text-2xl"><SlCalender /></span>
+                                <span className="text-2xl text-brandPurple"><MdOutlineDateRange /></span>
                                 <div>
                                     <p className="text-sm font-semibold text-gray-600">Program Dates</p>
                                     <p className="text-lg font-normal text-black">April 5 -  May 29</p>
@@ -97,7 +96,7 @@ const CohortsSection = () => {
                                 variants={fadeInUp}
                                 transition={{ duration: 0.4, ease: "easeOut" }}
                             >
-                                <span className="text-2xl"><BiMoney /></span>
+                                <span className="text-2xl text-brandPurple"><FaMoneyBillWave /></span>
                                 <div>
                                     <p className="text-sm font-semibold text-gray-600">Tuition Fee</p>
                                     <p className="text-lg font-normal text-black">Scholarship Based</p>

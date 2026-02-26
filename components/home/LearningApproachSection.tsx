@@ -31,13 +31,13 @@ const LearningApproachSection = () => {
             icon: FaChalkboardTeacher,
             title: "Weekly Live Classes",
             description: "Weekly live classes led by experienced tutors",
-            color: "text-brandGreen"
+            color: "text-brandPurple"
         },
         {
             icon: FaPencilAlt,
             title: "Practical Assignments",
             description: "Practical assignments to apply what you've learned",
-            color: "text-brandYellow"
+            color: "text-brandPurple"
         },
         {
             icon: FaClipboardCheck,
@@ -49,7 +49,7 @@ const LearningApproachSection = () => {
             icon: FaUsers,
             title: "Supportive Community",
             description: "A supportive learning environment with peers on the same journey",
-            color: "text-brandGreen"
+            color: "text-brandPurple"
         }
     ];
 

@@ -4,7 +4,6 @@ import CoursesSection from '@/components/home/CoursesSection'
 import TuitionSection from '@/components/home/TuitionSection'
 import LearningApproachSection from '@/components/home/LearningApproachSection'
 import FAQSection from '@/components/home/FAQSection'
-import Introvideo from '@/components/home/Introvideo-section'
 import CohortsSection from '@/components/home/CohortsSection'
 
 const page = () => {
@@ -12,7 +11,6 @@ const page = () => {
     <main>
       <Hero />
       <AboutSection />
-      <Introvideo />
       <TuitionSection />
       <CoursesSection />
       <CohortsSection />
