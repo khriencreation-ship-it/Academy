@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { FaInstagram } from "react-icons/fa";
 
 const validationSchema = zod.object({
   fullName: zod.string().min(1, "Full name is required"),
@@ -76,16 +77,16 @@ const Form = () => {
             >
               <Link
                 href="/"
-                className="relative inline-block overflow-hidden rounded-sm bg-brandPurple px-6 md:px-8 lg:px-10 py-2.5 md:py-3 text-sm md:text-base lg:text-lg font-semibold group"
+                className="relative overflow-hidden rounded-sm bg-brandPurple px-6 md:px-8 lg:px-10 py-2.5 md:py-3 text-sm md:text-base lg:text-lg font-semibold group"
               >
                 {/* Default Text */}
-                <span className="block text-white transition-all duration-300 group-hover:-translate-y-full group-hover:opacity-0">
-                  Instagram
+                <span className="flex w-full space-x-4  items-center text-white transition-all duration-300 group-hover:-translate-y-full group-hover:opacity-0">
+                  <span>Instagram</span> <FaInstagram className="text-2xl" />
                 </span>
 
                 {/* Hover Text */}
-                <span className="absolute inset-0 flex items-center justify-center text-brandPurple bg-white transition-all duration-300 translate-y-full group-hover:translate-y-0">
-                  Back to Home
+                <span className="flex w-full items-center justify-center space-x-4 absolute inset-0 text-brandPurple bg-white transition-all duration-300 translate-y-full group-hover:translate-y-0">
+                  <span>Instagram</span> <FaInstagram className="text-2xl" />
                 </span>
               </Link>
             </motion.div>
