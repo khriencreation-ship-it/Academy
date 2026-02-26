@@ -5,13 +5,11 @@ import TuitionSection from '@/components/home/TuitionSection'
 import LearningApproachSection from '@/components/home/LearningApproachSection'
 import FAQSection from '@/components/home/FAQSection'
 import Introvideo from '@/components/home/Introvideo-section'
-import WhatsApp from '@/components/Whatsapp'
 import CohortsSection from '@/components/home/CohortsSection'
 
 const page = () => {
   return (
     <main>
-      <WhatsApp />
       <Hero />
       <AboutSection />
       <Introvideo />

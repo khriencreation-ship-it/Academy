@@ -3,6 +3,7 @@ import { Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer&Cta";
+import WhatsApp from "@/components/Whatsapp";
 
 export const metadata: Metadata = {
   title: "Khrien Academy",
@@ -20,6 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${bricolage_grotesque.className} bg-white text-black`}>
         <Header />
+        <WhatsApp />
         {children}
         <Footer />
       </body>

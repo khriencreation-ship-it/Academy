@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
     // 1. Send data to Google Sheets
     const googleSheetsPromise = fetch(
-      'https://script.google.com/macros/s/AKfycbxy4EoxoATyE0KmsagdmfvFqx1adHqVgxDEIp_gD4J_j3dHe7iHCGLwPqs6yyC7K3YuEw/exec',
+      'https://script.google.com/macros/s/AKfycbxVYt0mUeip6jnkptx2_lvfW7f83onsP-2uBbvhkPKxSpn_MoUzRXUsL13yDP5aXPYg/exec',
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
