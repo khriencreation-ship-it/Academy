@@ -64,9 +64,9 @@ const Header = () => {
     };
 
     return (
-        <div className="bg-white lg:bg-black">
+        <div className="bg-red-400  lg:bg-black">
             <motion.header
-                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+                className={`max-w-screen fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
                     ? "bg-white shadow-md"
                     : "bg-white lg:bg-black"
                     }`}
@@ -74,7 +74,7 @@ const Header = () => {
                 animate="visible"
                 variants={navVariants}
             >
-                <div className="max-w-360 mx-auto  h-20 flex items-center px-4 lg:justify-evenly justify-between">
+                <div className="max-w-360 mx-auto h-20 flex items-center px-4 lg:justify-evenly justify-between">
                     {/* Logo */}
                     <motion.div
                         variants={linkVariants}
@@ -83,8 +83,9 @@ const Header = () => {
                         transition={{ delay: 0.1 }}
                     >
                         <Link href="/" className="text-2xl font-bold tracking-tight">
-                        {/* logo-blackbg.png */}
-                            <Image src={isScrolled ? "/academylogo.webp": "/logo-blackbg.png"} priority alt="Academy Logo" width={100} height={100} />
+                            {/* logo-blackbg.png */}
+                            <Image src={isScrolled ? "/academylogo.webp" : "/logo-blackbg.png"} className="hidden md:block" priority alt="Academy Logo" width={100} height={100} />
+                            <Image src="/academylogo.webp" priority alt="Academy Logo" className="block md:hidden" width={100} height={100} />
                         </Link>
                     </motion.div>
 
