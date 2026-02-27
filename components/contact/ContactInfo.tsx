@@ -24,8 +24,8 @@ const contactInfo = [
     {
         icon: FaEnvelope,
         title: 'Email Us',
-        details: 'support@khrien.com',
-        link: 'mailto:support@khrien.com',
+        details: 'hello@khrien.com',
+        link: 'mailto:hello@khrien.com',
         color: 'text-brandPurple',
         bgColor: 'bg-brandPurple/10',
         description: 'Send us an email anytime'
@@ -33,8 +33,8 @@ const contactInfo = [
     {
         icon: FaPhone,
         title: 'Call Us',
-        details: '+234 813 595 2169',
-        link: 'tel:+2348135952169',
+        details: '+234 906 159 3966',
+        link: 'tel:+2349061593966',
         color: 'text-brandGreen',
         bgColor: 'bg-brandGreen/10',
         description: 'Mon-Fri from 9am to 6pm'
@@ -42,8 +42,8 @@ const contactInfo = [
     {
         icon: FaWhatsapp,
         title: 'WhatsApp',
-        details: '+234 813 595 2169',
-        link: 'https://wa.me/2348135952169',
+        details: '+234 906 159 3966',
+        link: 'https://wa.me/2349061593966',
         color: 'text-green-500',
         bgColor: 'bg-green-500/10',
         description: 'Chat with us instantly'

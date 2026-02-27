@@ -32,7 +32,6 @@ const Cohort = () => {
           whileInView="show"
           viewport={{ once: true }}
           className="
-        max-w-4xl mx-auto 
         flex flex-col md:flex-row 
         gap-8 md:gap-0 
         md:justify-between 
@@ -41,8 +40,14 @@ const Cohort = () => {
       "
         >
           <motion.div variants={item} className="text-center">
+            <h3 className="text-3xl md:text-5xl font-semibold">Test Date</h3>
+            <p className="text-sm md:text-base text-white/70 mt-2">
+              April 5 - June 4
+            </p>
+          </motion.div>
+          <motion.div variants={item} className="text-center">
             <h3 className="text-3xl md:text-5xl font-semibold">Date</h3>
-            <p className="text-base text-white/70 mt-2">
+            <p className="text-sm md:text-base text-white/70 mt-2">
               April 5 - June 4
             </p>
           </motion.div>
