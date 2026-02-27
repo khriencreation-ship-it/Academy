@@ -8,7 +8,7 @@ import CohortsSection from '@/components/home/CohortsSection'
 
 const page = () => {
   return (
-    <main>
+    <main className='max-w-screen'>
       <Hero />
       <AboutSection />
       <TuitionSection />

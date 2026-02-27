@@ -33,7 +33,7 @@ const staggerContainer = {
 
 const Footer = () => {
   return (
-    <div className='bg-black relative w-screen '>
+    <div className='bg-black relative max-w-screen '>
       <div className="relative ">
         {/* LEFT */}
         <Image

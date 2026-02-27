@@ -1,10 +1,9 @@
-import HeroSection from '@/components/contact/HeroSection';
 import ContactInfo from '@/components/contact/ContactInfo';
 
 export default function ContactPage() {
     return (
         <>
-            <main className="">
+            <main className="max-w-screen">
                 <ContactInfo />
             </main>
         </>
