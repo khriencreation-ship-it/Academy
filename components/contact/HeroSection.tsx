@@ -39,7 +39,7 @@ const HeroSection = () => {
                         Get In <span className="text-brandPurple">Touch</span>
                     </motion.h1>
                     <motion.p
-                        className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 leading-relaxed max-w-2xl mx-auto"
+                        className="text-base md:text-lg lg:text-xl text-white/80 leading-relaxed max-w-2xl mx-auto"
                         variants={fadeInUp}
                         transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
                     >

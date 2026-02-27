@@ -40,7 +40,7 @@ const HeroSection = () => {
                     animate="visible"
                 >
                     <motion.h1
-                        className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-normal tracking-tight text-white leading-tight mb-4 sm:mb-6 md:mb-8"
+                        className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-normal tracking-tight text-white leading-tight mb-4 sm:mb-6 md:mb-8"
                         variants={fadeInUp}
                         transition={{ duration: 0.6, ease: "easeOut" }}
                     >
@@ -48,7 +48,7 @@ const HeroSection = () => {
                         <span className="text-brandPurple">Grow With Purpose</span>
                     </motion.h1>
                     <motion.p
-                        className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 leading-relaxed max-w-3xl mx-auto px-2"
+                        className="text-base md:text-lg lg:text-xl text-white/80 leading-relaxed max-w-3xl mx-auto px-2"
                         variants={fadeInUp}
                         transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
                     >

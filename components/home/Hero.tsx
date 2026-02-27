@@ -67,7 +67,7 @@ const Hero = () => {
     }, [imageSlider.length]);
 
     return (
-        <div className="bg-black pt-16 sm:pt-20 px-4 sm:px-10">
+        <div className="bg-black">
             <section className="max-w-360 mx-auto relative flex items-center justify-center h-[85vh] sm:h-screen overflow-hidden sm:mx-0 rounded-3xl">
                 {/* Image Carousel */}
                 {imageSlider.map((image, index) => (
@@ -75,7 +75,7 @@ const Hero = () => {
                         key={image.image}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: currentIndex === index ? 0.8 : 0 }}
-                        transition={{ duration: 0.5, ease: "easeInOut" }}
+                        transition={{ duration: 3, ease: "easeInOut" }}
                         className="absolute inset-0"
                     >
                         <Image

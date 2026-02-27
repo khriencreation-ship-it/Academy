@@ -63,10 +63,10 @@ const ContactInfo = () => {
                     variants={fadeInUp}
                     transition={{ duration: 0.6, ease: "easeOut" }}
                 >
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-normal text-white tracking-tight mb-3 sm:mb-4">
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-normal text-white tracking-tight mb-3 sm:mb-4">
                         Contact Information
                     </h2>
-                    <p className="text-sm sm:text-base md:text-lg text-white/80 max-w-2xl mx-auto">
+                    <p className="text-base md:text-lg text-white/80 max-w-2xl mx-auto">
                         Choose the most convenient way to reach us. We're here to help!
                     </p>
                 </motion.div>
@@ -93,7 +93,7 @@ const ContactInfo = () => {
                                 whileHover={{ y: -8, transition: { duration: 0.2 } }}
                             >
                                 <div className={`w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full ${contact.bgColor} flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                                    <IconComponent className={`text-2xl sm:text-3xl ${contact.color}`} />
+                                    <IconComponent className={`text-3xl ${contact.color}`} />
                                 </div>
                                 <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-white mb-2">
                                     {contact.title}

@@ -64,7 +64,7 @@ const Header = () => {
     };
 
     return (
-        <div className="bg-red-400  lg:bg-black">
+        <div className="bg-white  lg:bg-black">
             <motion.header
                 className={`max-w-screen fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
                     ? "bg-white shadow-md"

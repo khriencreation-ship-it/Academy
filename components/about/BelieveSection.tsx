@@ -32,7 +32,7 @@ const BelieveSection = () => {
         <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 max-w-360 mx-auto">
             <div className="mx-auto">
                 <motion.h2
-                    className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-normal text-black tracking-tight text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12"
+                    className="text-3xl md:text-4xl lg:text-5xl font-normal text-black tracking-tight text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12"
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
@@ -62,13 +62,13 @@ const BelieveSection = () => {
                                     <IconComponent className="text-brandPurple text-xl sm:text-2xl md:text-3xl" />
                                     <p className="text-lg sm:text-xl md:text-2xl font-bold text-black">{label}</p>
                                 </div>
-                                <p className="text-sm sm:text-base md:text-lg text-gray-500">{sub}</p>
+                                <p className="text-base md:text-lg text-gray-500">{sub}</p>
                             </motion.div>
                         );
                     })}
                 </motion.div>
                 <motion.p
-                    className="text-center text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 mt-6 sm:mt-8 md:mt-10 lg:mt-12 leading-relaxed max-w-3xl mx-auto px-2"
+                    className="text-center text-base md:text-lg lg:text-xl text-gray-600 mt-6 sm:mt-8 md:mt-10 lg:mt-12 leading-relaxed max-w-3xl mx-auto px-2"
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}

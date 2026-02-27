@@ -110,7 +110,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
                         transition={{ duration: 0.3, ease: "easeInOut" }}
                         className="overflow-hidden"
                     >
-                        <div className="px-4 sm:px-7 pb-4 sm:pb-6 text-gray-700 leading-relaxed text-sm sm:text-base border-t border-gray-100 pt-4">
+                        <div className="px-4 sm:px-7 pb-4 sm:pb-6 text-gray-700 leading-relaxed text-base border-t border-gray-100 pt-4">
                             {a}
                         </div>
                     </motion.div>

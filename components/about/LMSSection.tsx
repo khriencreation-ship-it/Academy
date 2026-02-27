@@ -29,12 +29,12 @@ const LMSSection = () => {
                         variants={fadeInLeft}
                         transition={{ duration: 0.6, ease: "easeOut" }}
                     >
-                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold">
+                        <h2 className="text-3xl md:text-4xl font-semibold">
                             Khrien LMS
                         </h2>
 
                         <p className="text-base sm:text-lg text-black/80 leading-relaxed max-w-lg mx-auto md:mx-0">
-                        Our platform provides structured courses, interactive lessons, real-time assessments, and collaborative learning tools that support continuous development.
+                            Our platform provides structured courses, interactive lessons, real-time assessments, and collaborative learning tools that support continuous development.
                         </p>
                     </motion.div>
 

@@ -31,7 +31,7 @@ const TeachingModel = () => {
         <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 max-w-360 mx-auto">
             <div className="mx-auto">
                 <motion.h2
-                    className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-normal text-black tracking-tight text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12"
+                    className="text-3xl md:text-4xl lg:text-5xl font-normal text-black tracking-tight text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12"
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
@@ -66,7 +66,7 @@ const TeachingModel = () => {
                                     </div>
 
                                     {/* Text */}
-                                    <p className="text-sm sm:text-base md:text-lg font-medium text-gray-800 leading-relaxed">
+                                    <p className="text-base md:text-lg font-medium text-gray-800 leading-relaxed">
                                         {label}
                                     </p>
 

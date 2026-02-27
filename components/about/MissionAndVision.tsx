@@ -34,7 +34,7 @@ const MissionAndVision = () => {
                         variants={fadeInLeft}
                         transition={{ duration: 0.6, ease: "easeOut" }}
                     >
-                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold">
+                        <h2 className="text-3xl md:text-4xl font-semibold">
                             Our Mission
                         </h2>
 
@@ -87,7 +87,7 @@ const MissionAndVision = () => {
                         variants={fadeInRight}
                         transition={{ duration: 0.6, ease: "easeOut" }}
                     >
-                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold">
+                        <h2 className="text-3xl md:text-4xl font-semibold">
                             Our Vision
                         </h2>
 

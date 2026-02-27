@@ -117,7 +117,7 @@ const TuitionSection = () => {
         variants={fadeInUp}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center leading-tight">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl text-center leading-tight">
           Our programs are carefully designed to help learners not just consume
           information.
         </h2>
