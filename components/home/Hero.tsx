@@ -101,7 +101,7 @@ const Hero = () => {
                     <motion.h1
                         variants={fadeInUp}
                         transition={{ duration: 0.6, ease: "easeOut" }}
-                        className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-normal tracking-tight mb-3 sm:mb-4 md:mb-6 text-white/80 leading-tight"
+                        className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-normal tracking-tight mb-3 sm:mb-4 md:mb-6 text-white/80 leading-tight"
                     >
                         Learn the Skills Shaping the Future.
                     </motion.h1>
@@ -112,7 +112,7 @@ const Hero = () => {
                         transition={{ duration: 0.6, ease: "easeOut" }}
                         className="max-w-4xl mx-auto mb-6 sm:mb-8 md:mb-10"
                     >
-                        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 leading-relaxed px-2">
+                        <p className="text-base md:text-lg lg:text-xl text-white/80 leading-relaxed px-1">
                             Khrien Academy is a modern learning institution focused on helping individuals build relevant, practical skills through structured programs, live instruction, and hands-on application.
                         </p>
                     </motion.div>
@@ -139,7 +139,7 @@ const Hero = () => {
                                 </span>
                             </Link>
                         </div>
-                        <p className="text-xs md:text-sm text-white/60 font-medium">
+                        <p className="text-sm text-white/60 font-medium">
                             Applications now open • Limited cohort size
                         </p>
                     </motion.div>

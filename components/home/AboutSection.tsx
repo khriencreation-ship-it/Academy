@@ -27,13 +27,13 @@ const AboutSection = () => {
                         variants={fadeInLeft}
                         transition={{ duration: 0.6, ease: "easeOut" }}
                     >
-                        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl max-w-md font-normal mb-4 sm:mb-6 md:mb-8 text-white tracking-tight leading-tight mx-auto md:mx-0">
+                        <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl max-w-md font-normal mb-4 sm:mb-6 md:mb-8 text-white tracking-tight leading-tight mx-auto md:mx-0">
                             Education Built With Purpose.
                         </h2>
 
                     </motion.div>
                     <motion.div
-                        className="text-sm sm:text-base md:text-lg lg:text-xl text-white leading-relaxed text-center md:text-left"
+                        className="text-base md:text-lg lg:text-xl text-white leading-relaxed text-center md:text-left"
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.3 }}
