@@ -162,7 +162,7 @@ const Footer = () => {
               variants={fadeInRight}
               transition={{ duration: 0.5, ease: "easeOut" }}
             >
-              <p className='text-sm'>Privacy Policy</p>
+              <Link href="/privacy-policy" className='text-sm hover:text-brandPurple transition-colors'>Privacy Policy</Link>
               <p className='text-sm'>Terms of Service</p>
             </motion.div>
           </motion.div>
