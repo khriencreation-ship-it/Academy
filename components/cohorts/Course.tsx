@@ -5,12 +5,12 @@ import { FaBrain, FaCheckCircle } from 'react-icons/fa'
 const Course = () => {
 
     const courseTopics = [
-        'Core AI concepts and terminology',
-        'Generative AI and modern workflows',
-        'Large Language Models (LLMs)',
-        'Practical AI tools for work and creativity',
-        'AI for builders, creators, and modern problem-solving',
-        'No-code and low-code AI platforms',
+        ' How AI works — and how to make it work for you',
+        'Writing, emails, and documents powered by Google Gemini & Claude',
+        ' Research and analysis using Google NotebookLM',
+        'AI-generated images, presentations, and visual content',
+        ' Storytelling and short film creation with Google Flow (Veo)',
+        'AI ethics, bias awareness, and responsible use at work',
     ]
     return (
         <section className="py-12 md:py-16 px-4 md:px-6 max-w-360 mx-auto">
@@ -33,15 +33,13 @@ const Course = () => {
                                     AI Foundations & Applied Intelligence
                                 </h3>
                                 <p className="text-brandGreen font-light text-sm md:text-base">
-                                    Beginner → Intermediate
+                                    Beginner → Job-Ready
                                 </p>
                             </div>
                         </div>
 
                         <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-6">
-                            A comprehensive program designed to help learners understand Artificial
-                            Intelligence from the ground up, covering core concepts, modern tools, and
-                            real-world use cases.
+                            An 8-week hands-on program that takes complete beginners from zero AI knowledge to confident, practical users. No tech background needed, just a willingness to work smarter. Every lesson is built around real tools you can use at work from Day 1.
                         </p>
 
                         <div className="bg-brandLightGray rounded-xl md:rounded-2xl p-5 md:p-6 mb-6">
@@ -52,7 +50,7 @@ const Course = () => {
                                 {courseTopics.map((topic) => (
                                     <li key={topic} className="flex items-start gap-2 md:gap-3">
                                         <FaCheckCircle className="text-brandPurple text-base md:text-lg mt-1 shrink-0" />
-                                        <span className="text-gray-700 text-sm md:text-base">{topic}</span>
+                                        <span className="text-gray-700 text-sm md:text-base">{topic}.</span>
                                     </li>
                                 ))}
                             </ul>
