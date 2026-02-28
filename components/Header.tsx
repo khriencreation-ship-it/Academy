@@ -8,6 +8,7 @@ import { FaUser } from "react-icons/fa";
 import { HiLogin } from "react-icons/hi";
 import { MdLogin } from "react-icons/md";
 import { motion, AnimatePresence, Variants } from "framer-motion";
+import Navlinks from "./Navlinks";
 
 // Animation variants with proper typing
 const navVariants: Variants = {
@@ -104,15 +105,12 @@ const Header = () => {
                                 animate="visible"
                                 transition={{ delay: 0.2 + i * 0.1 }}
                             >
-                                <Link
+                                <Navlinks
                                     href={link.href}
-                                    className={`text-lg font-medium transition-colors  ${isScrolled
-                                        ? "text-black hover:text-brandPurple"
-                                        : "text-black hover:text-brandPurple lg:text-white "
-                                        }`}
+                                    isScrolled={isScrolled}
                                 >
                                     {link.label}
-                                </Link>
+                                </Navlinks>
                             </motion.div>
                         ))}
                     </nav>
