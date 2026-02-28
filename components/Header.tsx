@@ -84,8 +84,8 @@ const Header = () => {
                     >
                         <Link href="/" className="text-2xl font-bold tracking-tight">
                             {/* logo-blackbg.png */}
-                            <Image src={isScrolled ? "/academylogo.webp" : "/logo-blackbg.png"} className="hidden md:block" priority alt="Academy Logo" width={100} height={100} />
-                            <Image src="/academylogo.webp" priority alt="Academy Logo" className="block md:hidden" width={100} height={100} />
+                            <Image src={isScrolled ? "/academylogo.webp" : "/logo-blackbg.png"} className="hidden lg:block" priority alt="Academy Logo" width={100} height={100} />
+                            <Image src="/academylogo.webp" priority alt="Academy Logo" className="block lg:hidden" width={100} height={100} />
                         </Link>
                     </motion.div>
 
@@ -106,9 +106,9 @@ const Header = () => {
                             >
                                 <Link
                                     href={link.href}
-                                    className={`text-lg font-medium transition-colors ${isScrolled
+                                    className={`text-lg font-medium transition-colors  ${isScrolled
                                         ? "text-black hover:text-brandPurple"
-                                        : "text-white hover:text-brandPurple"
+                                        : "text-black hover:text-brandPurple lg:text-white "
                                         }`}
                                 >
                                     {link.label}

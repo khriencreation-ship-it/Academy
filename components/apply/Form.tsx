@@ -1,8 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import * as zod from 'zod';
 import { useForm } from 'react-hook-form';
@@ -57,10 +56,14 @@ const Form = () => {
       toast.error('Form submission failed');
     }
   };
-
+  useEffect(() => {
+    if (submitted) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [submitted]);
   if (submitted) {
     return (
-      <main className="px-4 lg:px-9 bg-black h-screen max-w-screen overflow-x-hidden flex items-center justify-center">
+      <main className="px-4 lg:px-9 bg-black min-h-screen max-w-screen overflow-x-hidden flex items-center justify-center">
         <section className="min-h-[70vh] bg-black flex items-center justify-center py-16 md:py-24 px-4 md:px-6">
           <div className=" mx-auto text-center">
             {/* <div className="text-5xl md:text-6xl mb-4 md:mb-6">🎉</div> */}
