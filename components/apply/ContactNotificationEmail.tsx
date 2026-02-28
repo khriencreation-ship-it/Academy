@@ -19,6 +19,7 @@ export function ContactNotificationEmail({
     experience,
     referral,
 }: ContactNotificationEmailProps) {
+    const cohorts = "genesis"
     const containerStyle = {
         fontFamily: 'Arial, sans-serif',
         padding: '20px',
@@ -101,6 +102,10 @@ export function ContactNotificationEmail({
                 <div style={fieldStyle}>
                     <span style={labelStyle}>Referral:</span>
                     <span>{referral}</span>
+                </div>
+                <div style={fieldStyle}>
+                    <span style={labelStyle}>Referral:</span>
+                    <span>{cohorts}</span>
                 </div>
 
                 <div style={{ marginTop: '30px', fontSize: '12px', color: '#888', textAlign: 'center' }}>

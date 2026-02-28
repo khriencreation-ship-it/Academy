@@ -60,7 +60,7 @@ const Form = () => {
 
   if (submitted) {
     return (
-      <main className="px-4 lg:px-9 bg-black h-screen w-screen flex items-center justify-center">
+      <main className="px-4 lg:px-9 bg-black h-screen max-w-screen overflow-x-hidden flex items-center justify-center">
         <section className="min-h-[70vh] bg-black flex items-center justify-center py-16 md:py-24 px-4 md:px-6">
           <div className=" mx-auto text-center">
             {/* <div className="text-5xl md:text-6xl mb-4 md:mb-6">🎉</div> */}
@@ -75,8 +75,9 @@ const Form = () => {
               variants={fadeInUp}
               transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
             >
-              <Link
-                href="/"
+              <a
+                href="https://www.instagram.com/thisis_khrien?igsh=MWJocjI5ZWdsbHF5Zw=="
+                target="_blank"
                 className="relative overflow-hidden rounded-sm bg-brandPurple px-6 md:px-8 lg:px-10 py-2.5 md:py-3 text-sm md:text-base lg:text-lg font-semibold group"
               >
                 {/* Default Text */}
@@ -88,7 +89,7 @@ const Form = () => {
                 <span className="flex w-full items-center justify-center space-x-4 absolute inset-0 text-brandPurple bg-white transition-all duration-300 translate-y-full group-hover:translate-y-0">
                   <span>Instagram</span> <FaInstagram className="text-2xl" />
                 </span>
-              </Link>
+              </a>
             </motion.div>
           </div>
         </section>
