@@ -9,7 +9,7 @@ import Introvideo from '@/components/home/Introvideo-section'
 
 const page = () => {
   return (
-    <main className='max-w-screen'>
+    <main className='max-w-screen overflow-x-hidden'>
       <Hero />
       <AboutSection />
       <Introvideo />
