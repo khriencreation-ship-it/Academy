@@ -40,15 +40,15 @@ const Cohort = () => {
       "
         >
           <motion.div variants={item} className="text-center">
-            <h3 className="text-3xl md:text-5xl font-semibold">Test Date</h3>
+            <h3 className="text-3xl md:text-5xl font-semibold">Application date</h3>
             <p className="text-sm md:text-base text-white/70 mt-2">
-              April 5 - June 4
+              April 1 - April 15
             </p>
           </motion.div>
           <motion.div variants={item} className="text-center">
-            <h3 className="text-3xl md:text-5xl font-semibold">Date</h3>
+            <h3 className="text-3xl md:text-5xl font-semibold">Cohort Starts</h3>
             <p className="text-sm md:text-base text-white/70 mt-2">
-              April 5 - June 4
+              May 4 - July 3
             </p>
           </motion.div>
 

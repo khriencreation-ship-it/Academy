@@ -88,7 +88,7 @@ const CohortsSection = () => {
                                 <span className="text-2xl text-brandPurple"><MdOutlineDateRange /></span>
                                 <div>
                                     <p className="text-sm font-semibold text-gray-600">Program Dates</p>
-                                    <p className="text-lg font-normal text-black">April 5 -  May 29</p>
+                                    <p className="text-lg font-normal text-black">May 4 - July 3</p>
                                 </div>
                             </motion.div>
                             <motion.div

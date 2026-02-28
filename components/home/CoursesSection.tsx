@@ -31,7 +31,7 @@ const CoursesSection = () => {
     const courses: CourseType[] = [
         {
             category: "genesis-cohort",
-            title: 'AI Foundations & Applied Intelligence.',
+            title: 'AI Foundations & Practical Intelligence',
             image: '/home/imageOne.jpg',
             button: 'Apply Now'
         }
