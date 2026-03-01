@@ -163,7 +163,7 @@ const Footer = () => {
               transition={{ duration: 0.5, ease: "easeOut" }}
             >
               <Link href="/privacy-policy" className='text-sm hover:text-brandPurple transition-colors'>Privacy Policy</Link>
-              <p className='text-sm'>Terms of Service</p>
+              <Link href="/terms-and-conditions" className='text-sm hover:text-brandPurple transition-colors'>Terms of Service</Link>
             </motion.div>
           </motion.div>
         </motion.div>
