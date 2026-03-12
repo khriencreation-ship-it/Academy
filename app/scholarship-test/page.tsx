@@ -990,8 +990,7 @@ export default function ScholarshipTestPage() {
                             </div>
                             <h3 className="text-3xl font-black mb-4 text-black">Already Submitted</h3>
                             <p className="text-gray-500 mb-10 text-lg leading-relaxed">
-                                A submission with your details (Name, Email, or WhatsApp) has already been recorded. 
-                                Multiple attempts are not allowed for the Genesis Cohort Scholarship.
+                                Multiple attempts are not permitted for the Genesis Cohort Scholarship.
                             </p>
                             <button
                                 onClick={() => setShowDuplicateModal(false)}
