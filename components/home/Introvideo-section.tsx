@@ -13,10 +13,17 @@ const Introvideo = () => {
     const [isPlaying, setIsPlaying] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
 
-    const handlePlay = () => {
+    const handlePlay = async () => {
         if (videoRef.current) {
-            videoRef.current.play();
-            setIsPlaying(true);
+            try {
+                await videoRef.current.play();
+                setIsPlaying(true);
+            } catch (err) {
+                console.error("Video play failed:", err);
+                // Fallback: try muted if it fails (mobile requirement sometimes)
+                videoRef.current.muted = true;
+                videoRef.current.play().then(() => setIsPlaying(true));
+            }
         }
     };
 
@@ -40,11 +47,9 @@ const Introvideo = () => {
                     <video 
                         ref={videoRef}
                         controls={isPlaying}
-                        className='absolute top-0 left-0 w-full h-full object-cover z-0 rounded-xl md:rounded-2xl'
+                        className='absolute top-0 left-0 w-full h-full object-cover z-10 rounded-xl md:rounded-2xl'
                         preload='auto'
                         playsInline
-                        webkit-playsinline="true"
-                        poster='/ChatGPT Image Mar 10, 2026, 04_09_32 PM.png'
                         onPause={() => setIsPlaying(false)}
                         onPlay={() => setIsPlaying(true)}
                     >
@@ -60,13 +65,25 @@ const Introvideo = () => {
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
-                                className="absolute inset-0 bg-black/30 z-20 rounded-xl md:rounded-2xl flex items-center justify-center"
+                                className="absolute inset-0 z-30 rounded-xl md:rounded-2xl flex items-center justify-center overflow-hidden"
                             >
+                                {/* Custom Cover Image Overlay */}
+                                <img 
+                                    src="/ChatGPT Image Mar 10, 2026, 04_09_32 PM.png" 
+                                    alt="Video Cover" 
+                                    className="absolute inset-0 w-full h-full object-cover"
+                                />
+                                {/* Dark Tint */}
+                                <div className="absolute inset-0 bg-black/30" />
+
                                 <motion.button
                                     whileHover={{ scale: 1.1 }}
                                     whileTap={{ scale: 0.9 }}
-                                    className="w-20 h-20 md:w-28 md:h-28 bg-white/20 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center text-white transition-colors hover:bg-white/30"
-                                    onClick={handlePlay}
+                                    className="relative z-40 w-20 h-20 md:w-28 md:h-28 bg-white/20 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center text-white transition-colors hover:bg-white/30"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handlePlay();
+                                    }}
                                 >
                                     <Play size={40} fill="currentColor" className="ml-1" />
                                 </motion.button>
