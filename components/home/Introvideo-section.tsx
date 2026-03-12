@@ -13,16 +13,21 @@ const Introvideo = () => {
     const [isPlaying, setIsPlaying] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
 
-    const handlePlay = async () => {
+    const handlePlay = async (e?: React.MouseEvent) => {
+        if (e) e.stopPropagation();
         if (videoRef.current) {
             try {
-                await videoRef.current.play();
-                setIsPlaying(true);
+                const playPromise = videoRef.current.play();
+                if (playPromise !== undefined) {
+                    await playPromise;
+                    setIsPlaying(true);
+                }
             } catch (err) {
                 console.error("Video play failed:", err);
-                // Fallback: try muted if it fails (mobile requirement sometimes)
+                // Fallback for mobile: try to play muted
                 videoRef.current.muted = true;
-                videoRef.current.play().then(() => setIsPlaying(true));
+                videoRef.current.play();
+                setIsPlaying(true);
             }
         }
     };
@@ -34,22 +39,20 @@ const Introvideo = () => {
             {/* White background for bottom half */}
             <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-white z-0" />
 
-            <div className="max-w-360 mx-auto h-80 sm:h-96 md:h-125 lg:h-150 relative z-10 px-4 md:px-0">
-                <motion.div
-                    className="max-w-6xl mx-auto relative h-full group cursor-pointer"
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.3 }}
-                    variants={scaleIn}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
+            <div className="max-w-6xl mx-auto px-4 relative z-10">
+                <div 
+                    className="relative w-full pb-[56.25%] group cursor-pointer bg-black rounded-xl md:rounded-2xl shadow-xl overflow-hidden"
                     onClick={() => !isPlaying && handlePlay()}
                 >
+                    {/* The Video Element */}
                     <video 
                         ref={videoRef}
-                        controls={isPlaying}
-                        className='absolute top-0 left-0 w-full h-full object-cover z-10 rounded-xl md:rounded-2xl'
-                        preload='auto'
+                        className='absolute inset-0 w-full h-full object-cover'
+                        preload='metadata'
                         playsInline
+                        webkit-playsinline="true"
+                        poster='/ChatGPT%20Image%20Mar%2010,%202026,%2004_09_32%20PM.png'
+                        controls={isPlaying}
                         onPause={() => setIsPlaying(false)}
                         onPlay={() => setIsPlaying(true)}
                     >
@@ -59,38 +62,27 @@ const Introvideo = () => {
                         />
                     </video>
 
+                    {/* Overlay UI - Using standard HTML instead of complex motion for initial debug if needed */}
                     <AnimatePresence>
                         {!isPlaying && (
                             <motion.div 
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
-                                className="absolute inset-0 z-30 rounded-xl md:rounded-2xl flex items-center justify-center overflow-hidden"
+                                className="absolute inset-0 flex items-center justify-center bg-black/10 transition-colors group-hover:bg-black/20"
                             >
-                                {/* Custom Cover Image Overlay */}
-                                <img 
-                                    src="/ChatGPT Image Mar 10, 2026, 04_09_32 PM.png" 
-                                    alt="Video Cover" 
-                                    className="absolute inset-0 w-full h-full object-cover"
-                                />
-                                {/* Dark Tint */}
-                                <div className="absolute inset-0 bg-black/30" />
-
                                 <motion.button
                                     whileHover={{ scale: 1.1 }}
                                     whileTap={{ scale: 0.9 }}
-                                    className="relative z-40 w-20 h-20 md:w-28 md:h-28 bg-white/20 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center text-white transition-colors hover:bg-white/30"
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        handlePlay();
-                                    }}
+                                    className="w-16 h-16 md:w-28 md:h-28 bg-white text-black rounded-full flex items-center justify-center transition-all shadow-2xl"
+                                    onClick={handlePlay}
                                 >
-                                    <Play size={40} fill="currentColor" className="ml-1" />
+                                    <Play fill="currentColor" className="ml-1 w-6 h-6 md:w-10 md:h-10" />
                                 </motion.button>
                             </motion.div>
                         )}
                     </AnimatePresence>
-                </motion.div>
+                </div>
             </div>
         </section>
     )
