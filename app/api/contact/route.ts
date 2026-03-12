@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { ContactNotificationEmail } from '@/components/apply/ContactNotificationEmail';
+import { ApplicantConfirmationEmail } from '@/components/apply/ApplicantConfirmationEmail';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -26,7 +27,6 @@ export async function POST(req: Request) {
       }
     );
 
-    // 2. Send email via Resend
     const emailPromise = resend.emails.send({
       from: 'Khrien Academy Application <hello@khrien.com>',
       to: ['khriencreation@gmail.com'],
@@ -42,17 +42,31 @@ export async function POST(req: Request) {
       }),
     });
 
-    // Run both tasks
-    const [sheetResponse, emailResult] = await Promise.all([
+    // 3. Send confirmation email to applicant
+    const applicantEmailPromise = resend.emails.send({
+      from: 'Khrien Academy <hello@khrien.com>',
+      to: [data.email],
+      subject: `Your Genesis Cohort Application Has Been Received 🎉`,
+      react: ApplicantConfirmationEmail({
+        fullName: data.fullName,
+      }),
+    });
+
+    // Run all tasks
+    const [sheetResponse, emailResult, applicantEmailResult] = await Promise.all([
       googleSheetsPromise,
       emailPromise,
+      applicantEmailPromise,
     ]);
 
     const sheetText = await sheetResponse.text();
 
     if (emailResult.error) {
-      console.error('Email sending failed:', emailResult.error);
-      // We still return success if the sheet worked, but log the error
+      console.error('Admin email sending failed:', emailResult.error);
+    }
+
+    if (applicantEmailResult.error) {
+      console.error('Applicant email sending failed:', applicantEmailResult.error);
     }
 
     return NextResponse.json({ 

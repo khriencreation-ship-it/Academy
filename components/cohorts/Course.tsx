@@ -30,7 +30,7 @@ const Course = () => {
                             <FaBrain className="text-brandPurple text-2xl md:text-3xl shrink-0 mt-1" />
                             <div>
                                 <h3 className="text-3xl md:text-4xl font-normal text-black mb-2">
-                                    AI Foundations & Applied Intelligence
+                                    AI Foundations & Practical Intelligence
                                 </h3>
                                 <p className="text-brandGreen font-light text-sm md:text-base">
                                     Beginner → Job-Ready

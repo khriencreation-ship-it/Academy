@@ -9,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { FaInstagram } from "react-icons/fa";
+import { Loader2 } from "lucide-react";
 
 const validationSchema = zod.object({
   fullName: zod.string().min(1, "Full name is required"),
@@ -46,14 +47,22 @@ const Form = () => {
   };
 
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const formSubmit = async (data: FormData) => {
+    setIsSubmitting(true);
     try {
-      await axios.post('/api/contact', data);
+      // Add a small delay to ensure the loading state is visible (UX improvement)
+      await Promise.all([
+        axios.post('/api/contact', data),
+        new Promise(resolve => setTimeout(resolve, 1500))
+      ]);
       reset();
       setSubmitted(true);
     } catch (error) {
       toast.error('Form submission failed');
+    } finally {
+      setIsSubmitting(false);
     }
   };
   useEffect(() => {
@@ -257,9 +266,17 @@ const Form = () => {
           <div className="flex justify-center pt-2 md:pt-4">
             <button
               type="submit"
-              className="bg-brandPurple text-white font-bold py-2.5 md:py-3 px-8 md:px-10 rounded-sm text-base md:text-lg hover:opacity-90 transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer"
+              disabled={isSubmitting}
+              className="bg-brandPurple text-white font-bold py-2.5 md:py-3 px-8 md:px-10 rounded-sm text-base md:text-lg hover:opacity-90 transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-w-[200px]"
             >
-              Submit Application
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  <span>Submitting...</span>
+                </>
+              ) : (
+                "Submit Application"
+              )}
             </button>
           </div>
         </form>
