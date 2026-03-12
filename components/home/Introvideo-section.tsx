@@ -41,7 +41,9 @@ const Introvideo = () => {
                         ref={videoRef}
                         controls={isPlaying}
                         className='absolute top-0 left-0 w-full h-full object-cover z-0 rounded-xl md:rounded-2xl'
-                        preload='metadata'
+                        preload='auto'
+                        playsInline
+                        webkit-playsinline="true"
                         poster='/ChatGPT Image Mar 10, 2026, 04_09_32 PM.png'
                         onPause={() => setIsPlaying(false)}
                         onPlay={() => setIsPlaying(true)}

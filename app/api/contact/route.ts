@@ -9,13 +9,19 @@ export async function POST(req: Request) {
   try {
     const data = await req.json();
 
+    // Generate unique Application ID
+    const timestamp = Date.now().toString(36).toUpperCase();
+    const random = Math.random().toString(36).substring(2, 5).toUpperCase();
+    const applicationId = `KHA-${timestamp}-${random}`;
+
     // 1. Send data to Google Sheets
     const googleSheetsPromise = fetch(
-      'https://script.google.com/macros/s/AKfycbxVYt0mUeip6jnkptx2_lvfW7f83onsP-2uBbvhkPKxSpn_MoUzRXUsL13yDP5aXPYg/exec',
+      'https://script.google.com/macros/s/AKfycbwqdU49riG5o69LA9I2IqCqnaZVe6ZxD0idPSKjhPOvU-PAY4pXuLXeH1PMupr1kKsD/exec',
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          applicationId: applicationId,
           fullName: data.fullName,
           email: data.email,
           phone: data.phone,
@@ -23,6 +29,9 @@ export async function POST(req: Request) {
           goals: data.goals,
           experience: data.experience,
           referral: data.referral,
+          takenScholarship: 'No',
+          scholarshipStatus: 'Pending',
+          testScore: 0
         }),
       }
     );
@@ -49,6 +58,7 @@ export async function POST(req: Request) {
       subject: `Your Genesis Cohort Application Has Been Received 🎉`,
       react: ApplicantConfirmationEmail({
         fullName: data.fullName,
+        applicationId: applicationId,
       }),
     });
 

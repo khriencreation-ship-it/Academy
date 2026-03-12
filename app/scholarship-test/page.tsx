@@ -12,7 +12,8 @@ import {
     ChevronLeft, 
     Send,
     Instagram,
-    Users
+    Users,
+    Loader2
 } from "lucide-react";
 
 // --- TYPES & DATA ---
@@ -281,36 +282,79 @@ const colors = {
 
 export default function ScholarshipTestPage() {
     const [screen, setScreen] = useState<ScreenState>("REGISTRATION");
-    const [user, setUser] = useState({ fullName: "", email: "", whatsapp: "" });
+    const [user, setUser] = useState({ applicationId: "", firstName: "", lastName: "", otherName: "", email: "", whatsapp: "" });
     const [answers, setAnswers] = useState<Record<string, string>>({});
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [timeRemaining, setTimeRemaining] = useState(600); // 10 minutes
     const [score, setScore] = useState(0);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [showWarning, setShowWarning] = useState(false);
-    const [errors, setErrors] = useState({ fullName: "", email: "", whatsapp: "" });
+    const [showSubmitModal, setShowSubmitModal] = useState(false);
+    const [showDuplicateModal, setShowDuplicateModal] = useState(false);
+    const [errors, setErrors] = useState({ applicationId: "" });
+    // Remove userIp state
 
     const timerRef = useRef<NodeJS.Timeout | null>(null);
 
     // --- REGISTRATION LOGIC ---
-    const handleRegister = (e: React.FormEvent) => {
+    const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        // Check for prior submission in this browser
+        const hasSubmitted = localStorage.getItem(`scholarship_submitted_${user.email}`);
+        if (hasSubmitted) {
+            setShowDuplicateModal(true);
+            return;
+        }
+
+        setIsSubmitting(true);
+        try {
+            const res = await fetch('/api/scholarship-test/check', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    applicationId: user.applicationId
+                }),
+            });
+            const data = await res.json();
+            
+            if (data.exists) { // Here specifically checking if they ALREADY took it
+                setIsSubmitting(false);
+                setTimeout(() => {
+                    setShowDuplicateModal(true);
+                }, 100);
+                return;
+            }
+
+            if (!data.verified) {
+                setIsSubmitting(false);
+                setErrors({ applicationId: "Invalid Application ID. Please check your email." });
+                return;
+            }
+
+            // Populate user details from verification response
+            setUser(prev => ({
+                ...prev,
+                firstName: data.userData.firstName,
+                lastName: data.userData.lastName,
+                otherName: data.userData.otherName,
+                email: data.userData.email,
+                whatsapp: data.userData.whatsapp
+            }));
+
+        } catch (error) {
+            console.error('Check failed:', error);
+            setErrors({ applicationId: "Verification service unavailable. Try again later." });
+            setIsSubmitting(false);
+            return;
+        } finally {
+            setIsSubmitting(false);
+        }
+
         let valid = true;
-        const newErrors = { fullName: "", email: "", whatsapp: "" };
+        const newErrors = { applicationId: "" };
 
-        if (user.fullName.length < 2 || /\d/.test(user.fullName)) {
-            newErrors.fullName = "Please enter a valid full name (at least 2 characters, no numbers).";
-            valid = false;
-        }
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(user.email)) {
-            newErrors.email = "Please enter a valid email address.";
-            valid = false;
-        }
-
-        if (user.whatsapp.length < 8) {
-            newErrors.whatsapp = "Please enter a valid WhatsApp number.";
+        if (user.applicationId.length < 5) {
+            newErrors.applicationId = "Please enter a valid Application ID.";
             valid = false;
         }
 
@@ -369,9 +413,7 @@ export default function ScholarshipTestPage() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    fullName: user.fullName,
-                    email: user.email,
-                    whatsapp: user.whatsapp,
+                    applicationId: user.applicationId,
                     score: currentScore
                 }),
             });
@@ -384,36 +426,39 @@ export default function ScholarshipTestPage() {
     };
 
     const handleSubmitTest = () => {
-        const unansweredCount = QUESTIONS.length - Object.keys(answers).length;
-        if (unansweredCount > 0 && !showWarning) {
-            setShowWarning(true);
-            return;
-        }
-        setShowWarning(false);
+        setShowSubmitModal(true);
+    };
+
+    const confirmSubmit = async () => {
+        setShowSubmitModal(false);
         setIsSubmitting(true);
         if (timerRef.current) clearInterval(timerRef.current);
         
-        // Brief artificial delay for "feel"
-        setTimeout(() => {
-            calculateResults();
-            setIsSubmitting(false);
-        }, 1000);
+        // Artificial delay for premium feel
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        await calculateResults();
+        
+        // Mark as submitted to prevent retries in this browser
+        localStorage.setItem(`scholarship_submitted_${user.email}`, 'true');
+        
+        setIsSubmitting(false);
     };
 
     const resetTest = () => {
         setScreen("REGISTRATION");
-        setUser({ fullName: "" , email: "", whatsapp: "" });
+        setUser({ applicationId: "", firstName: "", lastName: "", otherName: "", email: "", whatsapp: "" });
         setAnswers({});
         setCurrentQuestionIndex(0);
         setTimeRemaining(600);
         setScore(0);
-        setErrors({ fullName: "", email: "", whatsapp: "" });
+        setIsSubmitting(false);
+        setErrors({ applicationId: "" });
     };
 
     const currentQuestion = QUESTIONS[currentQuestionIndex];
     const answeredCount = Object.keys(answers).length;
 
-    const firstName = user.fullName.split(' ')[0];
+    const firstName = user.firstName;
 
     // --- UI RENDERING ---
 
@@ -421,7 +466,7 @@ export default function ScholarshipTestPage() {
         <div className="min-h-screen text-black selection:bg-purple-500/30 font-sans" style={{ backgroundColor: colors.bg }}>
             {/* STYLES FOR ANIMATIONS */}
             <style jsx global>{`
-                @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Outfit:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap');
+                @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Outfit:wght@400;500;700&family=Syne:wght@600;700;800&display=swap');
                 
                 body {
                     font-family: 'DM Sans', sans-serif;
@@ -480,37 +525,19 @@ export default function ScholarshipTestPage() {
 
                             <form onSubmit={handleRegister} className="max-w-md mx-auto space-y-6 text-left">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-500 mb-2">Full Name</label>
+                                    <label className="block text-sm font-medium text-gray-500 mb-2">Application ID</label>
                                     <input
                                         type="text"
-                                        value={user.fullName}
-                                        onChange={(e) => setUser(prev => ({ ...prev, fullName: e.target.value }))}
-                                        placeholder="Enter your legal name"
-                                        className={`w-full bg-gray-50 border ${errors.fullName ? 'border-red-500' : 'border-gray-200'} rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all text-black`}
+                                        value={user.applicationId}
+                                        onChange={(e) => setUser({ ...user, applicationId: e.target.value.toUpperCase() })}
+                                        className={`w-full px-6 py-4 rounded-2xl bg-gray-50 border-2 transition-all outline-none focus:bg-white text-center text-xl font-bold tracking-widest ${errors.applicationId ? 'border-red-200' : 'border-transparent focus:border-[#934ab3]'}`}
+                                        placeholder="KHA-XXXX-XXX"
                                     />
-                                    {errors.fullName && <p className="text-red-500 text-xs mt-2">{errors.fullName}</p>}
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-500 mb-2">Email Address</label>
-                                    <input
-                                        type="email"
-                                        value={user.email}
-                                        onChange={(e) => setUser(prev => ({ ...prev, email: e.target.value }))}
-                                        placeholder="your@email.com"
-                                        className={`w-full bg-gray-50 border ${errors.email ? 'border-red-500' : 'border-gray-200'} rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all text-black`}
-                                    />
-                                    {errors.email && <p className="text-red-500 text-xs mt-2">{errors.email}</p>}
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-500 mb-2">WhatsApp Number</label>
-                                    <input
-                                        type="tel"
-                                        value={user.whatsapp}
-                                        onChange={(e) => setUser(prev => ({ ...prev, whatsapp: e.target.value }))}
-                                        placeholder="+234..."
-                                        className={`w-full bg-gray-50 border ${errors.whatsapp ? 'border-red-500' : 'border-gray-200'} rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all text-black`}
-                                    />
-                                    {errors.whatsapp && <p className="text-red-500 text-xs mt-2">{errors.whatsapp}</p>}
+                                    {errors.applicationId && <p className="mt-2 text-xs text-red-500 font-medium text-center">{errors.applicationId}</p>}
+                                    <p className="mt-4 text-xs text-gray-400 text-center leading-relaxed">
+                                        Check your confirmation email for your unique Application ID. 
+                                        If you haven't applied yet, please <a href="/apply" className="text-[#934ab3] font-bold underline">apply here</a> first.
+                                    </p>
                                 </div>
 
                                 <button
@@ -671,19 +698,12 @@ export default function ScholarshipTestPage() {
                                                     <ChevronLeft size={20} /> Previous
                                                 </button>
                                                 
-                                                {currentQuestionIndex < 24 ? (
+                                                {currentQuestionIndex < 24 && (
                                                     <button
                                                         onClick={() => setCurrentQuestionIndex(prev => Math.min(24, prev + 1))}
                                                         className="flex-1 bg-purple-50 hover:bg-purple-100 text-[#934ab3] font-bold py-4 rounded-2xl transition-all active:scale-95 flex items-center justify-center gap-2"
                                                     >
                                                         Next Question <ChevronRight size={20} />
-                                                    </button>
-                                                ) : (
-                                                    <button
-                                                        onClick={handleSubmitTest}
-                                                        className="flex-1 bg-[#934ab3] text-white font-black py-4 rounded-2xl transition-all active:scale-95 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(147,74,179,0.2)]"
-                                                    >
-                                                        Review & Submit <Send size={18} />
                                                     </button>
                                                 )}
                                             </div>
@@ -744,53 +764,19 @@ export default function ScholarshipTestPage() {
                                     </div>
                                 </div>
                             </div>
-
-                            {/* MOBILE BOTTOM SUBMIT (IF NOT ALL ANSWERED) */}
-                            {answeredCount < 25 && (
-                                <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/80 backdrop-blur-xl border-t border-gray-200 lg:hidden z-50">
-                                    <button
-                                        onClick={handleSubmitTest}
-                                        disabled={isSubmitting}
-                                        className="w-full bg-gray-100 hover:bg-[#934ab3] hover:text-white text-gray-500 font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2"
-                                    >
-                                        Preview Submission
-                                    </button>
-                                </div>
-                            )}
-
-                            {/* WARNING MODAL */}
-                            {showWarning && (
-                                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
-                                    <motion.div 
-                                        initial={{ scale: 0.9, opacity: 0 }}
-                                        animate={{ scale: 1, opacity: 1 }}
-                                        className="bg-white border border-amber-200 p-8 rounded-3xl max-w-sm w-full text-center shadow-2xl"
-                                    >
-                                        <AlertTriangle size={48} className="text-amber-500 mx-auto mb-4" />
-                                        <h4 className="text-xl font-bold mb-2 text-black">Unfinished Business</h4>
-                                        <p className="text-gray-500 text-sm mb-6 leading-relaxed">
-                                            You have {QUESTIONS.length - Object.keys(answers).length} unanswered questions. 
-                                            Unanswered questions will be marked as incorrect. Are you sure you want to submit?
-                                        </p>
-                                        <div className="flex gap-3">
-                                            <button 
-                                                onClick={() => setShowWarning(false)}
-                                                className="flex-1 py-3 text-sm font-bold border border-gray-200 rounded-xl hover:bg-gray-50 active:scale-95 transition-all text-gray-500"
-                                            >
-                                                Go Back
-                                            </button>
-                                            <button 
-                                                onClick={handleSubmitTest}
-                                                className="flex-1 py-3 text-sm font-bold bg-amber-500 text-white rounded-xl hover:bg-amber-600 active:scale-95 transition-all"
-                                            >
-                                                Submit Anyway
-                                            </button>
-                                        </div>
-                                    </motion.div>
-                                </div>
-                            )}
+                                                  {/* MOBILE BOTTOM SUBMIT */}
+                            <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/80 backdrop-blur-xl border-t border-gray-200 lg:hidden z-50">
+                                <button
+                                    onClick={handleSubmitTest}
+                                    disabled={isSubmitting}
+                                    className={`w-full py-4 rounded-xl font-black text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${answeredCount === 25 ? 'bg-green-500 text-white shadow-[0_0_20px_rgba(34,197,94,0.2)]' : 'bg-gray-100 text-gray-500'}`}
+                                >
+                                    {answeredCount === 25 ? 'Finish & Submit' : 'Submit Test'}
+                                </button>
+                            </div>
                         </motion.div>
-                    )}                        {/* SCREEN 4: RESULTS */}
+                    )}
+                    {/* SCREEN 4: RESULTS */}
                     {screen === "RESULTS" && (
                         <motion.div
                             key="results"
@@ -942,6 +928,135 @@ export default function ScholarshipTestPage() {
                     )}
                 </AnimatePresence>
             </div>
+
+            {/* SUBMIT CONFIRMATION MODAL */}
+            <AnimatePresence>
+                {showSubmitModal && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4"
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            className="bg-white rounded-[32px] p-8 md:p-12 max-w-lg w-full shadow-2xl text-center"
+                        >
+                            <div className="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-8 text-amber-500">
+                                <AlertTriangle size={40} />
+                            </div>
+                            <h3 className="text-3xl font-black mb-4 text-black">Submit your test?</h3>
+                            <p className="text-gray-500 mb-10 text-lg leading-relaxed">
+                                Once submitted, you cannot change your answers. Are you sure you are ready to send your results?
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-4">
+                                <button
+                                    onClick={() => setShowSubmitModal(false)}
+                                    className="flex-1 py-4 px-6 rounded-2xl font-bold text-gray-500 hover:bg-gray-100 transition-all"
+                                >
+                                    Review Answers
+                                </button>
+                                <button
+                                    onClick={confirmSubmit}
+                                    className="flex-1 py-4 px-6 rounded-2xl font-black bg-green-500 text-white hover:bg-green-600 transition-all shadow-[0_10px_20px_rgba(34,197,94,0.3)]"
+                                >
+                                    Yes, Submit Now
+                                </button>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* DUPLICATE SUBMISSION MODAL */}
+            <AnimatePresence>
+                {showDuplicateModal && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4"
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            className="bg-white rounded-[32px] p-8 md:p-12 max-w-lg w-full shadow-2xl text-center"
+                        >
+                            <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-8 text-red-500">
+                                <XCircle size={40} />
+                            </div>
+                            <h3 className="text-3xl font-black mb-4 text-black">Already Submitted</h3>
+                            <p className="text-gray-500 mb-10 text-lg leading-relaxed">
+                                A submission with your details (Name, Email, or WhatsApp) has already been recorded. 
+                                Multiple attempts are not allowed for the Genesis Cohort Scholarship.
+                            </p>
+                            <button
+                                onClick={() => setShowDuplicateModal(false)}
+                                className="w-full py-4 px-6 rounded-2xl font-black bg-[#934ab3] text-white hover:bg-black transition-all shadow-[0_10px_20px_rgba(147,74,179,0.3)]"
+                            >
+                                Understood
+                            </button>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* SUBMITTING LOADING INTERFACE */}
+            <AnimatePresence>
+                {isSubmitting && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 bg-white z-[200] flex flex-col items-center justify-center p-6 text-center"
+                    >
+                        <motion.div
+                            animate={{ 
+                                rotate: 360,
+                            }}
+                            transition={{ 
+                                duration: 2, 
+                                repeat: Infinity, 
+                                ease: "linear" 
+                            }}
+                            className="relative w-24 h-24 mb-10"
+                        >
+                            <div className="absolute inset-0 border-8 border-purple-100 rounded-full"></div>
+                            <div className="absolute inset-0 border-8 border-t-[#934ab3] rounded-full"></div>
+                        </motion.div>
+                        
+                        <h2 className="text-4xl font-black mb-4 text-black animate-pulse">
+                            {screen === "REGISTRATION" ? "Verifying Details..." : "Calculating Results..."}
+                        </h2>
+                        <p className="text-gray-500 text-xl max-w-md mx-auto leading-relaxed">
+                            {screen === "REGISTRATION" 
+                                ? "Please wait while we check our database. Do not close this window." 
+                                : "Please wait while we review your answers and prepare your scholarship status. Do not close this window."}
+                        </p>
+                        
+                        <div className="mt-12 flex gap-1 justify-center">
+                            {[0, 1, 2].map((i) => (
+                                <motion.div
+                                    key={i}
+                                    animate={{ 
+                                        y: [0, -10, 0],
+                                        opacity: [0.3, 1, 0.3]
+                                    }}
+                                    transition={{ 
+                                        duration: 0.8, 
+                                        repeat: Infinity, 
+                                        delay: i * 0.2 
+                                    }}
+                                    className="w-3 h-3 bg-[#934ab3] rounded-full"
+                                />
+                            ))}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }

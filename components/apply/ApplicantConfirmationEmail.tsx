@@ -2,10 +2,12 @@ import * as React from 'react';
 
 interface ApplicantConfirmationEmailProps {
     fullName: string;
+    applicationId: string;
 }
 
 export function ApplicantConfirmationEmail({
     fullName,
+    applicationId,
 }: ApplicantConfirmationEmailProps) {
     const firstName = fullName.split(' ')[0];
     
@@ -88,10 +90,14 @@ export function ApplicantConfirmationEmail({
                 <div style={{ marginTop: '30px', marginBottom: '25px' }}>
                     <span style={sectionTitleStyle}>STEP 3 — Take the Scholarship Test</span>
                     <p style={{ margin: '5px 0' }}>Once you've completed Steps 1 and 2, your next task is to take the Scholarship Test.</p>
+                    <div style={{ backgroundColor: '#f3e8ff', padding: '15px', borderRadius: '8px', margin: '15px 0', border: '1px dashed #934ab3' }}>
+                        <p style={{ margin: '0 0 5px 0', fontSize: '14px', color: '#666' }}>Your Unique Application ID:</p>
+                        <p style={{ margin: 0, fontSize: '24px', fontWeight: 'bold', color: '#934ab3', letterSpacing: '2px' }}>{applicationId}</p>
+                    </div>
                     <ul style={{ paddingLeft: '20px', margin: '10px 0' }}>
                         <li>The scholarship covers your full access to the Genesis Cohort</li>
-                        <li>Only applicants who PASS the scholarship test will be awarded the scholarship and granted access</li>
-                        <li>The test is your chance to show us you're serious — come prepared</li>
+                        <li><strong>IMPORTANT:</strong> You will need your Application ID above to access the test</li>
+                        <li>Only applicants who PASS the scholarship test will be awarded the scholarship</li>
                     </ul>
                     <a href="https://academy.khrien.com/scholarship-test" style={linkStyle}> 👉 Take the Scholarship Test</a>
                 </div>
