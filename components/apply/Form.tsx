@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import Script from "next/script";
 import { motion } from "framer-motion";
 import * as zod from 'zod';
 import { useForm } from 'react-hook-form';
@@ -22,6 +23,9 @@ const validationSchema = zod.object({
       message: "Experience is required",
     }),
   referral: zod.string().optional(),
+  website: zod.string().optional(), // Honeypot field
+  turnstileToken: zod.string().optional(),
+  loadTime: zod.number().optional(),
 })
 
 type FormData = zod.infer<typeof validationSchema>
@@ -37,6 +41,9 @@ const Form = () => {
       goals: "",
       experience: "None",
       referral: "",
+      website: "",
+      turnstileToken: "",
+      loadTime: Date.now(),
     },
   })
   const experience = watch("experience");
@@ -48,13 +55,27 @@ const Form = () => {
 
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string>("");
+  const formLoadTime = useRef<number>(Date.now());
+
+  // Turnstile callback
+  const onTurnstileVerify = (token: string) => {
+    setTurnstileToken(token);
+  };
 
   const formSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     try {
+      // Add submission duration check
+      const submissionDuration = Date.now() - formLoadTime.current;
+      
       // Add a small delay to ensure the loading state is visible (UX improvement)
       await Promise.all([
-        axios.post('/api/contact', data),
+        axios.post('/api/contact', {
+          ...data,
+          turnstileToken,
+          submissionDuration
+        }),
         new Promise(resolve => setTimeout(resolve, 1500))
       ]);
       reset();
@@ -141,6 +162,16 @@ const Form = () => {
               className="w-full rounded-xl border border-gray-300 px-4 md:px-5 py-3 md:py-4 text-sm md:text-base text-white placeholder:text-white/60 focus:outline-none focus:border-brandPurple focus:ring-2 focus:ring-brandPurple/20 transition-all duration-200 bg-transparent"
             />
             {errors.fullName?.message && <p className="text-red-500 mt-2 font-semibold text-sm">* {errors.fullName?.message}</p>}
+          </div>
+
+          {/* Honeypot field - Invisible to humans */}
+          <div style={{ display: 'none' }} aria-hidden="true">
+            <input
+              type="text"
+              {...register('website')}
+              tabIndex={-1}
+              autoComplete="off"
+            />
           </div>
 
           {/* Email */}
@@ -262,6 +293,32 @@ const Form = () => {
             />
           </div>
 
+          {/* Cloudflare Turnstile Widget */}
+          <div className="flex justify-center flex-col items-center gap-2 pb-4">
+            <Script
+              src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+              async
+              defer
+            />
+            <div 
+              className="cf-turnstile" 
+              data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "1x00000000000000000000AA"}
+              data-callback="onTurnstileVerify"
+              data-theme="dark"
+            />
+            {/* Global function for Turnstile callback */}
+            <Script id="turnstile-callback" strategy="afterInteractive">
+              {`
+                window.onTurnstileVerify = function(token) {
+                  const event = new CustomEvent('turnstile-verify', { detail: token });
+                  window.dispatchEvent(event);
+                };
+              `}
+            </Script>
+          </div>
+          
+          <TurnstileListener onVerify={onTurnstileVerify} />
+
           {/* Submit */}
           <div className="flex justify-center pt-2 md:pt-4">
             <button
@@ -293,6 +350,16 @@ const Form = () => {
       </section>
     </main>
   );
+};
+
+// Helper component to handle the custom event from the global callback
+const TurnstileListener = ({ onVerify }: { onVerify: (token: string) => void }) => {
+  useEffect(() => {
+    const handleVerify = (e: any) => onVerify(e.detail);
+    window.addEventListener('turnstile-verify', handleVerify);
+    return () => window.removeEventListener('turnstile-verify', handleVerify);
+  }, [onVerify]);
+  return null;
 };
 
 export default Form;

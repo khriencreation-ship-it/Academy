@@ -2,12 +2,78 @@ import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { ContactNotificationEmail } from '@/components/apply/ContactNotificationEmail';
 import { ApplicantConfirmationEmail } from '@/components/apply/ApplicantConfirmationEmail';
+import { rateLimit } from '@/lib/rate-limit';
+import { headers } from 'next/headers';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
   try {
+    const headerList = headers();
+    const ip = (await headerList).get('x-forwarded-for') || 'anonymous';
+    
+    // 1. Rate Limiting (20 requests per minute per IP address)
+    // This is very generous: it allows 20 people from the SAME office/house to apply in one minute.
+    if (!rateLimit(ip, 20, 60000)) {
+      return NextResponse.json(
+        { success: false, error: 'Too many requests. Please try again later.' },
+        { status: 429 }
+      );
+    }
+
     const data = await req.json();
+    const { website, turnstileToken, submissionDuration } = data;
+
+    // Honeypot check: if 'website' is filled, it's likely a bot.
+    // We return a success response but don't process the data.
+    if (website) {
+      console.warn('Spam submission detected via honeypot:', website);
+      return NextResponse.json({ 
+        success: true, 
+        message: 'Form processed successfully' 
+      });
+    }
+
+    // 3. Submission Duration Check (Reject if less than 3 seconds)
+    if (submissionDuration && submissionDuration < 3000) {
+      console.warn('Spam submission detected via duration check:', submissionDuration);
+      return NextResponse.json({ 
+        success: true, 
+        message: 'Form processed successfully' 
+      });
+    }
+
+    // 4. Cloudflare Turnstile Verification
+    const SECRET_KEY = process.env.TURNSTILE_SECRET_KEY || "1x0000000000000000000000000000000AA"; // Default testing secret
+    
+    if (!turnstileToken) {
+      return NextResponse.json(
+        { success: false, error: 'Security verification failed. Please try again.' },
+        { status: 400 }
+      );
+    }
+
+    const verifyResponse = await fetch(
+      'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          secret: SECRET_KEY,
+          response: turnstileToken,
+          remoteip: ip,
+        }),
+      }
+    );
+
+    const verifyResult = await verifyResponse.json();
+    if (!verifyResult.success) {
+      console.warn('Turnstile verification failed:', verifyResult);
+      return NextResponse.json(
+        { success: false, error: 'Security verification failed. Please try again.' },
+        { status: 400 }
+      );
+    }
 
     // Generate unique Application ID
     const timestamp = Date.now().toString(36).toUpperCase();
