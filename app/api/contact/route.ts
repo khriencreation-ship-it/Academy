@@ -132,7 +132,7 @@ export async function POST(req: Request) {
     const [sheetResponse, emailResult, applicantEmailResult] = await Promise.all([
       googleSheetsPromise,
       emailPromise,
-      applicantEmailPromise,
+      applicantEmailPromise
     ]);
 
     const sheetText = await sheetResponse.text();

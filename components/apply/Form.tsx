@@ -101,7 +101,7 @@ const Form = () => {
               Application Submitted Successfully!
             </h1>
             <p className="max-w-2xl mx-auto text-base md:text-lg text-white/80 leading-relaxed mb-6 md:mb-8">
-              Thank you for applying to Khrien Academy. Your application has been received and is currently under review. Please make sure you are following our Instagram page, as this is required for your application to be considered. Also, keep an eye on your email and our social media pages for important updates about your application.
+              Application received! Please check your email and spam folder for the scholarship test and next steps. Also, ensure you follow us on Instagram—it's required to qualify.
             </p>
             <motion.div
               className="flex justify-center mt-6"
@@ -198,12 +198,12 @@ const Form = () => {
               htmlFor="phone"
               className="block text-sm md:text-base font-semibold text-white mb-2"
             >
-              Phone Number
+              Whatsapp Number
             </label>
             <input
               id="phone"
               type="tel"
-              placeholder="WhatsApp-enabled preferred"
+              placeholder="Enter your whatsapp number"
               {...register('phone')}
               className="w-full rounded-xl border border-gray-300 px-4 md:px-5 py-3 md:py-4 text-sm md:text-base text-white placeholder:text-white/60 focus:outline-none focus:border-brandPurple focus:ring-2 focus:ring-brandPurple/20 transition-all duration-200 bg-transparent"
             />
