@@ -12,6 +12,8 @@ export interface Application {
   goals: string | null
   experience: string | null
   referral: string | null
+  whatsapp_reminded_at?: string | null
+  whatsapp_remind_count?: number
 }
 
 export interface AnalyticsEvent {

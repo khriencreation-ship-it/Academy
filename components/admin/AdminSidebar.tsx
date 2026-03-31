@@ -3,13 +3,14 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, Users, LogOut, BarChart3 } from 'lucide-react'
+import { LayoutDashboard, Users, LogOut, BarChart3, MessageSquare } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 
 const navItems = [
   { label: 'Home', href: '/khrienadmin/dashboard', icon: LayoutDashboard },
   { label: 'Applications', href: '/khrienadmin/applications', icon: Users },
   { label: 'Analytics', href: '/khrienadmin/analytics', icon: BarChart3 },
+  { label: 'Outreach', href: '/khrienadmin/outreach', icon: MessageSquare },
 ]
 
 export default function AdminSidebar({ userEmail }: { userEmail: string }) {
