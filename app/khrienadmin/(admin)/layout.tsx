@@ -13,7 +13,7 @@ export default async function AdminGroupLayout({ children }: { children: React.R
   return (
     <div className="flex min-h-screen bg-[#f5f6fa]">
       <AdminSidebar userEmail={user.email ?? ''} />
-      <main className="flex-1 ml-64 min-h-screen overflow-x-hidden">
+      <main className="flex-1 md:ml-64 min-h-screen overflow-x-hidden">
         {children}
       </main>
     </div>
