@@ -13,24 +13,8 @@ import {
   Target
 } from 'lucide-react'
 import AdminCharts from '@/components/admin/AdminCharts'
+import { Application, AnalyticsEvent } from '@/types/admin'
 
-interface Application {
-  id: string
-  full_name: string
-  email: string
-  phone: string
-  scholarship_status: string
-  test_score: number
-  created_at: string
-  cohort: string | null
-  referral: string | null
-}
-
-interface AnalyticsEvent {
-  id: string
-  event_type: string
-  created_at: string
-}
 
 interface Props {
   applications: Application[]

@@ -2,19 +2,8 @@
 
 import { useState } from 'react'
 import { Users, CheckCircle, XCircle, Clock, TrendingUp, Filter, BookOpen } from 'lucide-react'
+import { Application } from '@/types/admin'
 
-interface Application {
-  id: string
-  full_name: string
-  email: string
-  phone: string
-  application_id: string
-  scholarship_status: string
-  test_score: number
-  created_at: string
-  cohort: string | null
-  referral: string | null
-}
 
 interface Props {
   applications: Application[]

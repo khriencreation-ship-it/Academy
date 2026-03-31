@@ -7,22 +7,8 @@ import {
   ChevronRight, Filter, FileJson 
 } from 'lucide-react'
 import Link from 'next/link'
+import { Application } from '@/types/admin'
 
-interface Application {
-  id: string
-  full_name: string
-  email: string
-  phone: string
-  application_id: string
-  scholarship_status: string
-  test_score: number
-  created_at: string
-  cohort: string | null
-  motivation: string | null
-  goals: string | null
-  experience: string | null
-  referral: string | null
-}
 
 interface Props {
   applications: Application[]

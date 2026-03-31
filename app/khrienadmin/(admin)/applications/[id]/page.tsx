@@ -6,24 +6,10 @@ import {
   ArrowLeft, User, Mail, Phone, BookOpen, Award,
   Target, Lightbulb, Star, Share2, Calendar, Hash
 } from 'lucide-react'
+import { Application } from '@/types/admin'
 
 export const revalidate = 0
 
-interface Application {
-  id: string
-  full_name: string
-  email: string
-  phone: string
-  application_id: string
-  scholarship_status: string
-  test_score: number
-  created_at: string
-  cohort: string | null
-  motivation: string | null
-  goals: string | null
-  experience: string | null
-  referral: string | null
-}
 
 export default async function ApplicantDetailPage({
   params,

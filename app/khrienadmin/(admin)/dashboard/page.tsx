@@ -2,21 +2,10 @@ import { createClient as createServerSupabase } from '@/lib/supabase/server'
 import { supabase as directSupabase } from '@/lib/supabase'
 import { redirect } from 'next/navigation'
 import DashboardClient from '@/components/admin/DashboardClient'
+import { Application } from '@/types/admin'
 
 export const revalidate = 0
 
-interface Application {
-  id: string
-  full_name: string
-  email: string
-  phone: string
-  application_id: string
-  scholarship_status: string
-  test_score: number
-  created_at: string
-  cohort: string | null
-  referral: string | null
-}
 
 export default async function AdminDashboard() {
   const supabaseAuth = await createServerSupabase()

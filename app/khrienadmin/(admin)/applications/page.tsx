@@ -2,20 +2,10 @@ import { supabase as directSupabase } from '@/lib/supabase'
 import { createClient as createServerSupabase } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import ApplicationsClient from '@/components/admin/ApplicationsClient'
+import { Application } from '@/types/admin'
 
 export const revalidate = 0
 
-interface Application {
-  id: string
-  full_name: string
-  email: string
-  phone: string
-  application_id: string
-  scholarship_status: string
-  test_score: number
-  created_at: string
-  cohort: string | null
-}
 
 export default async function ApplicationsPage() {
   const supabaseAuth = await createServerSupabase()
