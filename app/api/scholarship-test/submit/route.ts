@@ -55,20 +55,7 @@ export async function POST(req: Request) {
                     : FailEmail({ fullName }),
             });
 
-            // Notify admin
-            await resend.emails.send({
-                from: 'Khrien Academy System <hello@khrien.com>',
-                to: ['khriencreation@gmail.com'],
-                subject: `Test Result: ${fullName} (${score}/25) - ${passed ? 'PASSED' : 'FAILED'}`,
-                html: `
-                    <p><strong>Name:</strong> ${fullName}</p>
-                    <p><strong>Application ID:</strong> ${applicationId}</p>
-                    <p><strong>Email:</strong> ${email}</p>
-                    <p><strong>Score:</strong> ${score}/25</p>
-                    <p><strong>Status:</strong> ${passed ? 'PASSED' : 'FAILED'}</p>
-                `,
-            });
-            
+            // Result processed
             return NextResponse.json({ 
                 success: true, 
                 message: 'Result processed and email sent successfully' 

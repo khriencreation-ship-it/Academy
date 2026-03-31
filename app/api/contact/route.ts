@@ -104,23 +104,7 @@ export async function POST(req: Request) {
       }
     ]);
 
-    // 2. Admin notification
-    const emailPromise = resend.emails.send({
-      from: 'Khrien Academy <hello@khrien.com>',
-      to: ['khriencreation@gmail.com'],
-      subject: `New Application: ${data.fullName}`,
-      react: ContactNotificationEmail({
-        fullName: data.fullName,
-        email: data.email,
-        phone: data.phone,
-        motivation: data.motivation,
-        goals: data.goals,
-        experience: data.experience,
-        referral: data.referral,
-      }),
-    });
-
-    // 3. Send confirmation email to applicant
+    // 2. Send confirmation email to applicant
     const applicantEmailPromise = resend.emails.send({
       from: 'Khrien Academy <hello@khrien.com>',
       to: [data.email],
@@ -132,9 +116,8 @@ export async function POST(req: Request) {
     });
 
     // Run all tasks
-    const [dbResult, adminEmailResult, userEmailResult] = await Promise.all([
+    const [dbResult, userEmailResult] = await Promise.all([
       dbPromise,
-      emailPromise,
       applicantEmailPromise
     ]);
 
@@ -142,10 +125,6 @@ export async function POST(req: Request) {
       console.error('Database insertion failed:', dbResult.error);
       // We still return true if emails were sent, but log the error
       // In production, you might want to return an error here
-    }
-
-    if (adminEmailResult.error) {
-      console.error('Admin email sending failed:', adminEmailResult.error);
     }
 
     if (userEmailResult.error) {
