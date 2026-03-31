@@ -70,7 +70,7 @@ export function PassEmail({
 
                 <p>Hi {firstName},</p>
 
-                <p>We have reviewed your scholarship test results — and we are proud to tell you:</p>
+                <p>We have reviewed your scholarship test results and we are proud to tell you:</p>
 
                 <p style={{ fontSize: '20px', fontWeight: 'bold', color: brandColor }}>You passed. 🎉</p>
 
@@ -85,13 +85,13 @@ export function PassEmail({
                     <div style={infoItemStyle}>📅 <strong>START DATE:</strong> May 4, 2026</div>
                     <div style={infoItemStyle}>🏁 <strong>END DATE:</strong> July 5, 2026</div>
                     <div style={infoItemStyle}>⏱ <strong>DURATION:</strong> 3 Months</div>
-                    <div style={infoItemStyle}>💰 <strong>TUITION:</strong> Fully Free — covered by your scholarship</div>
+                    <div style={infoItemStyle}>💰 <strong>TUITION:</strong> Fully Free covered by your scholarship</div>
                 </div>
 
-                <p>As a Genesis Cohort member, you are not just a student. You are a founding learner of Khrien Academy — the very first cohort in our history. That is a title that will always belong to you.</p>
+                <p>As a Genesis Cohort member, you are not just a student. You are a founding learner of Khrien Academy the very first cohort in our history. That is a title that will always belong to you.</p>
 
                 <h3 style={{ color: '#000', marginTop: '30px' }}>WHAT HAPPENS NEXT:</h3>
-                <p>We will be sending you your official onboarding details — including access to the learning platform, your first lesson, and how to connect with your fellow cohort members — before May 4.</p>
+                <p>We will be sending you your official onboarding details including access to the learning platform, your first lesson, and how to connect with your fellow cohort members before May 4.</p>
 
                 <p>In the meantime, make sure you have done the following if you haven't already:</p>
 
@@ -113,7 +113,7 @@ export function PassEmail({
                     
                     <p style={{ margin: '20px 0 0 0', fontStyle: 'italic', color: '#888', borderTop: '1px solid #eee', paddingTop: '15px' }}>
                         "The future belongs to those who prepare. And this is only the beginning."<br/>
-                        — Khrien Academy
+                        Khrien Academy
                     </p>
                 </div>
             </div>

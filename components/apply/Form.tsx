@@ -64,6 +64,13 @@ const Form = () => {
   };
 
   const formSubmit = async (data: FormData) => {
+    // Log the apply click
+    fetch('/api/analytics/log', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ event_type: 'apply_click' })
+    }).catch(console.error);
+
     setIsSubmitting(true);
     try {
       // Add submission duration check
@@ -111,6 +118,13 @@ const Form = () => {
               <a
                 href="https://www.instagram.com/thisis_khrien?igsh=MWJocjI5ZWdsbHF5Zw=="
                 target="_blank"
+                onClick={() => {
+                  fetch('/api/analytics/log', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ event_type: 'instagram_click' })
+                  }).catch(console.error);
+                }}
                 className="relative overflow-hidden rounded-sm bg-brandPurple px-6 md:px-8 lg:px-10 py-2.5 md:py-3 text-sm md:text-base lg:text-lg font-semibold group"
               >
                 {/* Default Text */}
@@ -284,13 +298,29 @@ const Form = () => {
                 Optional
               </span>
             </label>
-            <input
-              id="referral"
-              type="text"
-              placeholder="e.g. Social media, a friend, search engine..."
-              {...register('referral')}
-              className="w-full rounded-xl border border-gray-300 px-4 md:px-5 py-3 md:py-4 text-sm md:text-base text-white placeholder:text-white/60 focus:outline-none focus:border-brandPurple focus:ring-2 focus:ring-brandPurple/20 transition-all duration-200 bg-transparent"
-            />
+            <div className="relative">
+              <select
+                id="referral"
+                {...register('referral')}
+                className="w-full rounded-xl border border-gray-300 px-4 md:px-5 py-3 md:py-4 text-sm md:text-base text-white focus:outline-none focus:border-brandPurple focus:ring-2 focus:ring-brandPurple/20 transition-all duration-200 bg-black cursor-pointer appearance-none"
+              >
+                <option value="" disabled>Select an option</option>
+                <option value="PSA">PSA</option>
+                <option value="BAMS">BAMS</option>
+                <option value="OAUPGSA">OAUPGSA</option>
+                <option value="LSUDS">LSUDS</option>
+                <option value="Rotaract club">Rotaract club</option>
+                <option value="Friend">Friend</option>
+                <option value="Instagram">Instagram</option>
+                <option value="Facebook">Facebook</option>
+                <option value="Other">Other</option>
+              </select>
+              <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+                <svg className="w-4 h-4 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </div>
+            </div>
           </div>
 
           {/* Cloudflare Turnstile Widget */}

@@ -63,17 +63,17 @@ export function FailEmail({
 
                 <p style={{ fontWeight: 'bold' }}>This means you have not been selected for the Genesis Cohort at this time.</p>
 
-                <p>We know that is not easy to hear — and we want to be honest with you rather than leave you wondering.</p>
+                <p>We know that is not easy to hear and we want to be honest with you rather than leave you wondering.</p>
 
                 <p>But here is what we also want you to know:</p>
 
                 <p style={{ color: brandColor, fontWeight: 'bold', fontSize: '18px' }}>This is not the end of your journey with Khrien Academy.</p>
 
-                <p>The Genesis Cohort is just the beginning. We are building something much bigger, and future cohorts are already in the works. Every program we launch will be an opportunity for you to apply again — and we genuinely hope you do.</p>
+                <p>The Genesis Cohort is just the beginning. We are building something much bigger, and future cohorts are already in the works. Every program we launch will be an opportunity for you to apply again and we genuinely hope you do.</p>
 
                 <div style={{ margin: '30px 0', padding: '20px', backgroundColor: '#fdf4ff', borderRadius: '12px', border: '1px solid #f5d0fe' }}>
                     <p style={{ fontWeight: 'bold', margin: '0 0 15px 0' }}>HERE IS WHAT WE ENCOURAGE YOU TO DO:</p>
-                    <p>👉 Stay connected. Join our community and follow us on Instagram — this is where we announce new cohorts, free learning opportunities, and academy updates first.</p>
+                    <p>👉 Stay connected. Join our community and follow us on Instagram this is where we announce new cohorts, free learning opportunities, and academy updates first.</p>
                     
                     <div style={{ marginTop: '15px' }}>
                         <p style={{ margin: '5px 0' }}>✅ <strong>Join our community</strong> → <a href="https://chat.whatsapp.com/KavR69S3M3rBox593jkKEw" style={linkStyle}>Join the Community</a></p>
@@ -92,7 +92,7 @@ export function FailEmail({
 
                     <p style={{ margin: '20px 0 0 0', fontStyle: 'italic', color: '#888', borderTop: '1px solid #eee', paddingTop: '15px' }}>
                         "The future belongs to those who prepare. And this is only the beginning."<br/>
-                        — Khrien Academy
+                     Khrien Academy
                     </p>
                 </div>
             </div>

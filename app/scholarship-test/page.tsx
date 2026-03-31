@@ -332,13 +332,14 @@ export default function ScholarshipTestPage() {
             }
 
             // Populate user details from verification response
+            const fullName = data.userData.fullName || '';
+            const names = fullName.split(' ');
+            
             setUser(prev => ({
                 ...prev,
-                firstName: data.userData.firstName,
-                lastName: data.userData.lastName,
-                otherName: data.userData.otherName,
-                email: data.userData.email,
-                whatsapp: data.userData.whatsapp
+                firstName: names[0] || 'Applicant',
+                lastName: names.length > 1 ? names[names.length - 1] : '',
+                email: data.userData.email
             }));
 
         } catch (error) {
@@ -838,51 +839,14 @@ export default function ScholarshipTestPage() {
                                 </div>
                             )}
 
-                            {/* ANSWER REVIEW */}
-                            <div className="mt-24 text-left">
-                                <h3 className="text-2xl font-bold mb-8 syne-heading border-b border-gray-100 pb-4 text-black text-center lg:text-left">Detailed Review</h3>
-                                <div className="space-y-6">
-                                    {QUESTIONS.map((q, idx) => {
-                                        const isCorrect = answers[q.id] === q.correctAnswer;
-                                        return (
-                                            <div key={q.id} className="p-6 bg-gray-50 border border-gray-100 rounded-2xl">
-                                                <div className="flex items-center gap-3 mb-3">
-                                                    <span className="text-xs font-black text-gray-400 uppercase">Q{idx + 1}</span>
-                                                    {isCorrect ? (
-                                                        <span className="text-[10px] bg-green-50 text-green-600 border border-green-200 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Correct</span>
-                                                    ) : (
-                                                        <span className="text-[10px] bg-red-50 text-red-500 border border-red-200 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Incorrect</span>
-                                                    )}
-                                                </div>
-                                                <p className="text-lg font-medium mb-4 text-black">{q.text}</p>
-                                                <div className="grid md:grid-cols-2 gap-4">
-                                                    <div>
-                                                        <span className="text-[10px] font-bold text-gray-400 uppercase block mb-1">Your Answer</span>
-                                                        <div className={`p-2 px-3 rounded-lg text-sm border ${isCorrect ? 'border-green-200 bg-white text-green-600' : 'border-red-200 bg-white text-red-500'}`}>
-                                                            {answers[q.id] || "No answer provided"}
-                                                        </div>
-                                                    </div>
-                                                    {!isCorrect && (
-                                                        <div>
-                                                            <span className="text-[10px] font-bold text-gray-400 uppercase block mb-1">Correct Answer</span>
-                                                            <div className="p-2 px-3 rounded-lg text-sm border border-green-200 bg-green-50 text-green-600 font-bold">
-                                                                {q.correctAnswer}
-                                                            </div>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
+                            <div className="flex flex-col items-center">
+                                <button
+                                    onClick={resetTest}
+                                    className="mt-16 bg-[#934ab3] text-white px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-black transition-all transform hover:scale-105 shadow-[0_10px_30px_rgba(147,74,179,0.3)]"
+                                >
+                                    Return to Home
+                                </button>
                             </div>
-
-                            <button
-                                onClick={resetTest}
-                                className="mt-16 text-gray-400 hover:text-black transition-colors text-sm underline"
-                            >
-                                Back to Main Website
-                            </button>
                         </motion.div>
                     )}
 
@@ -909,7 +873,19 @@ export default function ScholarshipTestPage() {
                                         We will be opening future cohorts. Follow us on Instagram and join our community to be the first to know.
                                     </p>
                                     <div className="flex justify-center gap-6 pt-4">
-                                        <a href="https://www.instagram.com/thisis_khrien" className="text-[#934ab3] hover:text-black transition-colors" target="_blank" rel="noopener noreferrer">
+                                        <a 
+                                            href="https://www.instagram.com/thisis_khrien" 
+                                            className="text-[#934ab3] hover:text-black transition-colors" 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            onClick={() => {
+                                              fetch('/api/analytics/log', {
+                                                method: 'POST',
+                                                headers: { 'Content-Type': 'application/json' },
+                                                body: JSON.stringify({ event_type: 'instagram_click' })
+                                              }).catch(console.error);
+                                            }}
+                                        >
                                             <Instagram size={28} />
                                         </a>
                                         <a href="https://chat.whatsapp.com/KavR69S3M3rBox593jkKEw" className="text-[#934ab3] hover:text-black transition-colors" target="_blank" rel="noopener noreferrer">

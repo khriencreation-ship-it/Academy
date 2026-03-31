@@ -4,10 +4,11 @@ import { usePathname } from 'next/navigation';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer&Cta";
 import WhatsApp from "@/components/Whatsapp";
+import Script from "next/script";
 
 export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isExcluded = pathname === '/scholarship-test';
+  const isExcluded = pathname.startsWith('/khrienadmin') || pathname === '/scholarship-test';
 
   if (isExcluded) {
     return <>{children}</>;
@@ -19,6 +20,12 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
       <WhatsApp />
       {children}
       <Footer />
+      {/* Cloudflare Web Analytics - Only on public pages */}
+      <Script
+        defer
+        src='https://static.cloudflareinsights.com/beacon.min.js'
+        data-cf-beacon='{"token": "5c1e94d3189443468a7a18ffe621de6b"}'
+      />
     </>
   );
 }

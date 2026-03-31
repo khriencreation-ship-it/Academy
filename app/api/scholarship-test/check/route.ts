@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { headers } from 'next/headers';
+import { supabase } from '@/lib/supabase';
 
 export async function POST(req: Request) {
     try {
@@ -12,35 +12,27 @@ export async function POST(req: Request) {
             );
         }
 
-        // Call Google Apps Script for verification
+        // Call Supabase for verification
         try {
-            const response = await fetch(
-                'https://script.google.com/macros/s/AKfycbwqdU49riG5o69LA9I2IqCqnaZVe6ZxD0idPSKjhPOvU-PAY4pXuLXeH1PMupr1kKsD/exec',
-                {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        action: 'checkScholarship',
-                        applicationId: applicationId
-                    }),
-                }
-            );
+            const { data: user, error } = await supabase
+                .from('applications')
+                .select('full_name, email, taken_scholarship')
+                .eq('application_id', applicationId)
+                .single();
 
-            const result = await response.json();
-            
-            if (result.exists) { // This means "Taken Test" is already Yes
-                return NextResponse.json({ 
-                    success: true, 
-                    exists: true, 
-                    message: 'You have already taken this test.' 
-                });
-            }
-
-            if (!result.verified) { // ID not found in master sheet
+            if (error || !user) {
                 return NextResponse.json({ 
                     success: true, 
                     verified: false,
                     message: 'Invalid Application ID.'
+                });
+            }
+            
+            if (user.taken_scholarship) {
+                return NextResponse.json({ 
+                    success: true, 
+                    exists: true, 
+                    message: 'You have already taken this test.' 
                 });
             }
 
@@ -49,16 +41,18 @@ export async function POST(req: Request) {
                 success: true, 
                 verified: true,
                 exists: false,
-                userData: result.userData // First Name, Email, etc.
+                userData: {
+                    fullName: user.full_name,
+                    email: user.email
+                }
             });
 
         } catch (err) {
-            console.error('Google Sheets Check Error:', err);
+            console.error('Supabase Check Error:', err);
             return NextResponse.json({ 
-                success: true, 
-                exists: false,
-                warning: 'Could not verify existence, allowing proceed'
-            });
+                success: false, 
+                error: 'Database verification failed'
+            }, { status: 500 });
         }
     } catch (err: any) {
         console.error('Scholarship Check API Error:', err);

@@ -4,6 +4,7 @@ import { ContactNotificationEmail } from '@/components/apply/ContactNotification
 import { ApplicantConfirmationEmail } from '@/components/apply/ApplicantConfirmationEmail';
 import { rateLimit } from '@/lib/rate-limit';
 import { headers } from 'next/headers';
+import { supabase } from '@/lib/supabase';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -13,7 +14,6 @@ export async function POST(req: Request) {
     const ip = (await headerList).get('x-forwarded-for') || 'anonymous';
     
     // 1. Rate Limiting (20 requests per minute per IP address)
-    // This is very generous: it allows 20 people from the SAME office/house to apply in one minute.
     if (!rateLimit(ip, 20, 60000)) {
       return NextResponse.json(
         { success: false, error: 'Too many requests. Please try again later.' },
@@ -24,8 +24,7 @@ export async function POST(req: Request) {
     const data = await req.json();
     const { website, turnstileToken, submissionDuration } = data;
 
-    // Honeypot check: if 'website' is filled, it's likely a bot.
-    // We return a success response but don't process the data.
+    // Honeypot check
     if (website) {
       console.warn('Spam submission detected via honeypot:', website);
       return NextResponse.json({ 
@@ -34,7 +33,7 @@ export async function POST(req: Request) {
       });
     }
 
-    // 3. Submission Duration Check (Reject if less than 3 seconds)
+    // 3. Submission Duration Check
     if (submissionDuration && submissionDuration < 3000) {
       console.warn('Spam submission detected via duration check:', submissionDuration);
       return NextResponse.json({ 
@@ -44,7 +43,7 @@ export async function POST(req: Request) {
     }
 
     // 4. Cloudflare Turnstile Verification
-    const SECRET_KEY = process.env.TURNSTILE_SECRET_KEY || "1x0000000000000000000000000000000AA"; // Default testing secret
+    const SECRET_KEY = process.env.TURNSTILE_SECRET_KEY || "1x0000000000000000000000000000000AA";
     
     if (!turnstileToken) {
       return NextResponse.json(
@@ -80,30 +79,34 @@ export async function POST(req: Request) {
     const random = Math.random().toString(36).substring(2, 5).toUpperCase();
     const applicationId = `KHA-${timestamp}-${random}`;
 
-    // 1. Send data to Google Sheets
-    const googleSheetsPromise = fetch(
-      'https://script.google.com/macros/s/AKfycbwqdU49riG5o69LA9I2IqCqnaZVe6ZxD0idPSKjhPOvU-PAY4pXuLXeH1PMupr1kKsD/exec',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          applicationId: applicationId,
-          fullName: data.fullName,
-          email: data.email,
-          phone: data.phone,
-          motivation: data.motivation,
-          goals: data.goals,
-          experience: data.experience,
-          referral: data.referral,
-          takenScholarship: 'No',
-          scholarshipStatus: 'Pending',
-          testScore: 0
-        }),
-      }
-    );
+    // ─── COHORT CONFIG ────────────────────────────────────────────────────────
+    // To start a new cohort, update this ONE constant.
+    // All new applications will be tagged with the new cohort name automatically.
+    // Old applications retain their original cohort tag permanently.
+    const CURRENT_COHORT = 'Genesis Cohort';
+    // ─────────────────────────────────────────────────────────────────────────
 
+    // 1. Send data to Supabase
+    const dbPromise = supabase.from('applications').insert([
+      {
+        application_id: applicationId,
+        full_name: data.fullName,
+        email: data.email,
+        phone: data.phone,
+        motivation: data.motivation,
+        goals: data.goals,
+        experience: data.experience,
+        referral: data.referral,
+        taken_scholarship: false,
+        scholarship_status: 'Pending',
+        test_score: 0,
+        cohort: CURRENT_COHORT,
+      }
+    ]);
+
+    // 2. Admin notification
     const emailPromise = resend.emails.send({
-      from: 'Khrien Academy Application <hello@khrien.com>',
+      from: 'Khrien Academy <hello@khrien.com>',
       to: ['khriencreation@gmail.com'],
       subject: `New Application: ${data.fullName}`,
       react: ContactNotificationEmail({
@@ -129,26 +132,30 @@ export async function POST(req: Request) {
     });
 
     // Run all tasks
-    const [sheetResponse, emailResult, applicantEmailResult] = await Promise.all([
-      googleSheetsPromise,
+    const [dbResult, adminEmailResult, userEmailResult] = await Promise.all([
+      dbPromise,
       emailPromise,
       applicantEmailPromise
     ]);
 
-    const sheetText = await sheetResponse.text();
-
-    if (emailResult.error) {
-      console.error('Admin email sending failed:', emailResult.error);
+    if (dbResult.error) {
+      console.error('Database insertion failed:', dbResult.error);
+      // We still return true if emails were sent, but log the error
+      // In production, you might want to return an error here
     }
 
-    if (applicantEmailResult.error) {
-      console.error('Applicant email sending failed:', applicantEmailResult.error);
+    if (adminEmailResult.error) {
+      console.error('Admin email sending failed:', adminEmailResult.error);
+    }
+
+    if (userEmailResult.error) {
+      console.error('Applicant email sending failed:', userEmailResult.error);
     }
 
     return NextResponse.json({ 
       success: true, 
       message: 'Form processed successfully',
-      sheetStatus: sheetText 
+      applicationId: applicationId
     });
   } catch (err: any) {
     console.error('Contact API Error:', err);
