@@ -18,7 +18,7 @@ import {
 
 // --- TYPES & DATA ---
 
-type ScreenState = "REGISTRATION" | "INSTRUCTIONS" | "TEST" | "RESULTS" | "TIMEOUT";
+type ScreenState = "REGISTRATION" | "FOLLOW" | "INSTRUCTIONS" | "TEST" | "RESULTS" | "TIMEOUT";
 
 interface Question {
     id: string;
@@ -291,7 +291,7 @@ export default function ScholarshipTestPage() {
     const [showSubmitModal, setShowSubmitModal] = useState(false);
     const [showDuplicateModal, setShowDuplicateModal] = useState(false);
     const [errors, setErrors] = useState({ applicationId: "" });
-    // Remove userIp state
+    const [hasClickedFollow, setHasClickedFollow] = useState(false);
 
     const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -361,7 +361,7 @@ export default function ScholarshipTestPage() {
 
         setErrors(newErrors);
         if (valid) {
-            setScreen("INSTRUCTIONS");
+            setScreen("FOLLOW");
             window.scrollTo(0, 0);
         }
     };
@@ -555,7 +555,84 @@ export default function ScholarshipTestPage() {
                         </motion.div>
                     )}
 
-                    {/* SCREEN 2: INSTRUCTIONS */}
+                    {/* SCREEN 2: FOLLOW PAGE */}
+                    {screen === "FOLLOW" && (
+                        <motion.div
+                            key="follow"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            className="text-center max-w-xl mx-auto"
+                        >
+                            <div className="mb-8 flex flex-col items-center">
+                                <div className="relative w-32 h-10 mb-6 opacity-60">
+                                    <Image 
+                                        src="/academylogo.webp" 
+                                        alt="Khrien Academy Logo" 
+                                        fill
+                                        style={{ objectFit: 'contain' }}
+                                    />
+                                </div>
+                                <h2 className="text-3xl font-black mb-4 text-black">Stay Connected</h2>
+                                <p className="text-gray-500 text-lg leading-relaxed">
+                                    To be eligible for the scholarship and stay updated on the Genesis Cohort, ensure you are following us on Instagram.
+                                </p>
+                            </div>
+
+                            <div className="space-y-6">
+                                <a 
+                                    href="https://www.instagram.com/thisis_khrien?igsh=MWJocjI5ZWdsbHF5Zw==" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className={`w-full font-black py-5 rounded-2xl transition-all transform hover:scale-[1.03] shadow-lg flex items-center justify-center gap-3 text-lg ${
+                                        hasClickedFollow 
+                                        ? "bg-green-500 text-white" 
+                                        : "bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#c13584] text-white"
+                                    }`}
+                                    onClick={() => {
+                                        setHasClickedFollow(true);
+                                        fetch('/api/analytics/log', {
+                                            method: 'POST',
+                                            headers: { 'Content-Type': 'application/json' },
+                                            body: JSON.stringify({ event_type: 'instagram_follow_step_click' })
+                                        }).catch(console.error);
+                                    }}
+                                >
+                                    {hasClickedFollow ? (
+                                        <>
+                                            <CheckCircle2 size={24} />
+                                            Step 1: Followed! ✅
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Instagram size={24} />
+                                            Follow us on Instagram
+                                        </>
+                                    )}
+                                </a>
+
+                                <AnimatePresence>
+                                    {hasClickedFollow && (
+                                        <motion.button
+                                            initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                                            animate={{ opacity: 1, height: "auto", marginTop: 24 }}
+                                            exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                                            onClick={() => { setScreen("INSTRUCTIONS"); window.scrollTo(0, 0); }}
+                                            className="w-full bg-black text-white font-bold py-4 rounded-xl border border-gray-100 hover:bg-gray-900 transition-all flex items-center justify-center gap-2"
+                                        >
+                                            I have followed <ChevronRight size={20} />
+                                        </motion.button>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+
+                            <p className="mt-8 text-xs text-gray-400">
+                                This is a required step for all applicants.
+                            </p>
+                        </motion.div>
+                    )}
+
+                    {/* SCREEN 3: INSTRUCTIONS */}
                     {screen === "INSTRUCTIONS" && (
                         <motion.div
                             key="instructions"
@@ -599,7 +676,7 @@ export default function ScholarshipTestPage() {
 
                             <div className="flex flex-col sm:flex-row gap-4">
                                 <button
-                                    onClick={() => setScreen("REGISTRATION")}
+                                    onClick={() => setScreen("FOLLOW")}
                                     className="flex-1 border border-gray-200 hover:bg-gray-50 py-4 rounded-xl flex items-center justify-center gap-2 text-gray-500"
                                 >
                                     <ChevronLeft size={20} /> Go Back
@@ -798,21 +875,23 @@ export default function ScholarshipTestPage() {
                                         <span className="block mt-2 text-xl font-bold text-green-600">{(score/25*100).toFixed(0)}%</span>
                                     </div>
 
-                                    <div className="bg-green-50 border border-green-100 rounded-3xl p-8 max-w-2xl mx-auto text-left">
-                                        <p className="text-gray-700 leading-relaxed mb-6">
-                                            You have qualified for a scholarship seat in the Genesis Cohort — AI Foundations & Practical Intelligence. 
-                                            Our team will be in touch at <span className="text-green-600 font-bold underline">{user.email}</span> with your onboarding details. Welcome to the beginning of something great.
+                                    <div className="bg-white border border-gray-100 rounded-[32px] p-8 md:p-10 max-w-2xl mx-auto shadow-xl ring-1 ring-black/5">
+                                        <h3 className="text-2xl font-black mb-4">Welcome to the Family! 💜</h3>
+                                        <p className="text-gray-600 leading-relaxed mb-8 text-lg">
+                                            You are now part of the <b>Genesis Cohort</b>. To connect with your fellow members and receive your onboarding details, join our official community right now.
                                         </p>
-                                        <div className="flex gap-4 items-center pt-4 border-t border-green-100">
-                                            <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                                            <span className="text-xs font-bold uppercase tracking-widest text-gray-400">
-                                                Cohort Dates: <span className="text-black">May 4 – July 5</span>
-                                            </span>
-                                            <span className="text-xs font-bold uppercase tracking-widest text-gray-400 hidden md:inline">•</span>
-                                            <span className="text-xs font-bold uppercase tracking-widest text-gray-400 hidden md:inline">
-                                                Duration: <span className="text-black">3 Months</span>
-                                            </span>
-                                        </div>
+                                        <a 
+                                            href="https://chat.whatsapp.com/KavR69S3M3rBox593jkKEw" 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            className="w-full bg-[#25D366] text-white font-black py-5 rounded-2xl transition-all transform hover:scale-[1.03] shadow-lg flex items-center justify-center gap-3 text-lg"
+                                        >
+                                            <Users size={24} />
+                                            Join the WhatsApp Community
+                                        </a>
+                                        <p className="mt-4 text-xs text-gray-400 font-medium italic">
+                                            Check your email ({user.email}) for your invitation details.
+                                        </p>
                                     </div>
                                 </div>
                             ) : (
@@ -827,13 +906,22 @@ export default function ScholarshipTestPage() {
                                         <span className="text-6xl font-black text-black">{score}/25</span>
                                         <span className="block mt-2 text-xl font-bold text-red-500">{(score/25*100).toFixed(0)}%</span>
                                     </div>
-                                    <div className="bg-red-50 border border-red-100 rounded-3xl p-8 max-w-2xl mx-auto text-left">
-                                        <p className="text-gray-600 leading-relaxed mb-6">
-                                            Don't be discouraged. We will be opening future cohorts and you are welcome to apply again. 
-                                            Keep learning and we hope to see you in a future Khrien Academy program.
+                                    <div className="bg-white border border-gray-100 rounded-[32px] p-8 md:p-12 max-w-2xl mx-auto shadow-xl">
+                                        <h3 className="text-2xl font-black mb-4">Stay in the Loop! ✨</h3>
+                                        <p className="text-gray-600 leading-relaxed mb-8 text-lg">
+                                            Don't be discouraged. We will be opening future cohorts soon! Join our community to be the first to know and stay updated on free resources.
                                         </p>
-                                        <p className="text-gray-500 font-medium text-sm text-center">
-                                            Follow us on Instagram and join our community to stay updated on future cohort openings.
+                                        <a 
+                                            href="https://chat.whatsapp.com/KavR69S3M3rBox593jkKEw" 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            className="w-full bg-[#7c3aed] text-white font-black py-5 rounded-2xl transition-all transform hover:scale-[1.03] shadow-lg flex items-center justify-center gap-3 text-lg"
+                                        >
+                                            <Users size={24} />
+                                            Join the Khrien Community
+                                        </a>
+                                        <p className="mt-6 text-gray-500 leading-relaxed text-sm">
+                                            Keep learning and we hope to see you in a future Khrien Academy program.
                                         </p>
                                     </div>
                                 </div>

@@ -17,7 +17,7 @@ const fadeInRight = {
 const LMSSection = () => {
     return (
         <div className="bg-white py-8 sm:py-12 md:py-16">
-            <section className="max-w-360 mx-auto px-4 sm:px-6">
+            <section className="max-w-[1440px] mx-auto px-4 sm:px-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
 
                     {/* Text Column */}

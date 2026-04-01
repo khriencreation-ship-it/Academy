@@ -34,7 +34,7 @@ const staggerContainer = {
 const CohortsSection = () => {
     return (
         <section className='bg-white py-12 md:py-16 lg:py-20 px-4 md:px-8'>
-            <div className="max-w-360 mx-auto">
+            <div className="max-w-[1440px] mx-auto">
                 {/* Header */}
                 <motion.div
                     className="text-center mb-10 md:mb-12"

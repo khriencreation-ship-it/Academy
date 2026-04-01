@@ -53,7 +53,7 @@ const Footer = () => {
         />
 
       </div>
-      <section className="text-white lg:h-125 h-75 py-10 lg:py-20 flex items-center justify-center">
+      <section className="text-white lg:h-[500px] h-[300px] py-10 lg:py-20 flex items-center justify-center">
         <motion.div
           className="max-w-4xl mx-auto text-center"
           initial="hidden"
@@ -99,7 +99,7 @@ const Footer = () => {
       </section>
       <footer className='bg-black h-auto pt-0 pb-20 px-3'>
         <motion.div
-          className='max-w-360 mx-auto text-white'
+          className='max-w-[1440px] mx-auto text-white'
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
@@ -130,7 +130,7 @@ const Footer = () => {
               </a>
             </div>
           </motion.div>
-          <hr className='my-5 mx-auto max-w-360' />
+          <hr className='my-5 mx-auto max-w-[1440px]' />
           <motion.div
             className='grid grid-cols-1 md:grid-cols-3 justify-center items-center py-8 gap-6 px-3'
             variants={staggerContainer}

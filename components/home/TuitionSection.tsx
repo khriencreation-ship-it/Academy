@@ -33,7 +33,7 @@ const staggerContainer = {
 const TuitionSection = () => {
   return (
     <section className="bg-white py-8 md:py-12 lg:py-16 relative overflow-hidden">
-      <div className="max-w-360 mx-auto relative z-20 px-4 md:px-0">
+      <div className="max-w-[1440px] mx-auto relative z-20 px-4 md:px-0">
         {/* Background lines - hidden on mobile */}
         <div className="hidden md:block absolute top-0 bottom-20 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none">
           <Image

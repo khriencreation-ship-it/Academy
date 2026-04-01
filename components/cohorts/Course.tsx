@@ -13,7 +13,7 @@ const Course = () => {
         'AI ethics, bias awareness, and responsible use at work',
     ]
     return (
-        <section className="py-12 md:py-16 px-4 md:px-6 max-w-360 mx-auto">
+        <section className="py-12 md:py-16 px-4 md:px-6 max-w-[1440px] mx-auto">
             <div className="mx-auto">
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-normal text-black tracking-tight text-center mb-4">
                     Courses You'll Take

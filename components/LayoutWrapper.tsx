@@ -20,12 +20,14 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
       <WhatsApp />
       {children}
       <Footer />
-      {/* Cloudflare Web Analytics - Only on public pages */}
-      <Script
-        defer
-        src='https://static.cloudflareinsights.com/beacon.min.js'
-        data-cf-beacon='{"token": "5c1e94d3189443468a7a18ffe621de6b"}'
-      />
+      {/* Cloudflare Web Analytics - Only on public pages and in production */}
+      {process.env.NODE_ENV === 'production' && (
+        <Script
+          defer
+          src='https://static.cloudflareinsights.com/beacon.min.js'
+          data-cf-beacon='{"token": "5c1e94d3189443468a7a18ffe621de6b"}'
+        />
+      )}
     </>
   );
 }

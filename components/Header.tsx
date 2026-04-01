@@ -75,7 +75,7 @@ const Header = () => {
                 animate="visible"
                 variants={navVariants}
             >
-                <div className="max-w-360 mx-auto h-20 flex items-center px-4 lg:justify-evenly justify-between">
+                <div className="max-w-[1440px] mx-auto h-20 flex items-center px-4 lg:justify-evenly justify-between">
                     {/* Logo */}
                     <motion.div
                         variants={linkVariants}

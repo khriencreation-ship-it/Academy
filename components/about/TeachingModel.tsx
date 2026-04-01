@@ -28,7 +28,7 @@ const TeachingModel = () => {
         { icon: FaPencilAlt, label: 'Practical assignments and assessments', color: 'text-brandPurple' },
     ]
     return (
-        <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 max-w-360 mx-auto">
+        <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 max-w-[1440px] mx-auto">
             <div className="mx-auto">
                 <motion.h2
                     className="text-3xl md:text-4xl lg:text-5xl font-normal text-black tracking-tight text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12"

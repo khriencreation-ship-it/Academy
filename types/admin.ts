@@ -14,6 +14,7 @@ export interface Application {
   referral: string | null
   whatsapp_reminded_at?: string | null
   whatsapp_remind_count?: number
+  last_email_reminded_at?: string | null
 }
 
 export interface AnalyticsEvent {

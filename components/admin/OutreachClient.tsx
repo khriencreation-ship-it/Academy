@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { 
   Users, Search, Clock, Send, CheckCircle, 
   ExternalLink, MessageSquare, Info, AlertCircle 
@@ -12,9 +12,21 @@ interface Props {
   initialApplicants: Application[]
 }
 
-const DEFAULT_MESSAGE_TEMPLATE = `Hi {fname}! 👋🏾
+const GREETINGS = ['Hi', 'Hello', 'Hey', 'Greetings']
+const OPENERS = [
+  'Welcome to Khrien Academy — and congratulations on submitting your application for the Genesis Cohort!',
+  'Congratulations on your application to Khrien Academy! We are thrilled to have you here.',
+  'Great news! Your application to Khrien Academy has been received, and we are excited to have you in the Genesis Cohort.'
+]
+const CLOSERS = [
+  'We are rooting for you! 💜',
+  'Can\'t wait to see you in the cohort! 🚀',
+  'Best of luck with the application! ✨'
+]
 
-Welcome to Khrien Academy — and congratulations on submitting your application for the Genesis Cohort! We are so excited to have you here. You are one of 125 people who applied today alone and that energy is everything. You made a great call. 💜
+const DEFAULT_MESSAGE_TEMPLATE = `{greeting} {fname}! 👋🏾
+
+{opener} You are one of 125 people who applied today alone and that energy is everything. You made a great call. 💜
 
 However, your application is not complete yet — and we really do not want you to lose your spot over a few quick steps.
 
@@ -41,7 +53,7 @@ No problem at all — simply reply to this message with:
 
 and we will assist you directly right here on WhatsApp. 🙏🏾
 
-Spots are limited and filling fast — complete your application today and lock in your place. We are rooting for you! 💜
+Spots are limited and filling fast — complete your application today and lock in your place. {closer}
 
 — The Khrien Academy Team
 🌐 academy.khrien.com`
@@ -54,6 +66,15 @@ export default function OutreachClient({ initialApplicants }: Props) {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
   const [isQueueMode, setIsQueueMode] = useState(false)
   const [isUpdating, setIsUpdating] = useState<string | null>(null)
+  const [cooldown, setCooldown] = useState<number>(0)
+
+  // Cooldown Timer Logic
+  useEffect(() => {
+    if (cooldown > 0) {
+      const timer = setInterval(() => setCooldown(c => c - 1), 1000)
+      return () => clearInterval(timer)
+    }
+  }, [cooldown])
 
   // Filtering Logic
   const filtered = useMemo(() => {
@@ -67,7 +88,16 @@ export default function OutreachClient({ initialApplicants }: Props) {
 
   const getMessage = (app: Application) => {
     const fname = app.full_name.split(' ')[0]
+    
+    // Pick random variations for Spintax
+    const greeting = GREETINGS[Math.floor(Math.random() * GREETINGS.length)]
+    const opener = OPENERS[Math.floor(Math.random() * OPENERS.length)]
+    const closer = CLOSERS[Math.floor(Math.random() * CLOSERS.length)]
+
     return template
+      .replace(/{greeting}/g, greeting)
+      .replace(/{opener}/g, opener)
+      .replace(/{closer}/g, closer)
       .replace(/{fname}/g, fname)
       .replace(/{name}/g, app.full_name)
       .replace(/{email}/g, app.email)
@@ -76,6 +106,8 @@ export default function OutreachClient({ initialApplicants }: Props) {
   }
 
   const handleSend = (app: Application) => {
+    if (cooldown > 0) return // Safety check
+
     const message = getMessage(app)
     const encodedMessage = encodeURIComponent(message)
     
@@ -94,6 +126,9 @@ export default function OutreachClient({ initialApplicants }: Props) {
     const url = `https://wa.me/${cleanPhone}?text=${encodedMessage}`
     window.open(url, '_blank')
     
+    // Trigger Cooldown (60 seconds)
+    setCooldown(60)
+
     // Auto-mark as contacted after clicking send
     markAsContacted(app.id)
   }
@@ -182,6 +217,16 @@ export default function OutreachClient({ initialApplicants }: Props) {
 
         {/* Applicants List */}
         <div className="lg:col-span-2 space-y-4">
+          {/* Safety Warning */}
+          {cooldown > 0 && (
+            <div className="bg-amber-50 border border-amber-200 p-4 rounded-2xl flex items-center gap-3 animate-pulse">
+              <AlertCircle className="w-5 h-5 text-amber-600" />
+              <p className="text-sm font-medium text-amber-800">
+                <b>Safety Cooldown Active:</b> Please wait before sending the next message to avoid being flagged by WhatsApp.
+              </p>
+            </div>
+          )}
+
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
             {/* Toolbar */}
             <div className="p-4 border-b border-gray-100 bg-gray-50/50">
@@ -206,7 +251,7 @@ export default function OutreachClient({ initialApplicants }: Props) {
                       <input 
                         type="checkbox" 
                         className="rounded border-gray-300 text-[#7c3aed] focus:ring-[#7c3aed]"
-                        checked={selectedIds.size > 0 && selectedIds.size === filtered.length}
+                        checked={filtered.length > 0 && selectedIds.size > 0 && selectedIds.size === filtered.length}
                         onChange={toggleSelectAll}
                       />
                     </th>
@@ -265,14 +310,17 @@ export default function OutreachClient({ initialApplicants }: Props) {
                         <div className="flex justify-end gap-2">
                           <button
                             onClick={() => handleSend(app)}
+                            disabled={cooldown > 0}
                             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-sm ${
                               contactedIds.has(app.id) 
                                 ? 'bg-white text-gray-400 border border-gray-100 hover:bg-gray-50' 
-                                : 'bg-green-500 text-white hover:bg-green-600 shadow-green-100'
+                                : cooldown > 0
+                                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                                  : 'bg-green-500 text-white hover:bg-green-600 shadow-green-100'
                             }`}
                           >
                             <Send className="w-3 h-3" />
-                            {contactedIds.has(app.id) ? 'Resend' : 'Send WhatsApp'}
+                            {cooldown > 0 ? `Wait ${cooldown}s` : contactedIds.has(app.id) ? 'Resend' : 'Send WhatsApp'}
                           </button>
                         </div>
                       </td>
@@ -313,6 +361,7 @@ export default function OutreachClient({ initialApplicants }: Props) {
               <button
                 onClick={() => setSelectedIds(new Set())}
                 className="px-4 py-2 text-sm font-semibold text-white/70 hover:text-white transition-colors"
+                disabled={cooldown > 0 && selectedIds.size > 0}
               >
                 Cancel
               </button>
@@ -323,10 +372,24 @@ export default function OutreachClient({ initialApplicants }: Props) {
                   const applicant = applicants.find(a => a.id === firstId)
                   if (applicant) handleSend(applicant)
                 }}
-                className="bg-[#7c3aed] hover:bg-[#6d28d9] px-6 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-purple-900/40 transition-all flex items-center gap-2"
+                disabled={cooldown > 0}
+                className={`px-6 py-2.5 rounded-xl font-bold text-sm shadow-lg transition-all flex items-center gap-2 ${
+                   cooldown > 0 
+                   ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                   : 'bg-[#7c3aed] hover:bg-[#6d28d9] text-white shadow-purple-900/40'
+                }`}
               >
-                <Send className="w-4 h-4" />
-                Open WhatsApp for Next
+                {cooldown > 0 ? (
+                  <>
+                    <Clock className="w-4 h-4 animate-spin" />
+                    <span>Wait {cooldown}s</span>
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4" />
+                    <span>Open WhatsApp for Next</span>
+                  </>
+                )}
               </button>
             </div>
           </div>

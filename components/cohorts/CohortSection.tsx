@@ -25,7 +25,7 @@ const Cohort = () => {
 
   return (
     <section className="py-8 md:py-12 px-4 md:px-6 bg-black">
-      <div className="max-w-360 mx-auto">
+      <div className="max-w-[1440px] mx-auto">
         <motion.div
           variants={container}
           initial="hidden"

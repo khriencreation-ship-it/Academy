@@ -158,7 +158,7 @@ const Form = () => {
       </section>
 
       {/* ── Form ── */}
-      <section className="min-h-screen flex justify-between items-start px-3 py-6 gap-10 max-w-360">
+      <section className="min-h-screen flex justify-between items-start px-3 py-6 gap-10 max-w-[1440px]">
         <form onSubmit={handleSubmit(formSubmit)} className="space-y-6 md:space-y-8 flex-1">
           {/* Full Name */}
           <div>
@@ -372,7 +372,7 @@ const Form = () => {
           whileInView={{ opacity: 1, x: 0, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
-          className="relative w-full hidden lg:block lg:w-1/2 min-h-100 lg:h-225 overflow-hidden"
+          className="relative w-full hidden lg:block lg:w-1/2 min-h-[100px] lg:h-[225px] overflow-hidden"
         >
           <Image src="/form/form-image.jpg" priority alt="" fill className="object-cover" />
           <div className="absolute inset-0 bg-black/50" />

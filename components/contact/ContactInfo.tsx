@@ -53,7 +53,7 @@ const contactInfo = [
 const ContactInfo = () => {
     return (
         <section className="bg-black relative h-screen max-w-screen flex items-center justify-center p-3 pt-32 md:pt-0">
-            <div className="max-w-360 mx-auto">
+            <div className="max-w-[1440px] mx-auto">
                 {/* Header */}
                 <motion.div
                     className="text-center mb-10"

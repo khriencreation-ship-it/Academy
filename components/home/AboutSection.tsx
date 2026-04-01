@@ -17,7 +17,7 @@ const fadeInRight = {
 const AboutSection = () => {
     return (
         <div className="bg-black">
-            <section className="max-w-360 py-8 sm:py-12 md:py-16 lg:py-20 px-4 md:px-8 lg:px-12 mx-auto">
+            <section className="max-w-[1440px] py-8 sm:py-12 md:py-16 lg:py-20 px-4 md:px-8 lg:px-12 mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-center">
                     <motion.div
                         className="text-center md:text-left"

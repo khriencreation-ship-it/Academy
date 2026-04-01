@@ -1,14 +1,14 @@
 import * as React from 'react';
 
-interface ApplicantConfirmationEmailProps {
+interface ReminderEmailProps {
     fullName: string;
     applicationId: string;
 }
 
-export function ApplicantConfirmationEmail({
+export function ReminderEmail({
     fullName,
     applicationId,
-}: ApplicantConfirmationEmailProps) {
+}: ReminderEmailProps) {
     const firstName = fullName.split(' ')[0];
     
     const containerStyle = {
@@ -34,14 +34,6 @@ export function ApplicantConfirmationEmail({
         marginBottom: '30px',
     };
 
-    const sectionTitleStyle = {
-        color: '#934ab3', // Brand Purple
-        fontSize: '18px',
-        fontWeight: 'bold' as const,
-        marginBottom: '10px',
-        display: 'block',
-    };
-
     const linkStyle = {
         color: '#934ab3',
         textDecoration: 'underline',
@@ -65,20 +57,15 @@ export function ApplicantConfirmationEmail({
 
                 <p>Hi {firstName},</p>
 
-                <p>Congratulations — your application for the Genesis Cohort has been received! 🎉</p>
+                <p>We noticed that your scholarship application for the Genesis Cohort is still incomplete. We'd love to see you finish the process!</p>
+
+                <p>To move forward, you just need to take the 10-minute Scholarship Test. Your spot is waiting, but it's not secured until the test is submitted.</p>
 
                 <div style={{ margin: '25px 0', padding: '20px', backgroundColor: '#f3e8ff', borderRadius: '12px', border: '1px dashed #934ab3', textAlign: 'center' }}>
-                    <p style={{ margin: '0 0 10px 0', fontSize: '14px', color: '#666', textTransform: 'uppercase', letterSpacing: '1px' }}>Your Application ID is:</p>
-                    <p style={{ margin: 0, fontSize: '28px', fontWeight: 'bold', color: '#934ab3', letterSpacing: '4px' }}>{applicationId}</p>
-                </div>
-
-                <p>There is one thing standing between you and your spot — your Scholarship Test. Complete it now using the button below.</p>
-
-                <p style={{ fontSize: '14px', color: '#666', backgroundColor: '#fff8f0', padding: '12px', borderRadius: '8px', borderLeft: '4px solid #f97316' }}>
-                    <strong>⚠️ Important:</strong> You will need your Application ID above to access the test. Only applicants who pass will be awarded the scholarship.
-                </p>
-
-                <div style={{ textAlign: 'center', margin: '35px 0' }}>
+                    <p style={{ margin: '0 0 10px 0', fontSize: '14px', color: '#666', textTransform: 'uppercase', letterSpacing: '1px' }}>Ready to Take the Test? 🚀</p>
+                    <p style={{ margin: '0 0 10px 0', fontSize: '13px', color: '#666' }}>Your Application ID:</p>
+                    <p style={{ margin: 0, fontSize: '24px', fontWeight: 'bold', color: '#934ab3', letterSpacing: '4px', marginBottom: '20px' }}>{applicationId}</p>
+                    
                     <a 
                         href="https://academy.khrien.com/scholarship-test" 
                         style={{ 
@@ -93,11 +80,15 @@ export function ApplicantConfirmationEmail({
                             boxShadow: '0 4px 14px rgba(147, 74, 179, 0.3)'
                         }}
                     >
-                        Take Your Scholarship Test →
+                        Finish Your Application →
                     </a>
                 </div>
 
-                <p>We are rooting for you. 💜</p>
+                <p><strong>Common question:</strong> <em>"Will it take long?"</em> — No! It's just 25 multiple-choice questions and takes less than 10 minutes from start to finish.</p>
+
+                <p>If you have any questions or need help, just reply to this email!</p>
+
+                <p>Rooting for you 💜</p>
 
                 <div style={footerStyle}>
                     <p style={{ margin: 0, fontWeight: 'bold' }}>— The Khrien Academy Team</p>
