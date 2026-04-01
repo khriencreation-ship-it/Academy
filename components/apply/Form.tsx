@@ -372,7 +372,7 @@ const Form = () => {
           whileInView={{ opacity: 1, x: 0, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
-          className="relative w-full hidden lg:block lg:w-1/2 min-h-[100px] lg:h-[225px] overflow-hidden"
+          className="relative w-full hidden lg:block lg:w-1/3 h-[600px] overflow-hidden rounded-2xl shadow-2xl sticky top-32"
         >
           <Image src="/form/form-image.jpg" priority alt="" fill className="object-cover" />
           <div className="absolute inset-0 bg-black/50" />
