@@ -278,6 +278,8 @@ const colors = {
     error: "#EF4444"
 };
 
+const SESSION_KEY = "khrien_scholarship_session";
+
 // --- COMPONENTS ---
 
 export default function ScholarshipTestPage() {
@@ -294,6 +296,64 @@ export default function ScholarshipTestPage() {
     const [hasClickedFollow, setHasClickedFollow] = useState(false);
 
     const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+    // --- PERSISTENCE LOGIC ---
+    
+    // 1. Restore session on mount
+    useEffect(() => {
+        const savedSession = localStorage.getItem(SESSION_KEY);
+        if (savedSession) {
+            try {
+                const session = JSON.parse(savedSession);
+                if (session.user) setUser(session.user);
+                if (session.screen) setScreen(session.screen);
+                if (session.answers) setAnswers(session.answers);
+                if (session.currentQuestionIndex !== undefined) setCurrentQuestionIndex(session.currentQuestionIndex);
+                if (session.hasClickedFollow !== undefined) setHasClickedFollow(session.hasClickedFollow);
+                
+                // Smart Timer Recovery
+                if (session.testStartedAt && (session.screen === "TEST" || screen === "TEST")) {
+                    const elapsed = Math.floor((Date.now() - session.testStartedAt) / 1000);
+                    const remaining = Math.max(0, 600 - elapsed);
+                    setTimeRemaining(remaining);
+                    if (remaining === 0) setScreen("TIMEOUT");
+                }
+            } catch (e) {
+                console.error("Failed to restore session", e);
+            }
+        }
+    }, []);
+
+    // 2. Save session on state changes
+    useEffect(() => {
+        // Don't persist on initial login screen or terminal screens
+        if (screen === "RESULTS" || screen === "TIMEOUT") {
+            localStorage.removeItem(SESSION_KEY);
+            return;
+        }
+
+        if (screen !== "REGISTRATION") {
+            const savedSession = localStorage.getItem(SESSION_KEY);
+            const existingSession = savedSession ? JSON.parse(savedSession) : {};
+            let testStartedAt = existingSession.testStartedAt;
+
+            // If transitioning TO test mode for the first time, set the start time
+            if (screen === "TEST" && !testStartedAt) {
+                testStartedAt = Date.now();
+            }
+
+            const session = {
+                user,
+                screen,
+                answers,
+                currentQuestionIndex,
+                hasClickedFollow,
+                testStartedAt
+            };
+            
+            localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+        }
+    }, [screen, user, answers, currentQuestionIndex, hasClickedFollow]);
 
     // --- REGISTRATION LOGIC ---
     const handleRegister = async (e: React.FormEvent) => {
@@ -441,6 +501,7 @@ export default function ScholarshipTestPage() {
         
         // Mark as submitted to prevent retries in this browser
         localStorage.setItem(`scholarship_submitted_${user.email}`, 'true');
+        localStorage.removeItem(SESSION_KEY);
         
         setIsSubmitting(false);
     };
@@ -454,6 +515,7 @@ export default function ScholarshipTestPage() {
         setScore(0);
         setIsSubmitting(false);
         setErrors({ applicationId: "" });
+        localStorage.removeItem(SESSION_KEY);
     };
 
     const currentQuestion = QUESTIONS[currentQuestionIndex];
@@ -625,6 +687,12 @@ export default function ScholarshipTestPage() {
                                     )}
                                 </AnimatePresence>
                             </div>
+
+                            <p className="mt-4 text-[13px] text-gray-500 font-medium leading-relaxed max-w-sm mx-auto">
+                                <span className="text-black font-bold uppercase tracking-tight mr-1">Important:</span> 
+                                You must click the button above to proceed. If you already follow Khrien Academy, 
+                                simply click it once to verify this step and return here to continue.
+                            </p>
 
                             <p className="mt-8 text-xs text-gray-400">
                                 This is a required step for all applicants.

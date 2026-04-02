@@ -74,6 +74,31 @@ export async function POST(req: Request) {
       );
     }
 
+    // ─── CHECK FOR DUPLICATES ───────────────────────────────────────────────
+    // Before submitting, check if this person has already applied (same email or phone)
+    const { data: existingApp, error: checkError } = await supabase
+      .from('applications')
+      .select('email, phone')
+      .or(`email.ilike.${data.email},phone.eq.${data.phone}`)
+      .maybeSingle();
+
+    if (checkError) {
+      console.error('Database check failed:', checkError);
+    }
+
+    if (existingApp) {
+      const isEmailMatch = existingApp.email.toLowerCase() === data.email.toLowerCase();
+      const message = isEmailMatch 
+        ? 'An application with this email address already exists.' 
+        : 'An application with this phone number already exists.';
+      
+      return NextResponse.json(
+        { success: false, error: message },
+        { status: 400 }
+      );
+    }
+    // ────────────────────────────────────────────────────────────────────────
+
     // Generate unique Application ID
     const timestamp = Date.now().toString(36).toUpperCase();
     const random = Math.random().toString(36).substring(2, 5).toUpperCase();

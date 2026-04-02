@@ -10,7 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { FaInstagram } from "react-icons/fa";
-import { Loader2 } from "lucide-react";
+import { Loader2, Mail } from "lucide-react";
 
 const validationSchema = zod.object({
   fullName: zod.string().min(1, "Full name is required"),
@@ -87,8 +87,9 @@ const Form = () => {
       ]);
       reset();
       setSubmitted(true);
-    } catch (error) {
-      toast.error('Form submission failed');
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.error || 'Form submission failed';
+      toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -116,25 +117,24 @@ const Form = () => {
               transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
             >
               <a
-                href="https://www.instagram.com/thisis_khrien?igsh=MWJocjI5ZWdsbHF5Zw=="
-                target="_blank"
+                href="mailto:"
                 onClick={() => {
                   fetch('/api/analytics/log', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ event_type: 'instagram_click' })
+                    body: JSON.stringify({ event_type: 'check_email_click' })
                   }).catch(console.error);
                 }}
                 className="relative overflow-hidden rounded-sm bg-brandPurple px-6 md:px-8 lg:px-10 py-2.5 md:py-3 text-sm md:text-base lg:text-lg font-semibold group"
               >
                 {/* Default Text */}
                 <span className="flex w-full space-x-4  items-center text-white transition-all duration-300 group-hover:-translate-y-full group-hover:opacity-0">
-                  <span>Instagram</span> <FaInstagram className="text-2xl" />
+                  <span>Check my Email</span> <Mail className="w-5 h-5 md:w-6 md:h-6" />
                 </span>
 
                 {/* Hover Text */}
                 <span className="flex w-full items-center justify-center space-x-4 absolute inset-0 text-brandPurple bg-white transition-all duration-300 translate-y-full group-hover:translate-y-0">
-                  <span>Instagram</span> <FaInstagram className="text-2xl" />
+                  <span>Check my Email</span> <Mail className="w-5 h-5 md:w-6 md:h-6" />
                 </span>
               </a>
             </motion.div>

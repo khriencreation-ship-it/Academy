@@ -35,7 +35,7 @@ export async function GET(req: Request) {
     // 1. Fetch all pending applications
     const { data: pendingApplications, error: fetchError } = await supabase
       .from('applications')
-      .select('id, full_name, email, application_id, last_email_reminded_at')
+      .select('id, full_name, email, application_id, last_email_reminded_at, created_at')
       .eq('scholarship_status', 'Pending');
 
     if (fetchError) {
@@ -48,58 +48,76 @@ export async function GET(req: Request) {
     }
 
     const now = new Date();
-    const emailsToProcess = [];
+    const GRACE_PERIOD_MS = 24 * 60 * 60 * 1000; // 24 hours
+    const REPEAT_REMINDER_MS = 48 * 60 * 60 * 1000; // 48 hours
 
-    // 2. Filter for those who haven't been reminded in the last 48 hours
-    for (const app of pendingApplications) {
+    // 2. Filter for potential candidates
+    const emailsToProcess = pendingApplications.filter(app => {
+      const createdAt = new Date(app.created_at);
       const lastRemindedAt = app.last_email_reminded_at ? new Date(app.last_email_reminded_at) : null;
       
-      // If never reminded, or last reminder was more than 48 hours ago
-      if (!lastRemindedAt || (now.getTime() - lastRemindedAt.getTime()) >= (48 * 60 * 60 * 1000)) {
-        emailsToProcess.push(app);
-      }
-    }
+      // Safety: Never remind someone who applied less than 24h ago
+      if ((now.getTime() - createdAt.getTime()) < GRACE_PERIOD_MS) return false;
+
+      // Logic: If never reminded OR last reminder was > 48h ago
+      return !lastRemindedAt || (now.getTime() - lastRemindedAt.getTime()) >= REPEAT_REMINDER_MS;
+    });
+
+    console.log(`Cron identified ${emailsToProcess.length} candidates for reminders.`);
 
     if (emailsToProcess.length === 0) {
-      return NextResponse.json({ message: 'All pending applicants were recently reminded' });
+      return NextResponse.json({ message: 'All pending applicants were recently reminded or are in grace period' });
     }
 
-    // 3. Send emails and update database
-    const results = await Promise.allSettled(
-      emailsToProcess.map(async (app) => {
-        try {
-          // Send Email via Resend
-          await resend.emails.send({
-            from: 'Khrien Academy <hello@khrien.com>',
-            to: [app.email],
-            subject: 'Your application is incomplete',
-            react: ReminderEmail({ 
-              fullName: app.full_name, 
-              applicationId: app.application_id 
-            }),
-          });
+    // 3. Send emails in Chunks (Batching) to stay under Vercel execution limits
+    const CHUNK_SIZE = 30; // Processing 30 at a time
+    let successful = 0;
+    let failed = 0;
 
-          // Update the last_email_reminded_at timestamp
-          await supabase
-            .from('applications')
-            .update({ last_email_reminded_at: new Date().toISOString() })
-            .eq('id', app.id);
+    for (let i = 0; i < emailsToProcess.length; i += CHUNK_SIZE) {
+      const chunk = emailsToProcess.slice(i, i + CHUNK_SIZE);
+      console.log(`Processing batch ${Math.floor(i / CHUNK_SIZE) + 1} (${chunk.length} emails)`);
 
-          return { success: true, email: app.email };
-        } catch (err: any) {
-          console.error(`Failed to send reminder for ${app.email}:`, err);
-          throw err;
-        }
-      })
-    );
+      const batchResults = await Promise.allSettled(
+        chunk.map(async (app) => {
+          try {
+            await resend.emails.send({
+              from: 'Khrien Academy <hello@khrien.com>',
+              to: [app.email],
+              subject: 'Your application is incomplete',
+              react: ReminderEmail({ 
+                fullName: app.full_name, 
+                applicationId: app.application_id 
+              }),
+            });
 
-    const successful = results.filter(r => r.status === 'fulfilled').length;
-    const failed = results.filter(r => r.status === 'rejected').length;
+            await supabase
+              .from('applications')
+              .update({ last_email_reminded_at: new Date().toISOString() })
+              .eq('id', app.id);
+
+            return { success: true };
+          } catch (err: any) {
+            console.error(`Failed to send reminder for ${app.email}:`, err);
+            throw err;
+          }
+        })
+      );
+
+      successful += batchResults.filter(r => r.status === 'fulfilled').length;
+      failed += batchResults.filter(r => r.status === 'rejected').length;
+
+      // Small pause between batches if needed to avoid rate limits (optional)
+      if (i + CHUNK_SIZE < emailsToProcess.length) {
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+    }
 
     return NextResponse.json({ 
       message: `Reminder cycle complete`,
       processed: successful,
-      failed: failed
+      failed: failed,
+      total_candidates: emailsToProcess.length
     });
 
   } catch (err: any) {
