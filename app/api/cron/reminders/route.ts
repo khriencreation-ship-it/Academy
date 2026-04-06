@@ -10,6 +10,7 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const authHeader = req.headers.get('authorization');
     const testEmail = searchParams.get('test_email');
+    const dryRun = searchParams.get('dry_run') === 'true';
     
     // Security check for Cron (Authorization: Bearer CRON_SECRET or ?key=CRON_SECRET)
     if (authHeader !== `Bearer ${process.env.CRON_SECRET}` && searchParams.get('key') !== process.env.CRON_SECRET) {
@@ -63,16 +64,32 @@ export async function GET(req: Request) {
       return !lastRemindedAt || (now.getTime() - lastRemindedAt.getTime()) >= REPEAT_REMINDER_MS;
     });
 
-    console.log(`Cron identified ${emailsToProcess.length} candidates for reminders.`);
+    console.log(`Cron identified ${pendingApplications.length} total pending applications.`);
+    console.log(`Of those, ${emailsToProcess.length} are eligible for a reminder (grace period/frequency check).`);
+
+    // ─── DRY RUN MODE ──────────────────────────────────────────────────────
+    if (dryRun) {
+      console.log('Dry run enabled: Skipping email delivery and database updates.');
+      return NextResponse.json({ 
+        message: `Dry run complete. No emails were sent.`,
+        dry_run: true,
+        would_process: emailsToProcess.length,
+        total_pending: pendingApplications.length
+      });
+    }
+    // ───────────────────────────────────────────────────────────────────────
 
     if (emailsToProcess.length === 0) {
-      return NextResponse.json({ message: 'All pending applicants were recently reminded or are in grace period' });
+      return NextResponse.json({ 
+        message: 'All pending applicants were recently reminded or are in grace period',
+        total_pending: pendingApplications.length
+      });
     }
 
     // 3. Send emails in Chunks (Batching) to stay under Vercel execution limits
     const CHUNK_SIZE = 30; // Processing 30 at a time
-    let successful = 0;
-    let failed = 0;
+    let successfulSends = 0;
+    let failedSends = 0;
 
     for (let i = 0; i < emailsToProcess.length; i += CHUNK_SIZE) {
       const chunk = emailsToProcess.slice(i, i + CHUNK_SIZE);
@@ -80,7 +97,6 @@ export async function GET(req: Request) {
 
       const batchResults = await Promise.allSettled(
         chunk.map(async (app) => {
-          try {
             await resend.emails.send({
               from: 'Khrien Academy <hello@khrien.com>',
               to: [app.email],
@@ -90,34 +106,45 @@ export async function GET(req: Request) {
                 applicationId: app.application_id 
               }),
             });
-
-            await supabase
-              .from('applications')
-              .update({ last_email_reminded_at: new Date().toISOString() })
-              .eq('id', app.id);
-
-            return { success: true };
-          } catch (err: any) {
-            console.error(`Failed to send reminder for ${app.email}:`, err);
-            throw err;
-          }
+            return app.id;
         })
       );
 
-      successful += batchResults.filter(r => r.status === 'fulfilled').length;
-      failed += batchResults.filter(r => r.status === 'rejected').length;
+      // Collect IDs of people who were successfully emailed in this batch
+      const successfulIds = batchResults
+        .filter((r): r is PromiseFulfilledResult<string> => r.status === 'fulfilled')
+        .map(r => r.value);
+      
+      const failedCount = batchResults.filter(r => r.status === 'rejected').length;
+      
+      successfulSends += successfulIds.length;
+      failedSends += failedCount;
 
-      // Small pause between batches if needed to avoid rate limits (optional)
+      // Batch update the database for everyone who was emailed in this chunk
+      if (successfulIds.length > 0) {
+        console.log(`Batch updating database for ${successfulIds.length} successful sends...`);
+        const { error: updateError } = await supabase
+          .from('applications')
+          .update({ last_email_reminded_at: new Date().toISOString() })
+          .in('id', successfulIds);
+        
+        if (updateError) {
+          console.error('Failed to batch update last_email_reminded_at:', updateError);
+        }
+      }
+
+      // Small pause between batches if needed to avoid rate limits
       if (i + CHUNK_SIZE < emailsToProcess.length) {
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise(resolve => setTimeout(resolve, 300));
       }
     }
 
     return NextResponse.json({ 
       message: `Reminder cycle complete`,
-      processed: successful,
-      failed: failed,
-      total_candidates: emailsToProcess.length
+      processed: successfulSends,
+      failed: failedSends,
+      total_eligible: emailsToProcess.length,
+      total_pending: pendingApplications.length
     });
 
   } catch (err: any) {
