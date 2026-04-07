@@ -14,16 +14,18 @@ interface Props {
   applications: Application[]
   stats: { total: number; passed: number; failed: number; pending: number; passRate: number }
   cohorts: string[]
+  referrals: string[]
 }
 
 type SortOption = 'recent' | 'asc' | 'desc'
 type ExportType = 'all' | 'lms'
 
-export default function ApplicationsClient({ applications, stats, cohorts }: Props) {
+export default function ApplicationsClient({ applications, stats, cohorts, referrals }: Props) {
   // Filters & State
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('All')
   const [cohortFilter, setCohortFilter] = useState<string>('All')
+  const [referralFilter, setReferralFilter] = useState<string>('All')
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
   const [sortBy, setSortBy] = useState<SortOption>('recent')
@@ -54,6 +56,7 @@ export default function ApplicationsClient({ applications, stats, cohorts }: Pro
 
     const matchesStatus = statusFilter === 'All' || app.scholarship_status === statusFilter
     const matchesCohort = cohortFilter === 'All' || (app.cohort || 'Unknown') === cohortFilter
+    const matchesReferral = referralFilter === 'All' || (app.referral || 'Other') === referralFilter
     
     // Date Filtering
     let matchesDate = true
@@ -69,7 +72,7 @@ export default function ApplicationsClient({ applications, stats, cohorts }: Pro
       matchesDate = matchesDate && appDate <= end
     }
 
-    return matchesSearch && matchesStatus && matchesCohort && matchesDate
+    return matchesSearch && matchesStatus && matchesCohort && matchesReferral && matchesDate
   })
 
   // Sorting Logic
@@ -93,7 +96,7 @@ export default function ApplicationsClient({ applications, stats, cohorts }: Pro
   // Reset page when filters change
   useEffect(() => {
     setCurrentPage(1)
-  }, [search, statusFilter, cohortFilter, startDate, endDate, sortBy])
+  }, [search, statusFilter, cohortFilter, referralFilter, startDate, endDate, sortBy])
 
   const handleExport = (type: ExportType) => {
     let headers: string[]
@@ -124,6 +127,17 @@ export default function ApplicationsClient({ applications, stats, cohorts }: Pro
     a.download = `khrien-${type}-export-${Date.now()}.csv`
     a.click()
     setShowExportOptions(false)
+  }
+
+  // Dynamic Stats for Cards
+  const dynamicStats = {
+    total: filtered.length,
+    passed: filtered.filter(a => a.scholarship_status === 'Pass').length,
+    failed: filtered.filter(a => a.scholarship_status === 'Fail').length,
+    pending: filtered.filter(a => a.scholarship_status === 'Pending').length,
+    passRate: filtered.length > 0 
+      ? Math.round((filtered.filter(a => a.scholarship_status === 'Pass').length / filtered.length) * 100) 
+      : 0
   }
 
   return (
@@ -169,17 +183,20 @@ export default function ApplicationsClient({ applications, stats, cohorts }: Pro
       {/* Stats Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
         {[
-          { label: 'Total', value: stats.total, icon: Users, bg: 'bg-purple-50', iconBg: 'bg-[#7c3aed]', sub: 'All applicants' },
-          { label: 'Passed', value: stats.passed, icon: CheckCircle, bg: 'bg-green-50', iconBg: 'bg-green-500', sub: `${stats.passRate}% matching` },
-          { label: 'Failed', value: stats.failed, icon: XCircle, bg: 'bg-red-50', iconBg: 'bg-red-500', sub: 'Below threshold' },
-          { label: 'Pending', value: stats.pending, icon: Clock, bg: 'bg-amber-50', iconBg: 'bg-amber-500', sub: 'In progress' },
+          { label: 'Total', value: dynamicStats.total, icon: Users, bg: 'bg-purple-50', iconBg: 'bg-[#7c3aed]', sub: 'Matching results' },
+          { label: 'Passed', value: dynamicStats.passed, icon: CheckCircle, bg: 'bg-green-50', iconBg: 'bg-green-500', sub: `${dynamicStats.passRate}% success rate` },
+          { label: 'Failed', value: dynamicStats.failed, icon: XCircle, bg: 'bg-red-50', iconBg: 'bg-red-500', sub: 'Below threshold' },
+          { label: 'Pending', value: dynamicStats.pending, icon: Clock, bg: 'bg-amber-50', iconBg: 'bg-amber-500', sub: 'In progress' },
         ].map((s, i) => (
           <div key={i} className={`${s.bg} rounded-2xl p-5 border border-white shadow-sm transition-transform hover:scale-[1.02]`}>
             <div className={`${s.iconBg} p-2.5 rounded-xl w-fit mb-3`}>
               <s.icon className="w-4 h-4 text-white" />
             </div>
             <h3 className="text-3xl font-bold text-gray-900">{s.value}</h3>
-            <p className="text-gray-500 text-[10px] font-bold uppercase tracking-wider mt-1">{s.label}</p>
+            <div className="flex items-center justify-between">
+                <p className="text-gray-500 text-[10px] font-bold uppercase tracking-wider mt-1">{s.label}</p>
+                <span className="text-[9px] text-gray-400 font-medium">{s.sub}</span>
+            </div>
           </div>
         ))}
       </div>
@@ -244,10 +261,19 @@ export default function ApplicationsClient({ applications, stats, cohorts }: Pro
             <select
               value={cohortFilter}
               onChange={e => setCohortFilter(e.target.value)}
-              className="px-4 py-2 bg-gray-50 border border-gray-100 rounded-xl text-xs font-bold text-gray-700 outline-none"
+              className="px-4 py-2 bg-gray-50 border border-gray-100 rounded-xl text-xs font-bold text-gray-700 outline-none hover:border-[#7c3aed] transition-colors cursor-pointer"
             >
               <option value="All">All Cohorts</option>
               {cohorts.map(c => <option key={c} value={c}>{c}</option>)}
+            </select>
+
+            <select
+              value={referralFilter}
+              onChange={e => setReferralFilter(e.target.value)}
+              className="px-4 py-2 bg-gray-50 border border-gray-100 rounded-xl text-xs font-bold text-gray-700 outline-none hover:border-[#7c3aed] transition-colors cursor-pointer"
+            >
+              <option value="All">All Referrals</option>
+              {referrals.map(r => <option key={r} value={r}>{r}</option>)}
             </select>
 
             <div className="flex items-center gap-1.5 p-1 bg-gray-50 rounded-xl border border-gray-100">

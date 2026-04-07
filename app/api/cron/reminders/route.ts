@@ -52,20 +52,35 @@ export async function GET(req: Request) {
     const GRACE_PERIOD_MS = 24 * 60 * 60 * 1000; // 24 hours
     const REPEAT_REMINDER_MS = 48 * 60 * 60 * 1000; // 48 hours
 
-    // 2. Filter for potential candidates
+    // 2. Filter for potential candidates with breakdown
+    let skippedGracePeriod = 0;
+    let skippedRecentReminder = 0;
+
     const emailsToProcess = pendingApplications.filter(app => {
       const createdAt = new Date(app.created_at);
       const lastRemindedAt = app.last_email_reminded_at ? new Date(app.last_email_reminded_at) : null;
       
       // Safety: Never remind someone who applied less than 24h ago
-      if ((now.getTime() - createdAt.getTime()) < GRACE_PERIOD_MS) return false;
+      if ((now.getTime() - createdAt.getTime()) < GRACE_PERIOD_MS) {
+        skippedGracePeriod++;
+        return false;
+      }
 
       // Logic: If never reminded OR last reminder was > 48h ago
-      return !lastRemindedAt || (now.getTime() - lastRemindedAt.getTime()) >= REPEAT_REMINDER_MS;
+      const isEligible = !lastRemindedAt || (now.getTime() - lastRemindedAt.getTime()) >= REPEAT_REMINDER_MS;
+      
+      if (!isEligible) {
+        skippedRecentReminder++;
+        return false;
+      }
+
+      return true;
     });
 
     console.log(`Cron identified ${pendingApplications.length} total pending applications.`);
-    console.log(`Of those, ${emailsToProcess.length} are eligible for a reminder (grace period/frequency check).`);
+    console.log(`- Eligible: ${emailsToProcess.length}`);
+    console.log(`- Skipped (Grace Period < 24h): ${skippedGracePeriod}`);
+    console.log(`- Skipped (Recent Reminder < 48h): ${skippedRecentReminder}`);
 
     // ─── DRY RUN MODE ──────────────────────────────────────────────────────
     if (dryRun) {
@@ -73,8 +88,16 @@ export async function GET(req: Request) {
       return NextResponse.json({ 
         message: `Dry run complete. No emails were sent.`,
         dry_run: true,
-        would_process: emailsToProcess.length,
-        total_pending: pendingApplications.length
+        eligible_to_process: emailsToProcess.length,
+        total_pending: pendingApplications.length,
+        skipped_breakdown: {
+            applied_less_than_24h_ago: skippedGracePeriod,
+            reminded_less_than_48h_ago: skippedRecentReminder
+        },
+        frequency_rules: {
+            grace_period_hours: 24,
+            repeat_interval_hours: 48
+        }
       });
     }
     // ───────────────────────────────────────────────────────────────────────

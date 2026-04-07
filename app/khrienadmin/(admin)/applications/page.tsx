@@ -30,11 +30,17 @@ export default async function ApplicationsPage() {
     applications.map(a => a.cohort || 'Unknown').filter(Boolean)
   )].sort()
 
+  // Extract unique referral sources
+  const referrals = [...new Set(
+    applications.map(a => a.referral || 'Other').filter(Boolean)
+  )].sort()
+
   return (
     <ApplicationsClient
       applications={applications}
       stats={{ total, passed, failed, pending, passRate }}
       cohorts={cohorts}
+      referrals={referrals}
     />
   )
 }
