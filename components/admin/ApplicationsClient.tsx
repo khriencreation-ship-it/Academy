@@ -104,7 +104,9 @@ export default function ApplicationsClient({ applications, stats, cohorts, refer
 
     if (type === 'lms') {
       headers = ['Full Name', 'Email', 'Phone']
-      rows = sorted.map(a => [`"${a.full_name}"`, `"${a.email}"`, `"${a.phone || ''}"`])
+      rows = sorted
+        .filter(a => a.scholarship_status === 'Pass')
+        .map(a => [`"${a.full_name}"`, `"${a.email}"`, `"${a.phone || ''}"`])
     } else {
       headers = ['Full Name', 'Email', 'Phone', 'Application ID', 'Cohort', 'Status', 'Score', 'Applied', 'Motivation', 'Goals', 'Experience', 'Referral']
       rows = sorted.map(a => [
