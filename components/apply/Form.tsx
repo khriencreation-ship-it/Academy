@@ -99,6 +99,43 @@ const Form = () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, [submitted]);
+
+  const APPLICATIONS_CLOSED = true;
+
+  if (APPLICATIONS_CLOSED) {
+    return (
+      <main className="px-4 lg:px-9 bg-black min-h-screen max-w-screen overflow-x-hidden flex items-center justify-center">
+        <section className="min-h-[70vh] bg-black flex items-center justify-center py-16 md:py-24 px-4 md:px-6">
+          <div className=" mx-auto text-center">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-normal text-white mb-4 tracking-tight">
+              Applications Closed
+            </h1>
+            <p className="max-w-2xl mx-auto text-base md:text-lg text-white/80 leading-relaxed mb-6 md:mb-8">
+              Thank you for your interest in Khrien Academy! We are no longer accepting applications for the Genesis Cohort. Stay tuned to our social media for future updates.
+            </p>
+            <motion.div
+              className="flex justify-center mt-6"
+              variants={fadeInUp}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+            >
+              <a
+                href="/"
+                className="relative overflow-hidden rounded-sm bg-brandPurple px-6 md:px-8 lg:px-10 py-2.5 md:py-3 text-sm md:text-base lg:text-lg font-semibold group inline-block"
+              >
+                <span className="flex w-full space-x-4 items-center text-white transition-all duration-300 group-hover:-translate-y-full group-hover:opacity-0">
+                  <span>Return Home</span>
+                </span>
+                <span className="flex w-full items-center justify-center space-x-4 absolute inset-0 text-brandPurple bg-white transition-all duration-300 translate-y-full group-hover:translate-y-0">
+                  <span>Return Home</span>
+                </span>
+              </a>
+            </motion.div>
+          </div>
+        </section>
+      </main>
+    );
+  }
+
   if (submitted) {
     return (
       <main className="px-4 lg:px-9 bg-black min-h-screen max-w-screen overflow-x-hidden flex items-center justify-center">
