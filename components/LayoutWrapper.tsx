@@ -8,7 +8,7 @@ import Script from "next/script";
 
 export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isExcluded = pathname.startsWith('/khrienadmin') || pathname === '/scholarship-test';
+  const isExcluded = pathname.startsWith('/khrienadmin') || pathname === '/scholarship-test' || pathname.startsWith('/animate-africa');
 
   if (isExcluded) {
     return <>{children}</>;
