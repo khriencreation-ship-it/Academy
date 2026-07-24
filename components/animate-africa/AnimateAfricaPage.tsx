@@ -115,7 +115,7 @@ export default function AnimateAfricaPage() {
             {/* Right Side Pill Button */}
             <div>
               <a 
-                href="https://selar.com/khrienanimateafrica"
+                href="https://selar.com/animate_africa"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-white hover:bg-neutral-100 text-black text-xs uppercase tracking-wider font-semibold rounded-full px-6 py-3 transition-all duration-200 cursor-pointer shadow-sm inline-block"
@@ -144,7 +144,7 @@ export default function AnimateAfricaPage() {
           
           <div className="pt-4">
             <a 
-              href="https://selar.com/khrienanimateafrica"
+              href="https://selar.com/animate_africa"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-white hover:bg-neutral-100 text-black px-8 py-3.5 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-full transition-all cursor-pointer shadow-md inline-block"
@@ -190,7 +190,7 @@ export default function AnimateAfricaPage() {
               </div>
               <div className="pt-2">
                 <a 
-                  href="https://selar.com/khrienanimateafrica"
+                  href="https://selar.com/animate_africa"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-neutral-900 hover:bg-neutral-800 text-white px-8 py-3.5 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-full transition-all cursor-pointer shadow-md inline-block"
@@ -263,7 +263,7 @@ export default function AnimateAfricaPage() {
               {/* GAIN ACCESS BUTTON */}
               <div className="pt-4">
                 <a 
-                  href="https://selar.com/khrienanimateafrica"
+                  href="https://selar.com/animate_africa"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-neutral-900 hover:bg-neutral-800 text-white px-8 py-3.5 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-full transition-all cursor-pointer shadow-md inline-block"

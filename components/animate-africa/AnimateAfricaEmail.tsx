@@ -102,7 +102,7 @@ export function AnimateAfricaEmail({
         color: '#9ca3af',
     };
 
-    const selarLink = process.env.NEXT_PUBLIC_ANIMATE_AFRICA_SELAR_URL || 'https://selar.co/animate-africa';
+    const selarLink = process.env.NEXT_PUBLIC_ANIMATE_AFRICA_SELAR_URL || 'https://selar.com/animate_africa';
 
     return (
         <div style={containerStyle}>

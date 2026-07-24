@@ -154,7 +154,7 @@ export async function POST(req: Request) {
       success: true, 
       message: 'Lead registered successfully',
       applicationId: applicationId,
-      redirectUrl: process.env.NEXT_PUBLIC_ANIMATE_AFRICA_SELAR_URL || 'https://selar.co/animate-africa'
+      redirectUrl: process.env.NEXT_PUBLIC_ANIMATE_AFRICA_SELAR_URL || 'https://selar.com/animate_africa'
     });
   } catch (err: any) {
     console.error('Animate Africa API Error:', err);
