@@ -22,3 +22,20 @@ export interface AnalyticsEvent {
   event_type: string
   created_at: string
 }
+
+export interface CorporateEnquiry {
+  id?: string
+  enquiry_id: string
+  full_name: string
+  work_email: string
+  phone: string
+  company_name: string
+  staff_count: string
+  delivery_mode: string
+  departments: string
+  goals: string
+  start_date?: string | null
+  created_at: string
+  status?: string | null
+}
+

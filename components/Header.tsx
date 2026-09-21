@@ -4,11 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import MobileMenu from "./MobileMenu";
-import { FaUser } from "react-icons/fa";
+import { FaUser, FaChevronDown, FaBuilding, FaRobot } from "react-icons/fa";
 import { HiLogin } from "react-icons/hi";
 import { MdLogin } from "react-icons/md";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import Navlinks from "./Navlinks";
+import { usePathname } from "next/navigation";
 
 // Animation variants with proper typing
 const navVariants: Variants = {
@@ -50,6 +51,8 @@ const buttonVariants: Variants = {
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isOrgOpen, setIsOrgOpen] = useState(false);
+    const pathname = usePathname();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -64,8 +67,10 @@ const Header = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
+    const isOrgActive = pathname?.startsWith("/corporate-training") || pathname?.startsWith("/ai-training-for-organizations");
+
     return (
-        <div className="bg-white  lg:bg-black">
+        <div className="bg-white lg:bg-black">
             <motion.header
                 className={`max-w-screen fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
                     ? "bg-white shadow-md"
@@ -91,28 +96,117 @@ const Header = () => {
                     </motion.div>
 
                     {/* Navigation - Desktop */}
-                    <nav className="hidden md:flex items-center justify-evenly w-[50%]">
-                        {[
-                            { href: "/", label: "Home" },
-                            { href: "/about-us", label: "About Us" },
-                            { href: "/cohorts", label: "Cohorts & Courses" },
-                            { href: "/contact-us", label: "Contact" }
-                        ].map((link, i) => (
-                            <motion.div
-                                key={link.href}
-                                variants={linkVariants}
-                                initial="hidden"
-                                animate="visible"
-                                transition={{ delay: 0.2 + i * 0.1 }}
+                    <nav className="hidden md:flex items-center justify-evenly w-[60%] lg:w-[55%]">
+                        <motion.div
+                            variants={linkVariants}
+                            initial="hidden"
+                            animate="visible"
+                            transition={{ delay: 0.2 }}
+                        >
+                            <Navlinks href="/" isScrolled={isScrolled}>
+                                Home
+                            </Navlinks>
+                        </motion.div>
+
+                        <motion.div
+                            variants={linkVariants}
+                            initial="hidden"
+                            animate="visible"
+                            transition={{ delay: 0.3 }}
+                        >
+                            <Navlinks href="/about-us" isScrolled={isScrolled}>
+                                About Us
+                            </Navlinks>
+                        </motion.div>
+
+                        <motion.div
+                            variants={linkVariants}
+                            initial="hidden"
+                            animate="visible"
+                            transition={{ delay: 0.4 }}
+                        >
+                            <Navlinks href="/cohorts" isScrolled={isScrolled}>
+                                Cohorts & Courses
+                            </Navlinks>
+                        </motion.div>
+
+                        {/* Dropdown Menu for Organization */}
+                        <motion.div
+                            variants={linkVariants}
+                            initial="hidden"
+                            animate="visible"
+                            transition={{ delay: 0.45 }}
+                            className="relative"
+                            onMouseEnter={() => setIsOrgOpen(true)}
+                            onMouseLeave={() => setIsOrgOpen(false)}
+                        >
+                            <button
+                                onClick={() => setIsOrgOpen(!isOrgOpen)}
+                                className={`text-lg font-medium transition-colors duration-200 flex items-center gap-1.5 py-2 ${
+                                    isOrgActive
+                                        ? "text-brandPurple"
+                                        : isScrolled
+                                            ? "text-black hover:text-brandPurple"
+                                            : "text-black lg:text-white hover:text-brandPurple"
+                                }`}
+                                aria-expanded={isOrgOpen}
                             >
-                                <Navlinks
-                                    href={link.href}
-                                    isScrolled={isScrolled}
-                                >
-                                    {link.label}
-                                </Navlinks>
-                            </motion.div>
-                        ))}
+                                For Organization
+                                <FaChevronDown className={`text-xs transition-transform duration-200 ${isOrgOpen ? "rotate-180 text-brandPurple" : ""}`} />
+                            </button>
+
+                            <AnimatePresence>
+                                {isOrgOpen && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                                        transition={{ duration: 0.18, ease: "easeOut" }}
+                                        className={`absolute left-0 mt-1 w-72 rounded-xl p-2 shadow-2xl border ${
+                                            isScrolled
+                                                ? "bg-white border-gray-100 text-gray-900"
+                                                : "bg-neutral-900 border-neutral-800 text-white"
+                                        }`}
+                                    >
+                                        <Link
+                                            href="/corporate-training"
+                                            onClick={() => setIsOrgOpen(false)}
+                                            className={`flex items-start gap-3 p-3 rounded-lg transition-all duration-200 ${
+                                                isScrolled
+                                                    ? "hover:bg-purple-50 group"
+                                                    : "hover:bg-neutral-800 group"
+                                            }`}
+                                        >
+                                            <div className="p-2.5 rounded-lg bg-brandPurple/10 text-brandPurple group-hover:bg-brandPurple group-hover:text-white transition-colors duration-200 mt-0.5">
+                                                <FaBuilding className="text-lg" />
+                                            </div>
+                                            <div>
+                                                <div className="font-semibold text-sm group-hover:text-brandPurple transition-colors flex items-center gap-1.5">
+                                                    AI Training
+                                                    <span className="text-[10px] font-bold tracking-wide uppercase px-1.5 py-0.5 rounded bg-brandPurple/15 text-brandPurple">Teams</span>
+                                                </div>
+                                                <p className={`text-xs mt-0.5 leading-snug ${
+                                                    isScrolled ? "text-gray-500" : "text-neutral-400"
+                                                }`}>
+                                                    Practical AI training for staff & corporate teams
+                                                </p>
+                                            </div>
+                                        </Link>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </motion.div>
+
+                        <motion.div
+                            variants={linkVariants}
+                            initial="hidden"
+                            animate="visible"
+                            transition={{ delay: 0.5 }}
+                        >
+                            <Navlinks href="/contact-us" isScrolled={isScrolled}>
+                                Contact
+                            </Navlinks>
+                        </motion.div>
                     </nav>
 
                     {/* Actions - Desktop */}

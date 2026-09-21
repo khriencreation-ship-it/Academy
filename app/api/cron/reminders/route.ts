@@ -3,7 +3,7 @@ import { Resend } from 'resend';
 import { ReminderEmail } from '@/components/scholarship/ReminderEmail';
 import { supabase } from '@/lib/supabase';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY || 're_placeholder');
 
 export async function GET(req: Request) {
   try {

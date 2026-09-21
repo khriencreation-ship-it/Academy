@@ -5,7 +5,7 @@ import { rateLimit } from '@/lib/rate-limit';
 import { headers } from 'next/headers';
 import { supabase } from '@/lib/supabase';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY || 're_placeholder');
 
 export async function POST(req: Request) {
   try {

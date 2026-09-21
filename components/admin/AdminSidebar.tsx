@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, Users, LogOut, BarChart3, MessageSquare, Menu, X } from 'lucide-react'
+import { LayoutDashboard, Users, LogOut, BarChart3, MessageSquare, Menu, X, Building2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -11,6 +11,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 const navItems = [
   { label: 'Home', href: '/khrienadmin/dashboard', icon: LayoutDashboard },
   { label: 'Applications', href: '/khrienadmin/applications', icon: Users },
+  { label: 'Org Bookings', href: '/khrienadmin/corporate-bookings', icon: Building2 },
   { label: 'Analytics', href: '/khrienadmin/analytics', icon: BarChart3 },
   { label: 'Outreach', href: '/khrienadmin/outreach', icon: MessageSquare },
 ]

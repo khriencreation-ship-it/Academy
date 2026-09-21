@@ -31,6 +31,19 @@ const MobileMenu = ({ setIsMenuOpen }: MobileMenuProps) => {
                 >
                     Cohorts & Courses
                 </Link>
+                <div className="flex flex-col gap-2">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+                        For Organization
+                    </span>
+                    <Link
+                        href="/corporate-training"
+                        className="text-xl font-medium text-brandPurple flex items-center justify-between transition-colors pl-2"
+                        onClick={() => setIsMenuOpen(false)}
+                    >
+                        AI Training for Organizations
+                        <span className="text-xs bg-purple-100 text-brandPurple px-2 py-0.5 rounded-full font-normal">Corporate</span>
+                    </Link>
+                </div>
                 <Link
                     href="/contact-us"
                     className="text-xl font-medium text-gray-600 hover:text-black transition-colors"
