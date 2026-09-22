@@ -21,7 +21,7 @@ const pricingTiers = [
     ],
   },
   {
-    size: "1 to 5 staff",
+    size: "2 to 5 staff",
     range: "Small Team",
     price: "₦130,000",
     unit: "per person",
