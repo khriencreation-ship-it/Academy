@@ -155,6 +155,8 @@ const Form = () => {
     const publicKey = rawKey.trim().replace(/^["']|["']$/g, '');
     const txRef = `APPFEE-${appId}-${Date.now().toString(36)}`;
 
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://academy.khrien.com';
+
     if (typeof window !== 'undefined' && window.FlutterwaveCheckout) {
       window.FlutterwaveCheckout({
         public_key: publicKey,
@@ -162,6 +164,7 @@ const Form = () => {
         amount: 2000,
         currency: 'NGN',
         payment_options: 'card,banktransfer,ussd',
+        redirect_url: `${baseUrl}/payment-success`,
         customer_email: targetEmail,
         customer: {
           email: targetEmail,

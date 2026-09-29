@@ -45,14 +45,27 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, error: 'Transaction verification failed' }, { status: 400 });
     }
 
+    let cleanAppId = applicationId;
+    if (!cleanAppId || cleanAppId.startsWith('APPFEE-') || cleanAppId.startsWith('TUITION-')) {
+      if (tx_ref) {
+        const parts = tx_ref.split('-');
+        if (parts.length >= 4) {
+          cleanAppId = parts.slice(1, parts.length - 1).join('-');
+        } else if (parts.length >= 2) {
+          cleanAppId = parts.slice(1).join('-');
+        }
+      }
+    }
+
     // Fetch application record
     const { data: app, error: fetchErr } = await supabase
       .from('applications')
       .select('*')
-      .eq('application_id', applicationId)
-      .single();
+      .eq('application_id', cleanAppId)
+      .maybeSingle();
 
     if (fetchErr || !app) {
+      console.error('Verify API error finding application:', cleanAppId, fetchErr);
       return NextResponse.json({ success: false, error: 'Application not found' }, { status: 404 });
     }
 
@@ -66,9 +79,9 @@ export async function POST(req: Request) {
           application_fee_tx_ref: tx_ref,
           updated_at: new Date().toISOString(),
         })
-        .eq('application_id', applicationId);
+        .eq('application_id', cleanAppId);
 
-      const tuitionUrl = `${baseUrl}/tuition?ref=${applicationId}`;
+      const tuitionUrl = `${baseUrl}/tuition?ref=${cleanAppId}`;
 
       // Send Fee Confirmation Email
       try {
@@ -78,7 +91,7 @@ export async function POST(req: Request) {
           subject: 'Application Fee Confirmed! Next Step: Pay Tuition 🚀',
           react: FeeConfirmationEmail({
             fullName: app.full_name,
-            applicationId: applicationId,
+            applicationId: cleanAppId,
             courseSelection: app.course_selection || 'Catalyst Cohort Course',
             pricingTier: app.pricing_tier || 'early_bird',
             tuitionUrl,
@@ -108,9 +121,9 @@ export async function POST(req: Request) {
           tuition_tx_ref: tx_ref,
           updated_at: new Date().toISOString(),
         })
-        .eq('application_id', applicationId);
+        .eq('application_id', cleanAppId);
 
-      const placementTestUrl = `${baseUrl}/scholarship-test?ref=${applicationId}`;
+      const placementTestUrl = `${baseUrl}/scholarship-test?ref=${cleanAppId}`;
 
       try {
         await resend.emails.send({
@@ -119,7 +132,7 @@ export async function POST(req: Request) {
           subject: 'Tuition Confirmed — Complete Your Placement Check 🎓',
           react: PlacementTestEmail({
             fullName: app.full_name,
-            applicationId: applicationId,
+            applicationId: cleanAppId,
             courseSelection: app.course_selection || 'Catalyst Cohort Course',
             placementTestUrl,
           }),

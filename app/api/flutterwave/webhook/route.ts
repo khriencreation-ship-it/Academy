@@ -29,7 +29,16 @@ export async function POST(req: Request) {
     const amount: number = Number(txData.amount || 0);
     const customerEmail: string = txData.customer?.email || '';
 
-    const applicationId = meta.application_id || meta.applicationId || (txRef.split('-').slice(1).join('-'));
+    let applicationId = meta.application_id || meta.applicationId;
+    if (!applicationId && txRef) {
+      const parts = txRef.split('-');
+      if (parts.length >= 4) {
+        // e.g. APPFEE - KHA - TIMESTAMP - RAND - TS -> KHA-TIMESTAMP-RAND
+        applicationId = parts.slice(1, parts.length - 1).join('-');
+      } else if (parts.length >= 2) {
+        applicationId = parts.slice(1).join('-');
+      }
+    }
 
     if (!applicationId) {
       console.error('Flutterwave Webhook: Application ID could not be identified from txRef or meta', txRef, meta);

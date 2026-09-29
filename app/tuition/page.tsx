@@ -97,6 +97,8 @@ function TuitionContent() {
 
     setPayingTuition(true);
 
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://academy.khrien.com';
+
     if (typeof window !== 'undefined' && window.FlutterwaveCheckout) {
       window.FlutterwaveCheckout({
         public_key: publicKey,
@@ -104,6 +106,7 @@ function TuitionContent() {
         amount: paymentAmountNow,
         currency: 'NGN',
         payment_options: 'card,banktransfer,ussd',
+        redirect_url: `${baseUrl}/payment-success`,
         customer_email: application.email,
         customer: {
           email: application.email,
