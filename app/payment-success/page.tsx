@@ -139,10 +139,12 @@ function PaymentSuccessContent() {
 
             {isTuition && (
               <a
-                href={verifiedData?.placementTestUrl || (rawAppId ? `/scholarship-test?ref=${rawAppId}` : '/scholarship-test')}
-                className="w-full sm:w-auto bg-brandPurple text-white px-8 py-3.5 rounded-full font-bold text-sm hover:bg-brandPurple/90 transition-all flex items-center justify-center gap-2 shadow-xl shadow-purple-950/50"
+                href="https://chat.whatsapp.com/KavR69S3M3rBox593jkKEw"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto bg-emerald-600 text-white px-8 py-3.5 rounded-full font-bold text-sm hover:bg-emerald-500 transition-all flex items-center justify-center gap-2 shadow-xl shadow-emerald-950/50"
               >
-                <span>Take Placement Check Now</span>
+                <span>Join Student WhatsApp Community</span>
                 <ArrowRight className="w-4 h-4" />
               </a>
             )}

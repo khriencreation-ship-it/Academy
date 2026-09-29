@@ -5,7 +5,7 @@ import { useEffect, useState, useRef } from "react";
 import Script from "next/script";
 import { motion } from "framer-motion";
 import * as zod from 'zod';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -45,7 +45,6 @@ const validationSchema = zod.object({
   ),
   termFee: zod.boolean().refine(val => val === true, "You must accept the application fee term"),
   termEarlyBird: zod.boolean().optional(),
-  termPlacement: zod.boolean().refine(val => val === true, "You must accept the placement check term"),
   website: zod.string().optional(), // Honeypot field
   turnstileToken: zod.string().optional(),
   loadTime: zod.number().optional(),
@@ -100,7 +99,6 @@ const Form = () => {
       referral: undefined,
       termFee: false,
       termEarlyBird: false,
-      termPlacement: false,
       website: "",
       turnstileToken: "",
       loadTime: Date.now(),
@@ -226,7 +224,7 @@ const Form = () => {
     }
   };
 
-  const formSubmit = async (data: FormData) => {
+  const formSubmit: SubmitHandler<FormData> = async (data) => {
     const activePricingTier = isEarlyBird ? 'early_bird' : 'standard';
 
     if (isEarlyBird && !data.termEarlyBird) {
@@ -729,18 +727,6 @@ const Form = () => {
               </>
             )}
 
-            {/* Term 3 */}
-            <label className="flex items-start gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                {...register("termPlacement")}
-                className="accent-brandPurple w-4 h-4 rounded mt-0.5 shrink-0"
-              />
-              <span className="text-xs md:text-sm text-neutral-300 leading-snug">
-                I understand that after my tuition is paid, I'll be asked to complete a short placement check. <span className="text-brandPurple">*</span>
-              </span>
-            </label>
-            {errors.termPlacement?.message && <p className="text-red-400 text-xs font-medium pl-7">* {errors.termPlacement?.message}</p>}
           </div>
 
           {/* Turnstile Verification */}

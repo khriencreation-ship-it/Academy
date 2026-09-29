@@ -70,7 +70,7 @@ export function FeeConfirmationEmail({
 
         <h3 style={{ color: '#ffffff', fontSize: '18px', marginTop: '25px' }}>Next Step: Complete Tuition Payment</h3>
         <p style={{ color: '#d4d4d4' }}>
-          To lock in your seat and receive your placement check link, click below to select your tuition payment option:
+          To lock in your seat and finalize your enrollment, click below to complete your tuition payment:
         </p>
 
         <div style={{ textAlign: 'center', margin: '35px 0' }}>

@@ -26,14 +26,8 @@ const steps = [
     },
     {
         num: "04",
-        title: "Take a placement check",
-        desc: "Take a short placement check — not a pass/fail test, just a way for your tutor to know where to start with you.",
-        icon: FaClipboardCheck,
-    },
-    {
-        num: "05",
         title: "You're in!",
-        desc: "Access your cohort portal and prepare for your first class.",
+        desc: "Join the WhatsApp student community and prepare for your first class.",
         icon: FaCheck,
     },
 ];
@@ -55,7 +49,7 @@ const CatalystHowToApply = () => {
                 </div>
 
                 {/* Steps List */}
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-4 max-w-6xl mx-auto mb-16">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto mb-16">
                     {steps.map((step, idx) => {
                         const Icon = step.icon;
                         return (

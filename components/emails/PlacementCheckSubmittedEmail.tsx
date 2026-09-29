@@ -1,18 +1,11 @@
 import * as React from 'react';
 
-interface PlacementTestEmailProps {
+interface PlacementCheckSubmittedEmailProps {
   fullName: string;
-  applicationId: string;
-  courseSelection: string;
-  placementTestUrl?: string;
 }
 
-export function PlacementTestEmail({
-  fullName,
-  applicationId,
-  courseSelection,
-}: PlacementTestEmailProps) {
-  const firstName = fullName.split(' ')[0];
+export function PlacementCheckSubmittedEmail({ fullName }: PlacementCheckSubmittedEmailProps) {
+  const firstName = fullName ? fullName.split(' ')[0] : 'Applicant';
 
   return (
     <div style={{
@@ -34,13 +27,13 @@ export function PlacementTestEmail({
           <h1 style={{ margin: 0, color: '#ffffff', fontSize: '24px' }}>
             Khrien<span style={{ color: '#934ab3' }}>Academy</span>
           </h1>
-          <p style={{ margin: '4px 0 0 0', color: '#a3a3a3', fontSize: '13px' }}>Catalyst Cohort Enrollment</p>
+          <p style={{ margin: '4px 0 0 0', color: '#a3a3a3', fontSize: '13px' }}>Catalyst Cohort Placement Check</p>
         </div>
 
         <p style={{ fontSize: '16px', color: '#ffffff' }}>Hi {firstName},</p>
 
         <p style={{ color: '#d4d4d4' }}>
-          Welcome to the Catalyst Cohort! 🚀 Your tuition payment has been confirmed and your seat is officially reserved.
+          Thank you for completing your <strong>Catalyst Cohort Placement Check</strong>! 🎉
         </p>
 
         <div style={{
@@ -51,18 +44,15 @@ export function PlacementTestEmail({
           border: '1px solid #934ab3',
         }}>
           <p style={{ margin: '0 0 6px 0', fontSize: '12px', color: '#c084fc', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold' }}>
-            Enrollment Confirmed 🎉
+            Status: Placement Check Completed
           </p>
           <p style={{ margin: '4px 0', color: '#ffffff', fontSize: '14px' }}>
-            <strong>Application ID:</strong> <span style={{ color: '#c084fc', fontWeight: 'bold' }}>{applicationId}</span>
-          </p>
-          <p style={{ margin: '4px 0', color: '#ffffff', fontSize: '14px' }}>
-            <strong>Enrolled Course(s):</strong> {courseSelection}
+            Your responses have been successfully logged in our system.
           </p>
         </div>
 
         <p style={{ color: '#d4d4d4' }}>
-          Please click below to join our official Student WhatsApp Community for orientation details, class schedules, and setup instructions:
+          Our instructors use these responses strictly to assess your starting knowledge level so we can structure optimal hands-on guidance for you during the cohort.
         </p>
 
         <div style={{ textAlign: 'center', margin: '35px 0' }}>
@@ -83,10 +73,6 @@ export function PlacementTestEmail({
             Join WhatsApp Community →
           </a>
         </div>
-
-        <p style={{ fontSize: '13px', color: '#a3a3a3', backgroundColor: '#262626', padding: '12px', borderRadius: '8px' }}>
-          ℹ️ <strong>Next Steps:</strong> Save your Application ID (<strong>{applicationId}</strong>) for your records. Class schedules and onboarding guides will be posted in the community channel.
-        </p>
 
         <div style={{ marginTop: '40px', borderTop: '1px solid #262626', paddingTop: '20px', fontSize: '13px', color: '#a3a3a3' }}>
           <p style={{ margin: 0, fontWeight: 'bold', color: '#ffffff' }}>— The Khrien Academy Team</p>

@@ -937,26 +937,24 @@ function ScholarshipTestContent() {
                             key="results"
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            className="text-center"
+                            className="text-center max-w-2xl mx-auto"
                         >
-                            {score >= 15 ? (
-                                <div className="space-y-8">
-                                    <CheckCircle2 size={100} className="text-green-500 mx-auto drop-shadow-[0_0_20px_rgba(34,197,94,0.3)]" />
-                                    <div>
-                                        <h2 className="text-4xl md:text-5xl font-black mb-2 text-black">Congratulations, {firstName}! 🎉</h2>
-                                        <p className="text-xl text-green-600 font-medium">You have passed the Genesis Cohort Scholarship Test</p>
-                                    </div>
-                                    <div className="inline-block p-1 bg-green-50 border border-green-100 rounded-2xl px-12 py-10">
-                                        <span className="text-sm font-bold text-gray-400 block mb-2 uppercase tracking-widest">Your Score</span>
-                                        <span className="text-6xl font-black text-black">{score}/25</span>
-                                        <span className="block mt-2 text-xl font-bold text-green-600">{(score/25*100).toFixed(0)}%</span>
-                                    </div>
+                            <div className="space-y-8">
+                                <CheckCircle2 size={100} className="text-[#934ab3] mx-auto drop-shadow-[0_0_20px_rgba(147,74,179,0.3)]" />
+                                <div>
+                                    <h2 className="text-4xl md:text-5xl font-black mb-2 text-black">Placement Check Completed! 🎉</h2>
+                                    <p className="text-xl text-[#934ab3] font-medium">Thank you, {firstName}. Your responses have been recorded.</p>
+                                </div>
 
-                                    <div className="bg-white border border-gray-100 rounded-[32px] p-8 md:p-10 max-w-2xl mx-auto shadow-xl ring-1 ring-black/5">
-                                        <h3 className="text-2xl font-black mb-4">Welcome to the Family! 💜</h3>
-                                        <p className="text-gray-600 leading-relaxed mb-8 text-lg">
-                                            You are now part of the <b>Genesis Cohort</b>. To connect with your fellow members and receive your onboarding details, join our official community right now.
-                                        </p>
+                                <div className="bg-white border border-gray-100 rounded-[32px] p-8 md:p-10 max-w-2xl mx-auto shadow-xl ring-1 ring-black/5 text-left space-y-4">
+                                    <h3 className="text-2xl font-black mb-2 text-black">What happens next? 🚀</h3>
+                                    <p className="text-gray-600 leading-relaxed text-base">
+                                        Your responses have been saved and shared with your instructors to assess your background level and structure optimal hands-on guidance for you during the cohort.
+                                    </p>
+                                    <p className="text-gray-600 leading-relaxed text-base">
+                                        Make sure to join our official student WhatsApp community to stay updated on orientation and class schedules.
+                                    </p>
+                                    <div className="pt-4">
                                         <a 
                                             href="https://chat.whatsapp.com/KavR69S3M3rBox593jkKEw" 
                                             target="_blank" 
@@ -964,50 +962,19 @@ function ScholarshipTestContent() {
                                             className="w-full bg-[#25D366] text-white font-black py-5 rounded-2xl transition-all transform hover:scale-[1.03] shadow-lg flex items-center justify-center gap-3 text-lg"
                                         >
                                             <Users size={24} />
-                                            Join the WhatsApp Community
+                                            Join the Student WhatsApp Community
                                         </a>
-                                        <p className="mt-4 text-xs text-gray-400 font-medium italic">
-                                            Check your email ({user.email}) for your invitation details.
-                                        </p>
                                     </div>
+                                    <p className="mt-4 text-xs text-gray-400 font-medium italic text-center">
+                                        A confirmation email has also been sent to {user.email || 'your email'}.
+                                    </p>
                                 </div>
-                            ) : (
-                                <div className="space-y-8 text-black">
-                                    <XCircle size={100} className="text-red-500 mx-auto drop-shadow-[0_0_20px_rgba(239,68,68,0.3)]" />
-                                    <div>
-                                        <h2 className="text-3xl md:text-4xl font-bold mb-2">Thank You for Applying, {firstName}</h2>
-                                        <p className="text-lg text-gray-500">Unfortunately, you did not pass the scholarship test this time.</p>
-                                    </div>
-                                    <div className="inline-block p-1 bg-red-50 border border-red-100 rounded-2xl px-12 py-10">
-                                        <span className="text-sm font-bold text-gray-400 block mb-2 uppercase tracking-widest">Your Score</span>
-                                        <span className="text-6xl font-black text-black">{score}/25</span>
-                                        <span className="block mt-2 text-xl font-bold text-red-500">{(score/25*100).toFixed(0)}%</span>
-                                    </div>
-                                    <div className="bg-white border border-gray-100 rounded-[32px] p-8 md:p-12 max-w-2xl mx-auto shadow-xl">
-                                        <h3 className="text-2xl font-black mb-4">Stay in the Loop! ✨</h3>
-                                        <p className="text-gray-600 leading-relaxed mb-8 text-lg">
-                                            Don't be discouraged. We will be opening future cohorts soon! Join our community to be the first to know and stay updated on free resources.
-                                        </p>
-                                        <a 
-                                            href="https://chat.whatsapp.com/KavR69S3M3rBox593jkKEw" 
-                                            target="_blank" 
-                                            rel="noopener noreferrer"
-                                            className="w-full bg-[#7c3aed] text-white font-black py-5 rounded-2xl transition-all transform hover:scale-[1.03] shadow-lg flex items-center justify-center gap-3 text-lg"
-                                        >
-                                            <Users size={24} />
-                                            Join the Khrien Community
-                                        </a>
-                                        <p className="mt-6 text-gray-500 leading-relaxed text-sm">
-                                            Keep learning and we hope to see you in a future Khrien Academy program.
-                                        </p>
-                                    </div>
-                                </div>
-                            )}
+                            </div>
 
                             <div className="flex flex-col items-center">
                                 <button
                                     onClick={resetTest}
-                                    className="mt-16 bg-[#934ab3] text-white px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-black transition-all transform hover:scale-105 shadow-[0_10px_30px_rgba(147,74,179,0.3)]"
+                                    className="mt-12 bg-[#934ab3] text-white px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-black transition-all transform hover:scale-105 shadow-[0_10px_30px_rgba(147,74,179,0.3)]"
                                 >
                                     Return to Home
                                 </button>
@@ -1021,49 +988,34 @@ function ScholarshipTestContent() {
                             key="timeout"
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            className="text-center py-12"
+                            className="text-center py-12 max-w-2xl mx-auto"
                         >
-                            <Clock size={100} className="text-red-500 mx-auto mb-8 animate-[pulse_1s_infinite]" />
-                            <h2 className="text-5xl font-black mb-6 text-black">Time's Up</h2>
-                            <div className="bg-red-50 border border-red-100 rounded-3xl p-10 max-w-2xl mx-auto space-y-6">
-                                <p className="text-xl text-gray-700 font-medium">
-                                    Your 10-minute test window has expired.
+                            <Clock size={100} className="text-[#934ab3] mx-auto mb-8 animate-[pulse_1s_infinite]" />
+                            <h2 className="text-4xl md:text-5xl font-black mb-4 text-black">Time Window Ended</h2>
+                            <div className="bg-purple-50/60 border border-purple-100 rounded-3xl p-8 max-w-2xl mx-auto space-y-6 text-left">
+                                <p className="text-lg text-gray-700 font-medium">
+                                    Your 10-minute check window has completed.
                                 </p>
-                                <p className="text-gray-500 leading-relaxed">
-                                    Unfortunately, your test could not be submitted in time and you have not qualified for this round of the scholarship.
+                                <p className="text-gray-600 leading-relaxed text-base">
+                                    Don't worry — your completed responses up to this point have been automatically saved and forwarded to your instructors for review.
                                 </p>
-                                <div className="pt-8 space-y-4">
-                                    <p className="text-red-500 font-bold uppercase tracking-widest text-sm">What now?</p>
-                                    <p className="text-gray-500">
-                                        We will be opening future cohorts. Follow us on Instagram and join our community to be the first to know.
-                                    </p>
-                                    <div className="flex justify-center gap-6 pt-4">
-                                        <a 
-                                            href="https://www.instagram.com/thisis_khrien" 
-                                            className="text-[#934ab3] hover:text-black transition-colors" 
-                                            target="_blank" 
-                                            rel="noopener noreferrer"
-                                            onClick={() => {
-                                              fetch('/api/analytics/log', {
-                                                method: 'POST',
-                                                headers: { 'Content-Type': 'application/json' },
-                                                body: JSON.stringify({ event_type: 'instagram_click' })
-                                              }).catch(console.error);
-                                            }}
-                                        >
-                                            <Instagram size={28} />
-                                        </a>
-                                        <a href="https://chat.whatsapp.com/KavR69S3M3rBox593jkKEw" className="text-[#934ab3] hover:text-black transition-colors" target="_blank" rel="noopener noreferrer">
-                                            <Users size={28} />
-                                        </a>
-                                    </div>
+                                <div className="pt-4 space-y-4 text-center">
+                                    <a 
+                                        href="https://chat.whatsapp.com/KavR69S3M3rBox593jkKEw" 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="w-full bg-[#934ab3] text-white font-black py-4 rounded-xl transition-all transform hover:scale-[1.02] shadow-lg flex items-center justify-center gap-2"
+                                    >
+                                        <Users size={20} />
+                                        Join Student Community
+                                    </a>
                                 </div>
                             </div>
                             <button
                                 onClick={resetTest}
                                 className="mt-12 text-gray-400 hover:text-[#934ab3] transition-colors text-sm underline"
                             >
-                                Close Portal
+                                Return Home
                             </button>
                         </motion.div>
                     )}

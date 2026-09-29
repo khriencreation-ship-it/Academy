@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
-import { PassEmail } from '@/components/scholarship/PassEmail';
-import { FailEmail } from '@/components/scholarship/FailEmail';
+import { PlacementCheckSubmittedEmail } from '@/components/emails/PlacementCheckSubmittedEmail';
 import { supabase } from '@/lib/supabase';
 
 const resend = new Resend(process.env.RESEND_API_KEY || 're_placeholder');
@@ -17,15 +16,14 @@ export async function POST(req: Request) {
             );
         }
 
-        const passed = score >= 15;
-
         try {
-            // Update Supabase and retrieve user data
+            // Update Supabase with test score and completed status
             const { data: user, error } = await supabase
                 .from('applications')
                 .update({
                     test_score: score,
-                    scholarship_status: passed ? 'Pass' : 'Fail',
+                    placement_test_status: 'completed',
+                    scholarship_status: 'Completed',
                     taken_scholarship: true
                 })
                 .eq('application_id', applicationId)
@@ -42,23 +40,17 @@ export async function POST(req: Request) {
 
             const { full_name: fullName, email } = user;
             
-            const subject = passed 
-                ? "You're In. Welcome to the Genesis Cohort 🎉" 
-                : "Your Khrien Academy Scholarship Test Results";
-
-            const emailResult = await resend.emails.send({
+            await resend.emails.send({
                 from: 'Khrien Academy <hello@khrien.com>',
                 to: [email],
-                subject: subject,
-                react: passed 
-                    ? PassEmail({ fullName }) 
-                    : FailEmail({ fullName }),
+                subject: 'Placement Check Completed - Catalyst Cohort 🚀',
+                react: PlacementCheckSubmittedEmail({ fullName }),
             });
 
             // Result processed
             return NextResponse.json({ 
                 success: true, 
-                message: 'Result processed and email sent successfully' 
+                message: 'Placement check score recorded and email sent successfully' 
             });
 
         } catch (err: any) {

@@ -175,7 +175,7 @@ function TuitionContent() {
             Complete Tuition Payment
           </h1>
           <p className="text-neutral-400 text-sm md:text-base mt-2">
-            Lock in your seat for the Catalyst Cohort & gain access to your placement check.
+            Lock in your seat for the Catalyst Cohort & join the student community.
           </p>
         </div>
 
@@ -248,15 +248,17 @@ function TuitionContent() {
                 <div>
                   <h2 className="text-2xl font-bold text-white">Tuition Confirmed! 🎉</h2>
                   <p className="text-neutral-300 text-sm mt-2 max-w-md mx-auto">
-                    Your seat for the Catalyst Cohort is officially reserved. Check your email for your receipt and placement check instructions.
+                    Your seat for the Catalyst Cohort is officially reserved. Check your email for your receipt and onboarding details.
                   </p>
                 </div>
                 <div className="pt-4">
                   <a
-                    href={`/scholarship-test?ref=${application.application_id}`}
-                    className="inline-flex items-center gap-2 bg-brandPurple text-white px-8 py-4 rounded-full font-bold text-base hover:bg-brandPurple/90 transition-all shadow-xl shadow-purple-950/50"
+                    href="https://chat.whatsapp.com/KavR69S3M3rBox593jkKEw"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-emerald-600 text-white px-8 py-4 rounded-full font-bold text-base hover:bg-emerald-500 transition-all shadow-xl shadow-emerald-950/50"
                   >
-                    <span>Take Placement Check Now</span>
+                    <span>Join Student WhatsApp Community</span>
                     <ArrowRight className="w-5 h-5" />
                   </a>
                 </div>

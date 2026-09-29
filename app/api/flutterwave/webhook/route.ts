@@ -135,7 +135,7 @@ export async function POST(req: Request) {
         await resend.emails.send({
           from: 'Khrien Academy <hello@khrien.com>',
           to: [customerEmail || application.email],
-          subject: 'Tuition Confirmed — Complete Your Placement Check 🎓',
+          subject: 'Tuition Confirmed — Welcome to the Catalyst Cohort! 🎉',
           react: PlacementTestEmail({
             fullName: application.full_name,
             applicationId: applicationId,

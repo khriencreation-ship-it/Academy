@@ -90,7 +90,7 @@ const CatalystPricing = () => {
                                 </div>
                                 <div className="p-4 rounded-xl bg-purple-50/70 border border-purple-100 flex justify-between items-center">
                                     <span className="text-sm font-medium text-gray-700">Any 2 Courses</span>
-                                    <span className="text-2xl font-bold text-brandPurple">₦14,000</span>
+                                    <span className="text-2xl font-bold text-brandPurple">₦15,000</span>
                                 </div>
                             </div>
 
