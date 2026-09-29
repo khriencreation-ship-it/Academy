@@ -16,11 +16,11 @@ const tutors = [
     },
     {
         name: "Dada Oluwasegun David",
-        role: "Product & Operations Lead",
+        role: "Sales & Customer Success Lead",
         courses: "Product Management, Customer Success & Support Operations",
-        bio: "Teaching Product Management and Customer Success and Support Operations.",
+        bio: "Oluwasegun David Dada is a Sales and Customer Success professional with 5+ years of experience in SaaS, fintech, and technology. He helps aspiring professionals build practical skills in sales, customer success, client management, and growth.",
         tag: "Domain Expert",
-        image: "/about-us/image-two.jpg",
+        image: "/segzy.jpeg",
     },
     {
         name: "Oluwanishola Habeeb",
