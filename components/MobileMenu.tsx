@@ -24,13 +24,34 @@ const MobileMenu = ({ setIsMenuOpen }: MobileMenuProps) => {
                 >
                     About Us
                 </Link>
-                <Link
-                    href="/cohorts"
-                    className="text-xl font-medium text-gray-600 hover:text-black transition-colors"
-                    onClick={() => setIsMenuOpen(false)}
-                >
-                    Cohorts & Courses
-                </Link>
+                <div className="flex flex-col gap-2">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+                        Cohorts & Courses
+                    </span>
+                    <Link
+                        href="/cohorts/catalyst"
+                        className="text-lg font-medium text-gray-700 hover:text-brandPurple flex items-center justify-between transition-colors pl-2"
+                        onClick={() => setIsMenuOpen(false)}
+                    >
+                        Catalyst Cohort
+                        <span className="text-xs bg-brandPurple text-white px-2 py-0.5 rounded-full font-normal">Current Cohort</span>
+                    </Link>
+                    <Link
+                        href="/cohorts/genesis"
+                        className="text-lg font-medium text-gray-700 hover:text-brandPurple flex items-center justify-between transition-colors pl-2"
+                        onClick={() => setIsMenuOpen(false)}
+                    >
+                        Genesis Cohort
+                        <span className="text-xs bg-neutral-200 text-neutral-600 px-2 py-0.5 rounded-full font-normal">Ended</span>
+                    </Link>
+                    <Link
+                        href="/cohorts"
+                        className="text-sm font-medium text-gray-500 hover:text-black transition-colors pl-2 mt-1"
+                        onClick={() => setIsMenuOpen(false)}
+                    >
+                        All Cohorts Overview →
+                    </Link>
+                </div>
                 <div className="flex flex-col gap-2">
                     <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">
                         For Organization

@@ -116,21 +116,84 @@ export default async function ApplicantDetailPage({
                   app.scholarship_status === 'Pass' ? 'bg-green-500' :
                   app.scholarship_status === 'Fail' ? 'bg-red-400' : 'bg-gray-400'
                 }`}
-                style={{ width: `${(app.test_score / 25) * 100}%` }}
+                style={{ width: `${((app.test_score ?? 0) / 25) * 100}%` }}
               />
             </div>
             <p className={`text-xs font-bold mt-1 ${
               app.scholarship_status === 'Pass' ? 'text-green-600' :
               app.scholarship_status === 'Fail' ? 'text-red-500' : 'text-gray-400'
             }`}>
-              {Math.round((app.test_score / 25) * 100)}%
+              {Math.round(((app.test_score ?? 0) / 25) * 100)}%
             </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Catalyst Cohort Payment & Status Overview */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-6">
+        <h3 className="font-bold text-gray-900 text-sm uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">
+          Catalyst Cohort Status & Payment Tracking
+        </h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+          <div className="bg-gray-50 p-3.5 rounded-xl border border-gray-100">
+            <span className="text-gray-400 font-medium block mb-1">Pricing Tier</span>
+            <span className="font-bold text-gray-900 capitalize">
+              {app.pricing_tier === 'early_bird' ? '⚡ Early-Bird Rate' : '💳 Standard Rate'}
+            </span>
+          </div>
+
+          <div className="bg-gray-50 p-3.5 rounded-xl border border-gray-100">
+            <span className="text-gray-400 font-medium block mb-1">Application Fee (₦2,000)</span>
+            <span className={`font-bold px-2 py-0.5 rounded-full text-[10px] uppercase ${
+              app.application_fee_status === 'paid' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'
+            }`}>
+              {app.application_fee_status === 'paid' ? 'Paid' : 'Pending'}
+            </span>
+          </div>
+
+          <div className="bg-gray-50 p-3.5 rounded-xl border border-gray-100">
+            <span className="text-gray-400 font-medium block mb-1">Tuition Status</span>
+            <span className={`font-bold px-2 py-0.5 rounded-full text-[10px] uppercase ${
+              app.tuition_status === 'paid' ? 'bg-emerald-100 text-emerald-700' :
+              app.tuition_status === 'partially_paid' ? 'bg-blue-100 text-blue-700' : 'bg-gray-200 text-gray-700'
+            }`}>
+              {app.tuition_status || 'Not Started'}
+            </span>
+            {app.tuition_paid_amount ? (
+              <span className="block text-[11px] font-semibold text-gray-600 mt-1">₦{app.tuition_paid_amount.toLocaleString()} paid</span>
+            ) : null}
+          </div>
+
+          <div className="bg-gray-50 p-3.5 rounded-xl border border-gray-100">
+            <span className="text-gray-400 font-medium block mb-1">Placement Test</span>
+            <span className={`font-bold px-2 py-0.5 rounded-full text-[10px] uppercase ${
+              app.placement_test_status === 'completed' ? 'bg-emerald-100 text-emerald-700' :
+              app.placement_test_status === 'sent' ? 'bg-purple-100 text-purple-700' : 'bg-gray-200 text-gray-600'
+            }`}>
+              {app.placement_test_status || 'Not Sent'}
+            </span>
           </div>
         </div>
       </div>
 
       {/* Application Answers */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Course & Status Details */}
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="p-2 bg-purple-50 rounded-xl">
+              <BookOpen className="w-4 h-4 text-[#7c3aed]" />
+            </div>
+            <h3 className="font-bold text-gray-900 text-sm uppercase tracking-wider">Course & Applicant Details</h3>
+          </div>
+          <div className="space-y-2 text-xs text-gray-700">
+            <p><strong>Course Selection:</strong> {app.course_selection || 'N/A'}</p>
+            <p><strong>Current Status:</strong> {app.current_status || 'N/A'}</p>
+            <p><strong>Location:</strong> {app.location || 'N/A'}</p>
+            <p><strong>Date of Birth:</strong> {app.dob || 'N/A'}</p>
+          </div>
+        </div>
+
         {/* Motivation */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
           <div className="flex items-center gap-2 mb-4">
@@ -144,26 +207,13 @@ export default async function ApplicantDetailPage({
           </p>
         </div>
 
-        {/* Goals */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="p-2 bg-purple-50 rounded-xl">
-              <Target className="w-4 h-4 text-[#7c3aed]" />
-            </div>
-            <h3 className="font-bold text-gray-900 text-sm uppercase tracking-wider">Goals</h3>
-          </div>
-          <p className="text-gray-600 text-sm leading-relaxed">
-            {app.goals || <span className="text-gray-300 italic">Not provided</span>}
-          </p>
-        </div>
-
         {/* Experience */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
           <div className="flex items-center gap-2 mb-4">
             <div className="p-2 bg-purple-50 rounded-xl">
               <Lightbulb className="w-4 h-4 text-[#7c3aed]" />
             </div>
-            <h3 className="font-bold text-gray-900 text-sm uppercase tracking-wider">Experience</h3>
+            <h3 className="font-bold text-gray-900 text-sm uppercase tracking-wider">Tech Experience</h3>
           </div>
           <p className="text-gray-600 text-sm leading-relaxed">
             {app.experience || <span className="text-gray-300 italic">Not provided</span>}

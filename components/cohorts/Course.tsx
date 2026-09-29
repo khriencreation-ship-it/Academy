@@ -55,13 +55,6 @@ const Course = () => {
                                 ))}
                             </ul>
                         </div>
-
-                        <Link
-                            href="/apply"
-                            className="inline-block bg-brandPurple text-white font-semibold px-6 md:px-8 py-2.5 md:py-3 rounded-full hover:opacity-90 transition-all duration-300 shadow-md hover:shadow-lg text-sm md:text-base"
-                        >
-                            Apply Now
-                        </Link>
                     </div>
                 </div>
             </div>

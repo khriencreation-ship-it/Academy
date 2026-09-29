@@ -52,6 +52,7 @@ const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isOrgOpen, setIsOrgOpen] = useState(false);
+    const [isCohortsOpen, setIsCohortsOpen] = useState(false);
     const pathname = usePathname();
 
     useEffect(() => {
@@ -68,6 +69,7 @@ const Header = () => {
     };
 
     const isOrgActive = pathname?.startsWith("/corporate-training") || pathname?.startsWith("/ai-training-for-organizations");
+    const isCohortsActive = pathname?.startsWith("/cohorts") || pathname?.startsWith("/genesis-cohort") || pathname?.startsWith("/catalyst-cohort");
 
     return (
         <div className="bg-white lg:bg-black">
@@ -119,15 +121,108 @@ const Header = () => {
                             </Navlinks>
                         </motion.div>
 
+                        {/* Dropdown Menu for Cohorts & Courses */}
                         <motion.div
                             variants={linkVariants}
                             initial="hidden"
                             animate="visible"
                             transition={{ delay: 0.4 }}
+                            className="relative"
+                            onMouseEnter={() => setIsCohortsOpen(true)}
+                            onMouseLeave={() => setIsCohortsOpen(false)}
                         >
-                            <Navlinks href="/cohorts" isScrolled={isScrolled}>
+                            <button
+                                onClick={() => setIsCohortsOpen(!isCohortsOpen)}
+                                className={`text-lg font-medium transition-colors duration-200 flex items-center gap-1.5 py-2 ${
+                                    isCohortsActive
+                                        ? "text-brandPurple"
+                                        : isScrolled
+                                            ? "text-black hover:text-brandPurple"
+                                            : "text-black lg:text-white hover:text-brandPurple"
+                                }`}
+                                aria-expanded={isCohortsOpen}
+                            >
                                 Cohorts & Courses
-                            </Navlinks>
+                                <FaChevronDown className={`text-xs transition-transform duration-200 ${isCohortsOpen ? "rotate-180 text-brandPurple" : ""}`} />
+                            </button>
+
+                            <AnimatePresence>
+                                {isCohortsOpen && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                                        transition={{ duration: 0.18, ease: "easeOut" }}
+                                        className={`absolute left-0 mt-1 w-80 rounded-xl p-2 shadow-2xl border ${
+                                            isScrolled
+                                                ? "bg-white border-gray-100 text-gray-900"
+                                                : "bg-neutral-900 border-neutral-800 text-white"
+                                        }`}
+                                    >
+                                        <Link
+                                            href="/cohorts/catalyst"
+                                            onClick={() => setIsCohortsOpen(false)}
+                                            className={`flex items-start gap-3 p-3 rounded-lg transition-all duration-200 ${
+                                                isScrolled
+                                                    ? "hover:bg-purple-50 group"
+                                                    : "hover:bg-neutral-800 group"
+                                            }`}
+                                        >
+                                            <div className="p-2.5 rounded-lg bg-brandPurple/10 text-brandPurple group-hover:bg-brandPurple group-hover:text-white transition-colors duration-200 mt-0.5">
+                                                <FaBuilding className="text-lg" />
+                                            </div>
+                                            <div>
+                                                <div className="font-semibold text-sm group-hover:text-brandPurple transition-colors flex items-center gap-1.5">
+                                                    Catalyst Cohort
+                                                    <span className="text-[10px] font-bold tracking-wide uppercase px-1.5 py-0.5 rounded bg-brandPurple text-white">Current Cohort</span>
+                                                </div>
+                                                <p className={`text-xs mt-0.5 leading-snug ${
+                                                    isScrolled ? "text-gray-500" : "text-neutral-400"
+                                                }`}>
+                                                    6 courses. Real skills. Built for where you're headed
+                                                </p>
+                                            </div>
+                                        </Link>
+
+                                        <Link
+                                            href="/cohorts/genesis"
+                                            onClick={() => setIsCohortsOpen(false)}
+                                            className={`flex items-start gap-3 p-3 rounded-lg transition-all duration-200 ${
+                                                isScrolled
+                                                    ? "hover:bg-purple-50 group"
+                                                    : "hover:bg-neutral-800 group"
+                                            }`}
+                                        >
+                                            <div className="p-2.5 rounded-lg bg-brandPurple/10 text-brandPurple group-hover:bg-brandPurple group-hover:text-white transition-colors duration-200 mt-0.5">
+                                                <FaRobot className="text-lg" />
+                                            </div>
+                                            <div>
+                                                <div className="font-semibold text-sm group-hover:text-brandPurple transition-colors flex items-center gap-1.5">
+                                                    Genesis Cohort
+                                                    <span className="text-[10px] font-bold tracking-wide uppercase px-1.5 py-0.5 rounded bg-neutral-700 text-neutral-200">Ended</span>
+                                                </div>
+                                                <p className={`text-xs mt-0.5 leading-snug ${
+                                                    isScrolled ? "text-gray-500" : "text-neutral-400"
+                                                }`}>
+                                                    Practical AI intelligence & foundational skills
+                                                </p>
+                                            </div>
+                                        </Link>
+
+                                        <div className={`mt-1 pt-2 border-t ${isScrolled ? "border-gray-100" : "border-neutral-800"}`}>
+                                            <Link
+                                                href="/cohorts"
+                                                onClick={() => setIsCohortsOpen(false)}
+                                                className={`block text-center text-xs font-semibold py-1.5 rounded transition-colors ${
+                                                    isScrolled ? "text-gray-600 hover:text-brandPurple" : "text-neutral-400 hover:text-white"
+                                                }`}
+                                            >
+                                                View All Cohorts Overview →
+                                            </Link>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </motion.div>
 
                         {/* Dropdown Menu for Organization */}

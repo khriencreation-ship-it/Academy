@@ -34,10 +34,10 @@ export default function DashboardClient({ applications, uniqueCohorts }: Props) 
 
   // Score distribution for the sidebar-style summary
   const scoreRanges = [
-    { label: '0–9', count: filtered.filter(a => a.test_score >= 0 && a.test_score <= 9).length },
-    { label: '10–14', count: filtered.filter(a => a.test_score >= 10 && a.test_score <= 14).length },
-    { label: '15–19', count: filtered.filter(a => a.test_score >= 15 && a.test_score <= 19).length },
-    { label: '20–25', count: filtered.filter(a => a.test_score >= 20 && a.test_score <= 25).length },
+    { label: '0–9', count: filtered.filter(a => (a.test_score ?? 0) >= 0 && (a.test_score ?? 0) <= 9).length },
+    { label: '10–14', count: filtered.filter(a => (a.test_score ?? 0) >= 10 && (a.test_score ?? 0) <= 14).length },
+    { label: '15–19', count: filtered.filter(a => (a.test_score ?? 0) >= 15 && (a.test_score ?? 0) <= 19).length },
+    { label: '20–25', count: filtered.filter(a => (a.test_score ?? 0) >= 20 && (a.test_score ?? 0) <= 25).length },
   ]
 
   // Recent 10 applications (increased from 5 since charts are gone)

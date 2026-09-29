@@ -35,9 +35,9 @@ const Introvideo = () => {
     return (
         <section className='relative mb-10 md:mb-20'>
             {/* Black background for top half */}
-            <div className="absolute top-0 left-0 right-0 h-1/2 bg-black z-0" />
+            <div className="absolute top-0 left-0 right-0 h-1/2  z-0" />
             {/* White background for bottom half */}
-            <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-white z-0" />
+            <div className="absolute bottom-0 left-0 right-0 h-1/2  z-0" />
 
             <div className="max-w-6xl mx-auto px-4 relative z-10">
                 <div 

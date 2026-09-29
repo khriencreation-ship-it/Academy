@@ -5,6 +5,7 @@ import { ApplicantConfirmationEmail } from '@/components/apply/ApplicantConfirma
 import { rateLimit } from '@/lib/rate-limit';
 import { headers } from 'next/headers';
 import { supabase } from '@/lib/supabase';
+import { checkIsEarlyBird } from '@/lib/cohort-config';
 
 const resend = new Resend(process.env.RESEND_API_KEY || 're_placeholder');
 
@@ -108,7 +109,8 @@ export async function POST(req: Request) {
     // To start a new cohort, update this ONE constant.
     // All new applications will be tagged with the new cohort name automatically.
     // Old applications retain their original cohort tag permanently.
-    const CURRENT_COHORT = 'Genesis Cohort';
+    const CURRENT_COHORT = 'Catalyst Cohort';
+    const pricingTier = data.pricingTier || (checkIsEarlyBird() ? 'early_bird' : 'standard');
     // ─────────────────────────────────────────────────────────────────────────
 
     // 1. Send data to Supabase
@@ -118,10 +120,18 @@ export async function POST(req: Request) {
         full_name: data.fullName,
         email: data.email,
         phone: data.phone,
+        location: data.location,
+        dob: data.dob,
+        current_status: data.currentStatus,
+        course_selection: data.courseSelection,
+        experience: data.techExperience || data.experience,
         motivation: data.motivation,
-        goals: data.goals,
-        experience: data.experience,
         referral: data.referral,
+        pricing_tier: pricingTier,
+        application_fee_status: 'pending',
+        tuition_status: 'not_started',
+        payment_plan: pricingTier === 'early_bird' ? 'full' : 'full',
+        placement_test_status: 'not_sent',
         taken_scholarship: false,
         scholarship_status: 'Pending',
         test_score: 0,
@@ -133,7 +143,7 @@ export async function POST(req: Request) {
     const applicantEmailPromise = resend.emails.send({
       from: 'Khrien Academy <hello@khrien.com>',
       to: [data.email],
-      subject: `Your Genesis Cohort Application Has Been Received 🎉`,
+      subject: `Your Catalyst Cohort Application Has Been Received 🎉`,
       react: ApplicantConfirmationEmail({
         fullName: data.fullName,
         applicationId: applicationId,
