@@ -43,7 +43,7 @@ const CatalystDetails = () => {
           <motion.div variants={item} className="col-span-1">
             <h3 className="text-2xl md:text-4xl font-semibold">Application Date</h3>
             <p className="text-xs md:text-sm text-white/70 mt-2">
-              October 1 - October 31
+              October 1 - October 24
             </p>
           </motion.div>
 

@@ -96,7 +96,7 @@ const CatalystCourses = () => {
                                         <div className="p-3.5 rounded-xl bg-purple-50 text-brandPurple text-2xl group-hover:bg-brandPurple group-hover:text-white transition-colors duration-300">
                                             <Icon />
                                         </div>
-                                        
+
                                     </div>
 
                                     <h3 className="text-xl md:text-2xl font-semibold text-black mb-3 group-hover:text-brandPurple transition-colors">
@@ -111,7 +111,7 @@ const CatalystCourses = () => {
                                 <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
                                     <div className="flex items-center gap-2 text-xs md:text-sm text-gray-500">
                                         <FaUserTie className="text-brandPurple" />
-                                        <span>Tutor<strong className="text-gray-800 font-medium">{course.tutor}</strong></span>
+                                        <span>Tutor: <strong className="text-gray-800 font-medium">{course.tutor}</strong></span>
                                     </div>
                                     <Link
                                         href="/apply"
