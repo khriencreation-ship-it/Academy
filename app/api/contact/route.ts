@@ -77,17 +77,18 @@ export async function POST(req: Request) {
 
     // ─── CHECK FOR DUPLICATES ───────────────────────────────────────────────
     // Before submitting, check if this person has already applied (same email or phone)
-    const { data: existingApp, error: checkError } = await supabase
+    const { data: existingApps, error: checkError } = await supabase
       .from('applications')
       .select('email, phone')
       .or(`email.ilike.${data.email},phone.eq.${data.phone}`)
-      .maybeSingle();
+      .limit(1);
 
     if (checkError) {
       console.error('Database check failed:', checkError);
     }
 
-    if (existingApp) {
+    if (existingApps && existingApps.length > 0) {
+      const existingApp = existingApps[0];
       const isEmailMatch = existingApp.email.toLowerCase() === data.email.toLowerCase();
       const message = isEmailMatch 
         ? 'An application with this email address already exists.' 

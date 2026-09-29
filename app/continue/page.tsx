@@ -63,7 +63,8 @@ function ContinueContent() {
   const handlePayApplicationFee = () => {
     if (!application) return;
 
-    const publicKey = process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY || 'FLWPUBK-19b2f3bfcf94aacd968b8ee5351e423b-X';
+    const rawKey = process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY || process.env.FLUTTERWAVE_PUBLIC_KEY || '';
+    const publicKey = rawKey.trim().replace(/^["']|["']$/g, '');
     const txRef = `APPFEE-${application.application_id}-${Date.now().toString(36)}`;
 
     setPayingFee(true);

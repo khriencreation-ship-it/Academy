@@ -71,18 +71,22 @@ export async function POST(req: Request) {
       const tuitionUrl = `${baseUrl}/tuition?ref=${applicationId}`;
 
       // Send Fee Confirmation Email
-      resend.emails.send({
-        from: 'Khrien Academy <hello@khrien.com>',
-        to: [app.email],
-        subject: 'Application Fee Confirmed! Next Step: Pay Tuition 🚀',
-        react: FeeConfirmationEmail({
-          fullName: app.full_name,
-          applicationId: applicationId,
-          courseSelection: app.course_selection || 'Catalyst Cohort Course',
-          pricingTier: app.pricing_tier || 'early_bird',
-          tuitionUrl,
-        }),
-      }).catch(err => console.error('Error sending fee email in verify:', err));
+      try {
+        await resend.emails.send({
+          from: 'Khrien Academy <hello@khrien.com>',
+          to: [app.email],
+          subject: 'Application Fee Confirmed! Next Step: Pay Tuition 🚀',
+          react: FeeConfirmationEmail({
+            fullName: app.full_name,
+            applicationId: applicationId,
+            courseSelection: app.course_selection || 'Catalyst Cohort Course',
+            pricingTier: app.pricing_tier || 'early_bird',
+            tuitionUrl,
+          }),
+        });
+      } catch (err) {
+        console.error('Error sending fee email in verify:', err);
+      }
 
       return NextResponse.json({
         success: true,
@@ -108,17 +112,21 @@ export async function POST(req: Request) {
 
       const placementTestUrl = `${baseUrl}/scholarship-test?ref=${applicationId}`;
 
-      resend.emails.send({
-        from: 'Khrien Academy <hello@khrien.com>',
-        to: [app.email],
-        subject: 'Tuition Confirmed — Complete Your Placement Check 🎓',
-        react: PlacementTestEmail({
-          fullName: app.full_name,
-          applicationId: applicationId,
-          courseSelection: app.course_selection || 'Catalyst Cohort Course',
-          placementTestUrl,
-        }),
-      }).catch(err => console.error('Error sending placement email in verify:', err));
+      try {
+        await resend.emails.send({
+          from: 'Khrien Academy <hello@khrien.com>',
+          to: [app.email],
+          subject: 'Tuition Confirmed — Complete Your Placement Check 🎓',
+          react: PlacementTestEmail({
+            fullName: app.full_name,
+            applicationId: applicationId,
+            courseSelection: app.course_selection || 'Catalyst Cohort Course',
+            placementTestUrl,
+          }),
+        });
+      } catch (err) {
+        console.error('Error sending placement email in verify:', err);
+      }
 
       return NextResponse.json({
         success: true,
