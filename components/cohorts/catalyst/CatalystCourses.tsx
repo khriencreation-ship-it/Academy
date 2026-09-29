@@ -111,7 +111,7 @@ const CatalystCourses = () => {
                                 <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
                                     <div className="flex items-center gap-2 text-xs md:text-sm text-gray-500">
                                         <FaUserTie className="text-brandPurple" />
-                                        <span>Taught by <strong className="text-gray-800 font-medium">{course.tutor}</strong></span>
+                                        <span>Tutor<strong className="text-gray-800 font-medium">{course.tutor}</strong></span>
                                     </div>
                                     <Link
                                         href="/apply"

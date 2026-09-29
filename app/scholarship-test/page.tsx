@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { 
@@ -282,7 +283,8 @@ const SESSION_KEY = "khrien_scholarship_session";
 
 // --- COMPONENTS ---
 
-export default function ScholarshipTestPage() {
+function ScholarshipTestContent() {
+    const searchParams = useSearchParams();
     const [screen, setScreen] = useState<ScreenState>("REGISTRATION");
     const [user, setUser] = useState({ applicationId: "", firstName: "", lastName: "", otherName: "", email: "", whatsapp: "" });
     const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -296,6 +298,14 @@ export default function ScholarshipTestPage() {
     const [hasClickedFollow, setHasClickedFollow] = useState(false);
 
     const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+    // Auto-fill Application ID from query parameter (?ref=... or ?applicationId=...)
+    useEffect(() => {
+        const refParam = searchParams.get('ref') || searchParams.get('applicationId');
+        if (refParam) {
+            setUser(prev => ({ ...prev, applicationId: refParam.trim().toUpperCase() }));
+        }
+    }, [searchParams]);
 
     // --- PERSISTENCE LOGIC ---
     
@@ -525,41 +535,6 @@ export default function ScholarshipTestPage() {
 
     // --- UI RENDERING ---
 
-    const TEST_CLOSED = true;
-
-    if (TEST_CLOSED) {
-        return (
-            <div className="min-h-screen bg-white text-black font-sans flex items-center justify-center p-4">
-                <div className="max-w-2xl mx-auto text-center">
-                    <div className="relative w-48 h-12 mx-auto mb-8">
-                        <Image 
-                            src="/academylogo.webp" 
-                            alt="Khrien Academy Logo" 
-                            fill
-                            style={{ objectFit: 'contain' }}
-                            priority
-                        />
-                    </div>
-                    <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-8">
-                        <Clock size={40} className="text-gray-400" />
-                    </div>
-                    <h1 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight text-black" style={{ fontFamily: 'Outfit, sans-serif' }}>
-                        Scholarship Test Closed
-                    </h1>
-                    <p className="text-gray-600 text-lg md:text-xl leading-relaxed mb-10 max-w-xl mx-auto">
-                        The time window to take the scholarship test for the Genesis Cohort has now closed. We are no longer accepting new test submissions.
-                    </p>
-                    <a
-                        href="/"
-                        className="inline-flex items-center justify-center px-8 py-4 text-sm font-bold tracking-widest text-white uppercase transition-all duration-200 bg-[#934ab3] border border-transparent rounded-full hover:bg-black hover:text-white"
-                    >
-                        Return Home
-                    </a>
-                </div>
-            </div>
-        );
-    }
-
     return (
         <div className="min-h-screen text-black selection:bg-purple-500/30 font-sans" style={{ backgroundColor: colors.bg }}>
             {/* STYLES FOR ANIMATIONS */}
@@ -607,17 +582,16 @@ export default function ScholarshipTestPage() {
                                     />
                                 </div>
                                 <span className="inline-block px-3 py-1 bg-purple-500/10 text-[#934ab3] rounded-full text-xs font-bold uppercase tracking-wider mb-6">
-                                    The Genesis Cohort
+                                    Catalyst Cohort
                                 </span>
                                 <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight text-black">
-                                    Scholarship Qualification Test
+                                    Placement Check
                                 </h2>
                                 <p className="text-[#934ab3]/80 font-medium text-lg mb-8 uppercase tracking-widest">
                                     AI Foundations & Practical Intelligence
                                 </p>
                                 <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                                    Welcome, applicant. To be considered for a full scholarship seat in the Genesis Cohort, 
-                                    you must complete and pass this qualification test. Read the instructions carefully before you begin. Good luck.
+                                    Welcome, applicant. Please complete this short placement check to help our tutors assess your background and place you in the optimal learning track. Read the instructions carefully before you begin. Good luck.
                                 </p>
                             </div>
 
@@ -1224,5 +1198,17 @@ export default function ScholarshipTestPage() {
                 )}
             </AnimatePresence>
         </div>
+    );
+}
+
+export default function ScholarshipTestPage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen bg-white flex items-center justify-center text-gray-500">
+                <Loader2 className="w-8 h-8 animate-spin text-[#934ab3]" />
+            </div>
+        }>
+            <ScholarshipTestContent />
+        </Suspense>
     );
 }
