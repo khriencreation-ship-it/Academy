@@ -130,18 +130,25 @@ function TuitionContent() {
             toast.success('Tuition Payment Successful!');
             setTuitionPaidSuccess(true);
 
-            // Trigger backend verification
-            fetch('/api/flutterwave/verify', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                transaction_id: data.transaction_id,
-                tx_ref: txRef,
-                applicationId: application.application_id,
-                type: 'tuition',
-                amount: paymentAmountNow,
-              }),
-            }).catch(console.error);
+            const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://academy.khrien.com';
+
+            try {
+              await fetch('/api/flutterwave/verify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  transaction_id: data.transaction_id,
+                  tx_ref: txRef,
+                  applicationId: application.application_id,
+                  type: 'tuition',
+                  amount: paymentAmountNow,
+                }),
+              });
+            } catch (err) {
+              console.error('Error verifying tuition payment:', err);
+            }
+
+            window.location.href = `${baseUrl}/payment-success?status=successful&tx_ref=${txRef}&transaction_id=${data.transaction_id}`;
           }
           setPayingTuition(false);
         },

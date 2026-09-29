@@ -72,14 +72,20 @@ export async function POST(req: Request) {
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://academy.khrien.com';
 
     if (type === 'app_fee' || tx_ref.startsWith('APPFEE-')) {
-      await supabase
+      const { error: updateErr } = await supabase
         .from('applications')
         .update({
           application_fee_status: 'paid',
           application_fee_tx_ref: tx_ref,
           updated_at: new Date().toISOString(),
         })
-        .eq('application_id', cleanAppId);
+        .eq('id', app.id);
+
+      if (updateErr) {
+        console.error('Verify API: Error updating application_fee_status in Supabase:', updateErr);
+      } else {
+        console.log(`Verify API: Successfully marked application_fee_status as paid for ${cleanAppId}`);
+      }
 
       const tuitionUrl = `${baseUrl}/tuition?ref=${cleanAppId}`;
 

@@ -186,16 +186,25 @@ const Form = () => {
             toast.success('Application Fee Paid Successfully!');
             setFeePaid(true);
 
-            fetch('/api/flutterwave/verify', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                transaction_id: data.transaction_id,
-                tx_ref: txRef,
-                applicationId: appId,
-                type: 'app_fee',
-              }),
-            }).catch(console.error);
+            const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://academy.khrien.com';
+
+            try {
+              await fetch('/api/flutterwave/verify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  transaction_id: data.transaction_id,
+                  tx_ref: txRef,
+                  applicationId: appId,
+                  type: 'app_fee',
+                }),
+              });
+            } catch (err) {
+              console.error('Error verifying fee payment:', err);
+            }
+
+            // Smoothly redirect to payment success page
+            window.location.href = `${baseUrl}/payment-success?status=successful&tx_ref=${txRef}&transaction_id=${data.transaction_id}`;
           }
         },
         onclose: function () {

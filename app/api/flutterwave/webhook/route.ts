@@ -68,7 +68,7 @@ export async function POST(req: Request) {
           application_fee_tx_ref: txRef,
           updated_at: new Date().toISOString(),
         })
-        .eq('application_id', applicationId);
+        .eq('id', application.id);
 
       if (updateErr) {
         console.error('Flutterwave Webhook: Failed updating application_fee_status:', updateErr);
