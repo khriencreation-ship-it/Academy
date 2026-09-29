@@ -336,12 +336,35 @@ export default function ApplicationsClient({ applications, stats, cohorts, refer
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <span className={`px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider ${
-                      app.scholarship_status === 'Pass' ? 'bg-green-100 text-green-700' :
-                      app.scholarship_status === 'Fail' ? 'bg-red-100 text-red-600' : 'bg-amber-100 text-amber-700'
-                    }`}>
-                      {app.scholarship_status}
-                    </span>
+                    <div className="space-y-1">
+                      {/* Application Fee Status */}
+                      <div className="flex items-center gap-1">
+                        <span className={`px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider ${
+                          app.application_fee_status === 'paid' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'
+                        }`}>
+                          Fee: {app.application_fee_status === 'paid' ? 'Paid (₦2k)' : 'Pending'}
+                        </span>
+                      </div>
+                      
+                      {/* Tuition Status */}
+                      {app.cohort === 'Catalyst Cohort' || app.tuition_status ? (
+                        <div className="flex items-center gap-1">
+                          <span className={`px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider ${
+                            app.tuition_status === 'paid' ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' :
+                            app.tuition_status === 'partially_paid' ? 'bg-blue-100 text-blue-700 border border-blue-200' : 'bg-gray-100 text-gray-500'
+                          }`}>
+                            Tuition: {app.tuition_status || 'Not Started'}
+                          </span>
+                        </div>
+                      ) : (
+                        <span className={`px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider ${
+                          app.scholarship_status === 'Pass' ? 'bg-green-100 text-green-700' :
+                          app.scholarship_status === 'Fail' ? 'bg-red-100 text-red-600' : 'bg-amber-100 text-amber-700'
+                        }`}>
+                          {app.scholarship_status || 'Pending'}
+                        </span>
+                      )}
+                    </div>
                   </td>
                   <td className="px-6 py-4">
                     <span className="font-bold text-gray-900">{app.test_score ?? '–'} <span className="text-gray-400 text-[10px]">/25</span></span>
